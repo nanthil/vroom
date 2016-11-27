@@ -1,0 +1,82 @@
+{
+    "1u":{
+        "Generic Control Station":{
+            "height": 1,
+            "equipmentType": "",
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "Generic Control Station"
+        },
+        "Cisco UCS 6148UP":{
+            "height": 1,
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "Cisco UCS 6148UP"
+        },
+        "Cisco Nexu 3948T":{
+            "height": 1,
+            "equipmentType": 2,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "Cisco Nexu 3948T"
+        }, 
+        "EMC RecoverPoint":{
+            "height": 1,
+            "equipmentType": 3,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "EMC RecoverPoint"
+        }
+    },
+    "2u":{
+        "Cisco UCS 6296UP":{
+            "height": 2,
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "Cisco UCS 6296UP"
+        },
+        "EMC Data Movers":{
+            "height": 2,
+            "equipmentType": 3,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "EMC Data Movers"
+        },
+        "EMC Disk Array Enc 2.5":{
+            "height": 2,
+            "equipmentType": 3,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "EMC Disk Array Enc 2.5"
+        }, 
+        "Cisco Nexus 5596UP":{
+            "height": 2,
+            "equipmentType": 2,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "Cisco Nexus 5596UP"
+        }
+    },
+    "3u":{
+        "EMC Disk Array Enc 3.6":{
+            "height": 3,
+            "equipmentType": 3,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "EMC Disk Array Enc 3.6"
+        },
+        "EMC Storage Processors":{
+            "height": 3,
+            "equipmentType": 3,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "EMC Storage Processors"
+        }
+    },
+    "6u":{
+        "Cisco UCS 5108 Blade Chassis":{
+            "height": 6,
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "Cisco UCS 5108 Blade Chassis"
+        },
+        "EMC XtremIO Single":{
+            "height": 6,
+            "equipmentType": 3,
+            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
+            "name": "EMC XtremIO Single"
+        }
+    }
+}
