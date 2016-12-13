@@ -1,10 +1,10 @@
-import {Component, Output} from '@angular/core';
-import {DragulaModule, DragulaService} from '../ng2-dragula/ng2-dragula';
+import {Component, Output, Input} from '@angular/core';
+import {RackComponent} from './rack.component'
 
 @Component({
     selector: 'slot',
     template: `
-            <div class="slot img-thumbnail" [dragula]="equipment-bag" [dragulaModel]="equipmentObject">
+            <div class="slot img-thumbnail">
                 <div [innerHTML]="equipmentObject"></div>
             </div>
             `,
@@ -22,12 +22,10 @@ import {DragulaModule, DragulaService} from '../ng2-dragula/ng2-dragula';
     ]
 })
 export class SlotComponent{
-    equipmentObject = "";
-    constructor(private dragulaService: DragulaService){
-        dragulaService.drop.subscribe((value: any) => {
-            console.log(`drop: ${value[0]}`);
-            this.onDrop(value.slice(1));
-        });
+    @Input() slotid: number;
+    @Input() equipmentObject: any;
+    constructor(private rackComponent: RackComponent){
+
     }
     
 
@@ -42,11 +40,5 @@ export class SlotComponent{
     setValueOfSlot(equipObj:any){
         this.equipmentObject = equipObj;
     }
-
-    //dragula
-    private onDrop(args: any) {
-        let [equipmentDiv, el] = args;
-        this.equipmentObject = this.nodeToString(equipmentDiv);
-    }
-    //slot contains an image as well as the value for a particular equipment
+  //slot contains an image as well as the value for a particular equipment
 }

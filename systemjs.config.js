@@ -29,12 +29,6 @@
 
       // other libraries
       'rxjs':                      'npm:rxjs',
-        'dragula': 'node_modules/dragula',
-    'contra': 'node_modules/contra',
-    'atoa': 'node_modules/atoa',
-    'ticky': 'node_modules/ticky',
-    'crossvent': 'node_modules/crossvent/src',
-    'custom-event': 'node_modules/custom-event',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -45,13 +39,7 @@
       },
       rxjs: {
         defaultExtension: 'js'
-      },
-       'dragula': { main: 'dragula.js', defaultExtension: 'js' },
-    'contra': { main: 'contra.js', defaultExtension: 'js' },
-    'atoa': { main: 'atoa.js', defaultExtension: 'js' },
-    'ticky': { main: 'ticky.js', defaultExtension: 'js' },
-     'crossvent': { main: 'crossvent.js', defaultExtension: 'js' },
-     'custom-event': { main: 'index.js', defaultExtension: 'js' }
+      }
     }
   });
 })(this);

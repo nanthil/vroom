@@ -1,4 +1,4 @@
-import {Component, Output} from '@angular/core';
+import {Component, ViewChild, Output} from '@angular/core';
 import {SlotComponent} from './slot.component';
 
 @Component({
@@ -6,7 +6,9 @@ import {SlotComponent} from './slot.component';
     template: `
       <div class="rack">
          <div *ngFor="let s of slotArray">
-          <slot></slot>
+          <slot
+            [equipmentObject]=s.object
+            [slotid]=s.slotid></slot>
         </div>
         <all-equipment [width]="rackWidth"></all-equipment>
       </div>`,
@@ -35,8 +37,11 @@ export class RackComponent{
 
     constructor(){
       for(let i = 0; i < this.rackSize; i++){
-        this.slotArray.push({});
+        this.slotArray.push({'slotid': i, 'object': 'thing' + i});
       }
       this.rackName = this.rackName + this.rackCount;
+    }
+    setValueOfSingleSlot(slotid: number, value: any){
+      this.slotArray[slotid].object = value
     }
 }

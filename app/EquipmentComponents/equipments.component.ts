@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { EquipmentService } from './equipment.services';
-import {DragulaModule} from '../ng2-dragula/ng2-dragula';
 
 @Component({
     selector: 'all-equipment',
     template: `
-        <div [dragula]="equipment-bag" [dragulaModel]="equipmentJson"> 
+        <div> 
             <div *ngFor="let e of equipmentJson" >
                 <single-equipment [width]="width" [equipment]="e">
                 </single-equipment>
