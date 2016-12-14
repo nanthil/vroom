@@ -26,17 +26,22 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
       '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
-      'ng2-dnd': './node_modules/ng2-dnd',
+
       // other libraries
       'rxjs':                      'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+
+      //public
+      'ng2-dnd': './node_modules/ng2-dnd',
+      'ng2-popup': 'node_modules/ng2-popup/dist'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
       app: {
         main: './main.js',
         defaultExtension: 'js',
-      },
+      }, 
+      'ng2-popup': { main: 'ng2-popup.umd.js', defaultExtension: 'js' },
       'ng2-dnd':  {
          main: 'index.js',  
          defaultExtension: 'js' 

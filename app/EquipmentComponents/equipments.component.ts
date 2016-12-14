@@ -6,7 +6,10 @@ import { EquipmentService } from './equipment.services';
     template: `
         <div> 
             <div *ngFor="let e of equipmentJson" >
-                <single-equipment [width]="width" [equipment]="e">
+                <single-equipment 
+                [width]="width" 
+                [equipment]="e"
+                [isActive]="equipmentIsActive">
                 </single-equipment>
             </div>
         </div>
@@ -14,8 +17,10 @@ import { EquipmentService } from './equipment.services';
     providers: [EquipmentService]
 })
 export class EquipmentsComponent{
+    
     @Input() width: number;
     equipmentJson = new Array();
+    equipmentIsActive = false;
 
     constructor(private equipmentService: EquipmentService){
         this.generateDefaultEquipment();

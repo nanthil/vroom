@@ -1,15 +1,20 @@
 import {Component, Output, Input, ApplicationRef} from '@angular/core';
-import {RackComponent} from './rack.component'
+import {RackComponent} from './rack.component';
+import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.component';
 @Component({
     selector: 'slot',
     template: `
             <div class="slot img-thumbnail" 
             dnd-droppable
             (onDropSuccess)="setValueOfSlot($event)">
-            <div *ngFor="let e of recievedData" >
-                <single-equipment [width]="e.w" [equipment]="e.e">
-                </single-equipment>
-            </div>
+            <single-equipment 
+                (click)="toggleConfig()"
+                [width]="width"
+                [equipment]="equip"
+                [isActive]="equipmentActivated"
+                [showConfig]="showConfig"
+            >
+            </single-equipment>
 
             </div>
             `,
@@ -29,19 +34,32 @@ import {RackComponent} from './rack.component'
 export class SlotComponent{
     @Input() slotid: number;
     @Input() equipmentObject: any;
-    recievedData:Array<any> = [];
-    constructor(
-        private appref: ApplicationRef,
-        private rackComponent: RackComponent){
+    equip: Object;
+    width: number;
+    equipmentActivated = false;
+    showConfig = false;
+    constructor(private rackComponent: RackComponent){
 
     }
     ngOnInit(){
-        this.recievedData.push(this.equipmentObject);
+        this.equip = this.equipmentObject.e
+        this.width = this.equipmentObject.w
     }
+
+    toggleConfig(){
+        if(this.equipmentActivated){
+            this.showConfig = !this.showConfig
+        }
+    }
+    
     setValueOfSlot(e:any){
-        this.recievedData = [];
-        this.recievedData.push(e.dragData)
-        //this.rackComponent.setValueOfSingleSlot(this.slotid, e.dragData);
-        //this.equipmentObject = equipObj;
+        if(this.equipmentActivated){
+            //will delete old are you sure?
+            //get user input
+            this.showConfig = false;
+        }
+        this.equipmentActivated = true;
+        this.equip = e.dragData.e
+        this.width = e.dragData.w
     }
 }

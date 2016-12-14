@@ -9,6 +9,7 @@ import {SlotComponent} from './slot.component';
           <slot
             [equipmentObject]=s.object
             [slotid]=s.slotid
+            [hidden]=s.shouldHideSlot
           ></slot>
         </div>
         <all-equipment [width]="rackWidth"></all-equipment>
@@ -23,12 +24,12 @@ import {SlotComponent} from './slot.component';
         }
      `
     ]
-
 })
 export class RackComponent{
     slotArray: any[] = [];
     rackSize = 42;
     rackWidth = 190;
+    shouldHideSlot = false;
     emptySlot = {
         'e': {
         'name': 'Empty',
@@ -46,13 +47,15 @@ export class RackComponent{
 
     constructor(){
       for(let i = 0; i < this.rackSize; i++){
-        this.slotArray.push({'slotid': i, 'object': this.emptySlot});
+        this.slotArray.push({
+          'slotid': i, 
+          'shouldHideSlot': this.shouldHideSlot,
+          'object': this.emptySlot
+        });
       }
       this.rackName = this.rackName + this.rackCount;
     }
-    setValueOfSingleSlot(slotid: number, value: any){
-      this.slotArray[slotid].object = value
-      console.log(this.slotArray);
-      console.log(value);
+    hideSlot(slotId:number){
+      this.slotArray[slotId].shouldHideSlot = true;
     }
 }
