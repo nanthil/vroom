@@ -8,7 +8,8 @@ import {SlotComponent} from './slot.component';
          <div *ngFor="let s of slotArray">
           <slot
             [equipmentObject]=s.object
-            [slotid]=s.slotid></slot>
+            [slotid]=s.slotid
+          ></slot>
         </div>
         <all-equipment [width]="rackWidth"></all-equipment>
       </div>`,
@@ -27,8 +28,16 @@ import {SlotComponent} from './slot.component';
 export class RackComponent{
     slotArray: any[] = [];
     rackSize = 42;
+    rackWidth = 190;
+    emptySlot = {
+        'e': {
+        'name': 'Empty',
+        'imgUrl': './app/Racks/img/1274237_300x300.jpg',
+        'height': 3
+        },
+        'w': 190
+      }
    
-    rackWidth = 235;
     rackName = "rack";
     // <div *ngFor="let element of range(6); let i=index">
     //   elements[i].name
@@ -37,11 +46,13 @@ export class RackComponent{
 
     constructor(){
       for(let i = 0; i < this.rackSize; i++){
-        this.slotArray.push({'slotid': i, 'object': 'thing' + i});
+        this.slotArray.push({'slotid': i, 'object': this.emptySlot});
       }
       this.rackName = this.rackName + this.rackCount;
     }
     setValueOfSingleSlot(slotid: number, value: any){
       this.slotArray[slotid].object = value
+      console.log(this.slotArray);
+      console.log(value);
     }
 }

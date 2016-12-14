@@ -1,11 +1,16 @@
-import {Component, Output, Input} from '@angular/core';
+import {Component, Output, Input, ApplicationRef} from '@angular/core';
 import {RackComponent} from './rack.component'
-
 @Component({
     selector: 'slot',
     template: `
-            <div class="slot img-thumbnail">
-                <div [innerHTML]="equipmentObject"></div>
+            <div class="slot img-thumbnail" 
+            dnd-droppable
+            (onDropSuccess)="setValueOfSlot($event)">
+            <div *ngFor="let e of recievedData" >
+                <single-equipment [width]="e.w" [equipment]="e.e">
+                </single-equipment>
+            </div>
+
             </div>
             `,
       
@@ -24,21 +29,19 @@ import {RackComponent} from './rack.component'
 export class SlotComponent{
     @Input() slotid: number;
     @Input() equipmentObject: any;
-    constructor(private rackComponent: RackComponent){
+    recievedData:Array<any> = [];
+    constructor(
+        private appref: ApplicationRef,
+        private rackComponent: RackComponent){
 
     }
-    
-
-    //methods
-    nodeToString ( node :any ) {
-        var tmpNode = document.createElement( "div" );
-        tmpNode.appendChild( node.cloneNode( true ) );
-        var str = tmpNode.innerHTML;
-        tmpNode = node = null; // prevent memory leaks in IE
-        return str;
+    ngOnInit(){
+        this.recievedData.push(this.equipmentObject);
     }
-    setValueOfSlot(equipObj:any){
-        this.equipmentObject = equipObj;
+    setValueOfSlot(e:any){
+        this.recievedData = [];
+        this.recievedData.push(e.dragData)
+        //this.rackComponent.setValueOfSingleSlot(this.slotid, e.dragData);
+        //this.equipmentObject = equipObj;
     }
-  //slot contains an image as well as the value for a particular equipment
 }
