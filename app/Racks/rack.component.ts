@@ -34,7 +34,7 @@ export class RackComponent{
         'e': {
         'name': 'Empty',
         'imgUrl': './app/Racks/img/1274237_300x300.jpg',
-        'height': 3
+        'height': 1
         },
         'w': 190
       }

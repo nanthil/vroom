@@ -5,16 +5,17 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     selector: 'slot',
     template: `
             <div class="slot img-thumbnail" 
-            dnd-droppable
-            (onDropSuccess)="setValueOfSlot($event)">
-            <single-equipment 
-                (click)="toggleConfig()"
-                [width]="width"
-                [equipment]="equip"
-                [isActive]="equipmentActivated"
-                [showConfig]="showConfig"
-            >
-            </single-equipment>
+                dnd-droppable
+                (onDropSuccess)="setValueOfSlot($event)"
+                [style.height.px]="height">
+                <single-equipment 
+                    (click)="toggleConfig()"
+                    [width]="width"
+                    [equipment]="equip"
+                    [isActive]="equipmentActivated"
+                    [showConfig]="showConfig"
+                >
+                </single-equipment>
 
             </div>
             `,
@@ -22,10 +23,10 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     styles: [
       `
         .slot {
+            padding-left: 20px;
           background-color: blue;
           width: 200px;
           height: 50px;
-          margin: 10px;
           display: list-item;
         }
      `
@@ -34,8 +35,9 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
 export class SlotComponent{
     @Input() slotid: number;
     @Input() equipmentObject: any;
-    equip: Object;
+    equip: any;
     width: number;
+    height: number;
     equipmentActivated = false;
     showConfig = false;
     constructor(private rackComponent: RackComponent){
@@ -44,8 +46,8 @@ export class SlotComponent{
     ngOnInit(){
         this.equip = this.equipmentObject.e
         this.width = this.equipmentObject.w
+        this.height = 20
     }
-
     toggleConfig(){
         if(this.equipmentActivated){
             this.showConfig = !this.showConfig
@@ -61,5 +63,6 @@ export class SlotComponent{
         this.equipmentActivated = true;
         this.equip = e.dragData.e
         this.width = e.dragData.w
+        this.height = e.dragData.e.height * 15 + 1
     }
 }

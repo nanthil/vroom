@@ -4,16 +4,24 @@ import { EquipmentService } from './equipment.services';
 @Component({
     selector: 'all-equipment',
     template: `
-        <div> 
-            <div *ngFor="let e of equipmentJson" >
-                <single-equipment 
-                [width]="width" 
-                [equipment]="e"
-                [isActive]="equipmentIsActive">
-                </single-equipment>
-            </div>
-        </div>
+            <ul>
+                <li class="equipment-list" *ngFor="let e of equipmentJson" >
+                    <single-equipment 
+                    [width]="width" 
+                    [equipment]="e"
+                    [isActive]="equipmentIsActive">
+                    </single-equipment>
+                </li>
+            <ul>
     `,
+    styles: [`
+    .equipment-list{position: fixed;
+    display: list-item;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 400px;
+    border: 3px solid #73AD21;}`],
     providers: [EquipmentService]
 })
 export class EquipmentsComponent{
