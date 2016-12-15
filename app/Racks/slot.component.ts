@@ -42,16 +42,24 @@ export class SlotComponent{
 
     }
     ngOnInit(){
-        this.equip = this.equipmentObject.e
-        this.width = this.equipmentObject.w
-        this.height = 19.55
+        this.equip = this.equipmentObject.e;
+        this.width = this.equipmentObject.w;
+        this.height = 19.55;
     }
     toggleConfig(){
         if(this.equipmentActivated){
-            this.showConfig = !this.showConfig
+            this.showConfig = !this.showConfig;
         }
     }
-    
+    consumeRackSlots(){
+        let slotsToConsume = this.equip.height;
+        let indexToConsume = this.slotid + 1;
+        while(slotsToConsume > 0){
+            console.log(slotsToConsume);
+            indexToConsume++;
+            slotsToConsume = slotsToConsume - 1;
+        }
+    }
     setValueOfSlot(e:any){
         if(this.equipmentActivated){
             //will delete old are you sure?
@@ -59,8 +67,9 @@ export class SlotComponent{
             this.showConfig = false;
         }
         this.equipmentActivated = true;
-        this.equip = e.dragData.e
-        this.width = e.dragData.w
-        this.height = e.dragData.e.height * 19.55
+        this.equip = e.dragData.e;
+        this.width = e.dragData.w;
+        this.height = e.dragData.e.height * 19.55;
+        this.consumeRackSlots();
     }
 }

@@ -37,16 +37,12 @@ export class EquipmentComponent{
     name: string;
     equipmentImg : any;
     transferData: Object;
-    constructor(
-        private el: ElementRef, private rend: Renderer){}
-
     ngOnInit() {
-        this.setValues()
-
+        this.setValues();
     }
    
     ngOnChanges(c: SimpleChanges){
-        this.setValues()
+        this.setValues();
     }
 
      setValues(){

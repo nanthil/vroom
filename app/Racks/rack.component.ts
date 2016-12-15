@@ -1,4 +1,4 @@
-import {Component, ViewChild, Output} from '@angular/core';
+import {Component, ViewChild, Output, SimpleChanges} from '@angular/core';
 import {SlotComponent} from './slot.component';
 
 @Component({
@@ -6,10 +6,9 @@ import {SlotComponent} from './slot.component';
     template: `
       <div class="rack">
          <div *ngFor="let s of slotArray">
-          <slot
+          <slot *ngIf="!s.shouldHideSlot"
             [equipmentObject]=s.object
             [slotid]=s.slotid
-            [hidden]=s.shouldHideSlot
           ></slot>
         </div>
         <all-equipment [width]="rackWidth"></all-equipment>
@@ -55,8 +54,5 @@ export class RackComponent{
         });
       }
       this.rackName = this.rackName + this.rackCount;
-    }
-    hideSlot(slotId:number){
-      this.slotArray[slotId].shouldHideSlot = true;
     }
 }
