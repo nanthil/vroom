@@ -4,7 +4,7 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
 @Component({
     selector: 'slot',
     template: `
-            <div class="slot img-thumbnail" 
+            <div class="slot" 
                 dnd-droppable
                 (onDropSuccess)="setValueOfSlot($event)"
                 [style.height.px]="height">
@@ -21,13 +21,11 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
             `,
       
     styles: [
-      `
+      ` 
         .slot {
-            padding-left: 20px;
-          background-color: blue;
-          width: 200px;
-          height: 50px;
-          display: list-item;
+            margin-left: 34.3px;
+            background-color: blue;
+            width: 200px;
         }
      `
     ]
@@ -46,7 +44,7 @@ export class SlotComponent{
     ngOnInit(){
         this.equip = this.equipmentObject.e
         this.width = this.equipmentObject.w
-        this.height = 20
+        this.height = 19.55
     }
     toggleConfig(){
         if(this.equipmentActivated){
@@ -63,6 +61,6 @@ export class SlotComponent{
         this.equipmentActivated = true;
         this.equip = e.dragData.e
         this.width = e.dragData.w
-        this.height = e.dragData.e.height * 15 + 1
+        this.height = e.dragData.e.height * 19.55
     }
 }

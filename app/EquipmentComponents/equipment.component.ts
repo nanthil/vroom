@@ -10,16 +10,22 @@ import {Component,
     selector: 'single-equipment',
     template: `
         <e-modal [show]="showConfig"></e-modal>
-        <img class="equipment"
-            dnd-draggable [dragEnabled]="true"
+        <div class="equipment">
+        <img class="e-image" dnd-draggable [dragEnabled]="true"
             [dragData]="transferData"
             [alt]="name"
             [src]="equipmentImg"
-            [style.width.px]="width" 
-            [style.height.px]="height"/>
+            [style.height.px]="height" />
+        </div>
      `,
      styles: [ `
+        .e-image {
+            display: table;
+            width: 100%
+        }
         .equipment{
+            display: table;
+            height: 100%;
         }`]
 })
 export class EquipmentComponent{
@@ -42,10 +48,11 @@ export class EquipmentComponent{
     ngOnChanges(c: SimpleChanges){
         this.setValues()
     }
+
      setValues(){
         this.name = this.equipment.name;
         this.equipmentImg = this.equipment.imgUrl;
-        this.height = this.equipment.height * 12;
+        this.height = this.equipment.height * 19.55;
         console.log(this.isActive);
 
         //data transfers on drop

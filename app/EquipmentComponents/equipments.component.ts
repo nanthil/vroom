@@ -4,8 +4,8 @@ import { EquipmentService } from './equipment.services';
 @Component({
     selector: 'all-equipment',
     template: `
-            <ul>
-                <li class="equipment-list" *ngFor="let e of equipmentJson" >
+            <ul class="equipment-list">
+                <li *ngFor="let e of equipmentJson" >
                     <single-equipment 
                     [width]="width" 
                     [equipment]="e"

@@ -17,8 +17,9 @@ import {SlotComponent} from './slot.component';
     styles: [
       `
         .rack {
+          padding-top:28.5px;
           height: 875px;
-          width: 100%;
+          width: 266px;
           margin: 10px;
           background-image: url("./app/Racks/img/42uRack.png"); 
         }
