@@ -28,6 +28,8 @@ import {RackService} from './rack.service';
     ]
 })
 export class RackComponent{
+  
+    constructor(private rackService: RackService){}
     rackid = '1';
     shouldHideSlot = false;
     rackWidth = 190;
@@ -40,7 +42,6 @@ export class RackComponent{
       this.rackService.updateRack(this.rackid, event.id, newObject)
       console.log(this.rackService.slotList);
     }
-    constructor(private rackService: RackService){}
     ngOnInit(){
       this.rackService.generateEmptyRack(this.rackid);
     }
