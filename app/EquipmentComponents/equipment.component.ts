@@ -33,7 +33,7 @@ export class EquipmentComponent{
     @Input() equipment: any;
     @Input() width: number;
     @Input() showConfig: boolean;
-    height: number;
+    @Input() height: number;
     name: string;
     equipmentImg : any;
     transferData: Object;
@@ -48,8 +48,6 @@ export class EquipmentComponent{
      setValues(){
         this.name = this.equipment.name;
         this.equipmentImg = this.equipment.imgUrl;
-        this.height = this.equipment.height * 19.55;
-        console.log(this.isActive);
 
         //data transfers on drop
         this.transferData = {

@@ -8,6 +8,7 @@ import { EquipmentService } from './equipment.services';
                 <li *ngFor="let e of equipmentJson" >
                     <single-equipment 
                     [width]="width" 
+                    [height]="e.height * 19.55"
                     [equipment]="e"
                     [isActive]="equipmentIsActive">
                     </single-equipment>
