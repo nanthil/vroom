@@ -12,6 +12,7 @@ import { DndModule } from 'ng2-dnd';
 import {EquipmentComponent} from './EquipmentComponents/equipment.component';
 import {EquipmentModalComponent} from './EquipmentComponents/equipmentModal.component'
 import {EquipmentsComponent} from './EquipmentComponents/equipments.component';
+import {RacksComponent} from './Racks/racks.component';
 import {RackComponent} from './Racks/rack.component';
 import {RackService} from './Racks/rack.service';
 import {SlotComponent} from './Racks/slot.component';
@@ -29,7 +30,8 @@ import {SlotComponent} from './Racks/slot.component';
     EquipmentModalComponent,
     EquipmentsComponent,
     SlotComponent,
-    RackComponent
+    RackComponent,
+    RacksComponent
    ],
    providers: [RackService],
   bootstrap:    [ AppComponent ]

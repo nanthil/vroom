@@ -1,4 +1,4 @@
-import {Component, ViewChild, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, ViewChild, Output, SimpleChanges} from '@angular/core';
 import {SlotComponent} from './slot.component';
 import {RackService} from './rack.service';
 @Component({
@@ -32,7 +32,7 @@ export class RackComponent{
     slotArray: any[] = [];
     rackWidth = 190;
     rackName = "rack";
-    rackId = '1';
+    @Input() rackId: string;
     constructor(private rackService: RackService){}
     ngOnInit(){
       this.rackService.generateEmptyRack(this.rackId);

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {RackComponent} from './Racks/rack.component'
+import {RacksComponent} from './Racks/racks.component'
 
 
 @Component({
   selector: 'my-app',
-  template: `<h1>Hello {{name}}</h1><single-rack></single-rack>`,
+  template: `<h1>Hello {{name}}</h1><all-racks></all-racks>`,
 })
 export class AppComponent  {
   name = 'Angular'; 

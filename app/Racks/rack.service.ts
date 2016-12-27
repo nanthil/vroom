@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
-    data: any;
+    rackList = {};
     slotList: any[];
     
     generateEmptyRack(rackID: string){
@@ -34,27 +34,34 @@ export class RackService{
             });
         }
         this.slotList = slotArray;
+        this.rackList[rackID] = this.slotList;
+        console.log(this.rackList);
     }
     updateRack(rackId: string, slotId: number, newSlotValue: any, activeStatus: boolean){
         let success = false;
         if(newSlotValue.e.height > 1){
-            success = this.checkSlotsForValid(slotId, newSlotValue.e.height)
+            success = this.checkSlotsForValid(rackId, slotId, newSlotValue.e.height)
         } else if (newSlotValue.e.height === 1){
             success = true;
         }
 
         if(success){
-            this.slotList[slotId].equipmentActive = activeStatus
-            this.slotList[slotId].object = {
+            this.rackList[rackId][slotId].equipmentActive = activeStatus
+            this.rackList[rackId][slotId].object = {
                 e : newSlotValue.e,
                 w : newSlotValue.w
             };
+            // this.slotList[slotId].equipmentActive = activeStatus
+            // this.slotList[slotId].object = {
+            //     e : newSlotValue.e,
+            //     w : newSlotValue.w
+            // };
             this.consumeSlots(slotId, newSlotValue.e.height)
         } 
         return success;
        
     }
-    checkSlotsForValid(startIndex: number, numberOfSlotsToConsume: number){
+    checkSlotsForValid(rackId: string, startIndex: number, numberOfSlotsToConsume: number){
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
