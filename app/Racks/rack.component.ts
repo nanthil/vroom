@@ -5,7 +5,7 @@ import {RackService} from './rack.service';
     selector: 'single-rack',
     template: `
       <div class="rack">
-         <div *ngFor="let s of rackService.slotList">
+         <div *ngFor="let s of rackService.rackList[rackId]">
           <slot *ngIf="!s.shouldHideSlot"
             [equipmentObject]=s.object
             [slotid]=s.slotid
@@ -32,13 +32,11 @@ export class RackComponent{
     slotArray: any[] = [];
     rackWidth = 190;
     rackName = "rack";
-    @Input() rackId: string;
+    @Input() rackId: number;
     constructor(private rackService: RackService){}
-    ngOnInit(){
-      this.rackService.generateEmptyRack(this.rackId);
-    }
     callUpdateService(e:any){
       let success = this.rackService.updateRack(this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
+      console.log(this.rackService.rackList[this.rackId])
       if(!success){
         //error
         console.log('error');

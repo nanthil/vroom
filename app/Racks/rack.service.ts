@@ -8,10 +8,11 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
-    rackList = {};
+    siteList: any[] = [];
+    rackList: any[] = [];
     slotList: any[];
     
-    generateEmptyRack(rackID: string){
+    generateEmptyRack(rackID: number){
         let slotArray: any[] = [];
         let rackSize = 42;
         let rackWidth = 190;
@@ -33,11 +34,10 @@ export class RackService{
                 'object': emptySlot,
             });
         }
-        this.slotList = slotArray;
-        this.rackList[rackID] = this.slotList;
+        this.rackList[rackID] = slotArray;
         console.log(this.rackList);
     }
-    updateRack(rackId: string, slotId: number, newSlotValue: any, activeStatus: boolean){
+    updateRack(rackId: number, slotId: number, newSlotValue: any, activeStatus: boolean){
         let success = false;
         if(newSlotValue.e.height > 1){
             success = this.checkSlotsForValid(rackId, slotId, newSlotValue.e.height)
@@ -56,18 +56,18 @@ export class RackService{
             //     e : newSlotValue.e,
             //     w : newSlotValue.w
             // };
-            this.consumeSlots(slotId, newSlotValue.e.height)
+            this.consumeSlots(rackId, slotId, newSlotValue.e.height)
         } 
         return success;
        
     }
-    checkSlotsForValid(rackId: string, startIndex: number, numberOfSlotsToConsume: number){
+    checkSlotsForValid(rackId: number, startIndex: number, numberOfSlotsToConsume: number){
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
             //this.slotList[indexToConsume]
-            if(this.slotList[indexToConsume].equipmentActive){
+            if(this.rackList[rackId][indexToConsume].equipmentActive){
                 //notify user
                 return false;
             }
@@ -77,13 +77,13 @@ export class RackService{
         return true;
 
     }
-    consumeSlots(startIndex: number, numberOfSlotsToConsume: number){
+    consumeSlots(rackId: number, startIndex: number, numberOfSlotsToConsume: number){
         //don't consume the current slot
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
-            this.slotList[indexToConsume].shouldHideSlot = true;
+            this.rackList[rackId][indexToConsume].shouldHideSlot = true;
             indexToConsume++;
             numberOfSlotsToConsume--;
         }

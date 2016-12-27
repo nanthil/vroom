@@ -5,10 +5,10 @@ import {RackService} from './rack.service';
     selector: 'all-racks',
     template: `
         <button (click)="addNewRack()">Add New Rack</button>
-        <div *ngFor="let rack of numOfRacks">
+        <div *ngFor="let rack of rackService.rackList; let i = index">
             <div class="racks">
                 <single-rack
-                    [rackId]=rack
+                    [rackId]=i
                     ></single-rack>
             </div>
         </div>
@@ -20,16 +20,14 @@ import {RackService} from './rack.service';
     `]
 })
 export class RacksComponent{
-    rackId: string;
     newRackId: number;
-    numOfRacks: any[] = [];
+    constructor(private rackService: RackService){}
     ngOnInit(){
         this.newRackId = 0;
-        this.numOfRacks.push('rack' + this.newRackId);
     }
     addNewRack(){
+        this.rackService.generateEmptyRack(this.newRackId);
         this.newRackId ++;
-        this.numOfRacks.push('rack'+ this.newRackId);
     }
     
 
