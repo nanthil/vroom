@@ -1,4 +1,4 @@
-import {Component, Output, Input, ApplicationRef} from '@angular/core';
+import {Component, Output, Input, ApplicationRef, EventEmitter, NgZone} from '@angular/core';
 import {RackComponent} from './rack.component';
 import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.component';
 @Component({
@@ -6,13 +6,14 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     template: `
             <div class="slot" 
                 dnd-droppable
-                (onDropSuccess)="setValueOfSlot($event)"
+                (onDropSuccess)="_updateRack($event)"
                 [style.height.px]="height">
                 <single-equipment 
                     (click)="toggleConfig()"
-                    [width]="width"
-                    [equipment]="equip"
-                    [isActive]="equipmentActivated"
+                    [width]="equipmentObject.w"
+                    [height]="equipmentObject.e.height * 19.55"
+                    [equipment]="equipmentObject.e"
+                    [isActive]="equipmentActive"
                     [showConfig]="showConfig"
                 >
                 </single-equipment>
@@ -31,45 +32,44 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     ]
 })
 export class SlotComponent{
+    //variables
+    //id of slot
     @Input() slotid: number;
+    //the object that contains data for the equipment component
     @Input() equipmentObject: any;
-    equip: any;
-    width: number;
-    height: number;
-    equipmentActivated = false;
+    //whether to toggle config for equipment or not
+    @Input() equipmentActive: boolean;
+    //event to trigger rack to update
+    @Output() updateRack = new EventEmitter();
+    @Input() height: number;
     showConfig = false;
-    constructor(private rackComponent: RackComponent){
 
-    }
-    ngOnInit(){
-        this.equip = this.equipmentObject.e;
-        this.width = this.equipmentObject.w;
-        this.height = 19.55;
-    }
-    toggleConfig(){
-        if(this.equipmentActivated){
-            this.showConfig = !this.showConfig;
-        }
-    }
-    consumeRackSlots(){
-        let slotsToConsume = this.equip.height;
-        let indexToConsume = this.slotid + 1;
-        while(slotsToConsume > 0){
-            console.log(slotsToConsume);
-            indexToConsume++;
-            slotsToConsume = slotsToConsume - 1;
-        }
-    }
-    setValueOfSlot(e:any){
-        if(this.equipmentActivated){
+    constructor(private rackComponent: RackComponent, private zone: NgZone){}
+    //set default height of slot
+    //ngOnInit(){this.height = 19.55;}
+
+    //emits event from drop
+    private _updateRack(e:any){
+        if(this.equipmentActive){
             //will delete old are you sure?
             //get user input
             this.showConfig = false;
         }
-        this.equipmentActivated = true;
-        this.equip = e.dragData.e;
-        this.width = e.dragData.w;
-        this.height = e.dragData.e.height * 19.55;
-        this.consumeRackSlots();
+
+        //this fixes an issue when ng2dnd runs outside of angular2's zone
+        this.zone.run(() => {
+            this.updateRack.emit({
+                id: this.slotid, 
+                eventObject: e,
+                activeStatus: true
+            });
+    });
+    }
+    
+    toggleConfig(){
+        if(this.equipmentActive){
+            
+            this.showConfig = !this.showConfig;
+        }
     }
 }
