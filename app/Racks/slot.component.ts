@@ -1,4 +1,4 @@
-import {Component, Output, Input, ApplicationRef} from '@angular/core';
+import {Component, Output, Input, EventEmitter, ApplicationRef} from '@angular/core';
 import {RackComponent} from './rack.component';
 import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.component';
 @Component({
@@ -6,7 +6,7 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     template: `
             <div class="slot" 
                 dnd-droppable
-                (onDropSuccess)="setValueOfSlot($event)"
+                (onDropSuccess)="_updateSlotList($event)"
                 [style.height.px]="height">
                 <single-equipment 
                     (click)="toggleConfig()"
@@ -33,6 +33,18 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
 export class SlotComponent{
     @Input() slotid: number;
     @Input() equipmentObject: any;
+    @Output() updateSlotList = new EventEmitter();
+    private _updateSlotList(e:any){
+           if(this.equipmentActivated){
+            //will delete old are you sure?
+            //get user input
+            this.showConfig = false;
+        }
+        this.equipmentActivated = true;
+        this.height = e.dragData.e.height * 19.55;
+        //event
+        this.updateSlotList.emit({id: this.slotid, eventObject: e})
+    }
     equip: any;
     width: number;
     height: number;
@@ -50,26 +62,5 @@ export class SlotComponent{
         if(this.equipmentActivated){
             this.showConfig = !this.showConfig;
         }
-    }
-    consumeRackSlots(){
-        let slotsToConsume = this.equip.height;
-        let indexToConsume = this.slotid + 1;
-        while(slotsToConsume > 0){
-            console.log(slotsToConsume);
-            indexToConsume++;
-            slotsToConsume = slotsToConsume - 1;
-        }
-    }
-    setValueOfSlot(e:any){
-        if(this.equipmentActivated){
-            //will delete old are you sure?
-            //get user input
-            this.showConfig = false;
-        }
-        this.equipmentActivated = true;
-        this.equip = e.dragData.e;
-        this.width = e.dragData.w;
-        this.height = e.dragData.e.height * 19.55;
-        this.consumeRackSlots();
     }
 }

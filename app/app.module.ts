@@ -13,6 +13,7 @@ import {EquipmentComponent} from './EquipmentComponents/equipment.component';
 import {EquipmentModalComponent} from './EquipmentComponents/equipmentModal.component'
 import {EquipmentsComponent} from './EquipmentComponents/equipments.component';
 import {RackComponent} from './Racks/rack.component';
+import {RackService} from './Racks/rack.service';
 import {SlotComponent} from './Racks/slot.component';
 
 
@@ -30,6 +31,7 @@ import {SlotComponent} from './Racks/slot.component';
     SlotComponent,
     RackComponent
    ],
+   providers: [RackService],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

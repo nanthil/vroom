@@ -1,13 +1,15 @@
 import {Component, ViewChild, Output, SimpleChanges} from '@angular/core';
 import {SlotComponent} from './slot.component';
+import {RackService} from './rack.service';
 
 @Component({
     selector: 'single-rack',
     template: `
       <div class="rack">
-         <div *ngFor="let s of slotArray">
+         <div *ngFor="let s of rackService.slotList">
           <slot *ngIf="!s.shouldHideSlot"
             [equipmentObject]=s.object
+            (updateSlotList)="updateRackSlotList($event)"
             [slotid]=s.slotid
           ></slot>
         </div>
@@ -26,33 +28,20 @@ import {SlotComponent} from './slot.component';
     ]
 })
 export class RackComponent{
-    slotArray: any[] = [];
-    rackSize = 42;
-    rackWidth = 190;
+    rackid = '1';
     shouldHideSlot = false;
-    emptySlot = {
-        'e': {
-        'name': 'Empty',
-        'imgUrl': './app/Racks/img/1274237_300x300.jpg',
-        'height': 1
-        },
-        'w': 190
-      }
-   
+    rackWidth = 190;
     rackName = "rack";
-    // <div *ngFor="let element of range(6); let i=index">
-    //   elements[i].name
-    // </div>
-    rackCount = 1
-
-    constructor(){
-      for(let i = 0; i < this.rackSize; i++){
-        this.slotArray.push({
-          'slotid': i, 
-          'shouldHideSlot': this.shouldHideSlot,
-          'object': this.emptySlot
-        });
+    updateRackSlotList(event:any){
+      let newObject = {
+        equipment: event.eventObject.dragData.e, 
+        width: event.eventObject.dragData.w
       }
-      this.rackName = this.rackName + this.rackCount;
+      this.rackService.updateRack(this.rackid, event.id, newObject)
+      console.log(this.rackService.slotList);
+    }
+    constructor(private rackService: RackService){}
+    ngOnInit(){
+      this.rackService.generateEmptyRack(this.rackid);
     }
 }
