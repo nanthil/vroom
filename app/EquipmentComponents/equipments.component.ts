@@ -16,13 +16,13 @@ import { EquipmentService } from './equipment.services';
             <ul>
     `,
     styles: [`
-    .equipment-list{position: fixed;
-    display: list-item;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 400px;
-    border: 3px solid #73AD21;}`],
+    .equipment-list{
+        overflow:auto;
+        list-style-type: none;
+        display: list-item;
+        border: 3px solid #73AD21;
+        height: 400px;
+    }`],
     providers: [EquipmentService]
 })
 export class EquipmentsComponent{
@@ -49,3 +49,10 @@ export class EquipmentsComponent{
     }
 }
 
+// position: fixed;
+//     overflow:auto;
+//     display: list-item;
+//     top: 0;
+//     right: 0;
+//     width: 300px;
+//     border: 3px solid #73AD21;

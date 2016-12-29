@@ -29,6 +29,4 @@ export class RacksComponent{
         this.rackService.generateEmptyRack(this.newRackId);
         this.newRackId ++;
     }
-    
-
 }

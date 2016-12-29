@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import {RacksComponent} from './Racks/racks.component'
+import {ServerManagementComponent} from './ServerManagementPage/ServerManagementPage.component'
 
 
 @Component({
   selector: 'my-app',
-  template: `<h1>Hello {{name}}</h1><all-racks></all-racks>`,
+  template: `<management-page></management-page>`,
 })
 export class AppComponent  {
-  name = 'Angular'; 
   constructor(){
   }
 

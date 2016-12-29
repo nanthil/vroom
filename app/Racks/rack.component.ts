@@ -14,7 +14,6 @@ import {RackService} from './rack.service';
             (updateRack)="callUpdateService($event)"
           ></slot>
         </div>
-        <all-equipment [width]="rackWidth"></all-equipment>
       </div>`,
     styles: [
       `
@@ -22,7 +21,6 @@ import {RackService} from './rack.service';
           padding-top:28.5px;
           height: 875px;
           width: 266px;
-          margin: 10px;
           background-image: url("./app/Racks/img/42uRack.png"); 
         }
      `

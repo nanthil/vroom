@@ -8,6 +8,12 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
+    thereIsADatacenter = false;
+    currentSite= {
+        site: -1,
+        building: -1,
+        datacenter: -1
+    };
     siteList: any[] = [];
     rackList: any[] = [];
     slotList: any[];
