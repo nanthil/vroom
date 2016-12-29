@@ -45,12 +45,12 @@ export class AddNewSiteModalComponent{
         if(this.inputValue.length === 0){
             this.showError = true;
         } else {
-            this.newValue.emit({inputValue: this.inputValue})
+            this.newValue.emit({added: this.whatToAdd,inputValue: this.inputValue})
             this.inputValue = '';
         }
     }
     private _cancel(){
-        this.newValue.emit({inputValue: 'cancel'})
+        this.newValue.emit({added: this.whatToAdd, inputValue: 'cancel'})
         this.inputValue = '';
     }
 }

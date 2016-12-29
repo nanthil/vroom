@@ -10,7 +10,9 @@ import {Component} from '@angular/core';
     `,
     styles: [`
         .nav-bar {
-            float:right;
+            position:fixed;
+            top:0;
+            right:0;
             height: 100vh;
             width: 400px;
             background-color: blue;

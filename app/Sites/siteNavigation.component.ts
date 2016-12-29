@@ -5,7 +5,7 @@ import {SiteComponent} from '../Sites/site.component'
 @Component({
     selector: 'site-nav',
     template: `
-    
+        <div site-nav-div>
         <add-new 
             [showModal]=showModal
             [whatToAdd]=typeToAdd
@@ -80,9 +80,14 @@ import {SiteComponent} from '../Sites/site.component'
                 </div>
             </div>
         </div>
+        </div>
     `,
     styles: [
     `
+        .site-nav-div{
+            position: fixed;
+            top: 0;
+        }
         .nav-title {
             color: #ffffff;
         }

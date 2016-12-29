@@ -18,7 +18,7 @@ export class RackService{
     rackList: any[] = [];
     slotList: any[];
     
-    generateEmptyRack(rackID: number){
+    generateEmptyRack(room: number, enclave:number, rackID: number){
         let slotArray: any[] = [];
         let rackSize = 42;
         let rackWidth = 190;
@@ -40,40 +40,61 @@ export class RackService{
                 'object': emptySlot,
             });
         }
-        this.rackList[rackID] = slotArray;
-        console.log(this.rackList);
+        console.log(this.currentSite);
+        this.siteList[this.currentSite.site]
+            .buildings[this.currentSite.building]
+            .datacenters[this.currentSite.datacenter]
+            .rooms[room]
+            .enclaves[enclave].racks[rackID] = slotArray;
+            console.log('success');
     }
-    updateRack(rackId: number, slotId: number, newSlotValue: any, activeStatus: boolean){
+    updateRack(room: number, enclave:number, rackId: number, slotId: number, newSlotValue: any, activeStatus: boolean){
         let success = false;
         if(newSlotValue.e.height > 1){
-            success = this.checkSlotsForValid(rackId, slotId, newSlotValue.e.height)
+            success = this.checkSlotsForValid(room, enclave, rackId, slotId, newSlotValue.e.height)
         } else if (newSlotValue.e.height === 1){
             success = true;
         }
 
         if(success){
-            this.rackList[rackId][slotId].equipmentActive = activeStatus
-            this.rackList[rackId][slotId].object = {
-                e : newSlotValue.e,
-                w : newSlotValue.w
-            };
+            this.siteList[this.currentSite.site]
+                .buildings[this.currentSite.building]
+                .datacenters[this.currentSite.datacenter]
+                .rooms[room]
+                .enclaves[enclave].racks[rackId][slotId].equipmentActive = activeStatus;
+
+
+
+            this.siteList[this.currentSite.site]
+                .buildings[this.currentSite.building]
+                .datacenters[this.currentSite.datacenter]
+                .rooms[room]
+                .enclaves[enclave].racks[rackId][slotId].object = {
+                    e : newSlotValue.e,
+                    w : newSlotValue.w
+                };
             // this.slotList[slotId].equipmentActive = activeStatus
             // this.slotList[slotId].object = {
             //     e : newSlotValue.e,
             //     w : newSlotValue.w
             // };
-            this.consumeSlots(rackId, slotId, newSlotValue.e.height)
+            this.consumeSlots(room, enclave, rackId, slotId, newSlotValue.e.height)
+            
         } 
         return success;
        
     }
-    checkSlotsForValid(rackId: number, startIndex: number, numberOfSlotsToConsume: number){
+    checkSlotsForValid(room: number, enclave:number,rackId: number, startIndex: number, numberOfSlotsToConsume: number){
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
             //this.slotList[indexToConsume]
-            if(this.rackList[rackId][indexToConsume].equipmentActive){
+            if(this.siteList[this.currentSite.site]
+                .buildings[this.currentSite.building]
+                .datacenters[this.currentSite.datacenter]
+                .rooms[room]
+                .enclaves[enclave].racks[rackId][indexToConsume].equipmentActive){
                 //notify user
                 return false;
             }
@@ -83,13 +104,19 @@ export class RackService{
         return true;
 
     }
-    consumeSlots(rackId: number, startIndex: number, numberOfSlotsToConsume: number){
+    consumeSlots(room: number, enclave:number, rackId: number, startIndex: number, numberOfSlotsToConsume: number){
         //don't consume the current slot
+        
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
-            this.rackList[rackId][indexToConsume].shouldHideSlot = true;
+            console.log('something');
+            this.siteList[this.currentSite.site]
+                .buildings[this.currentSite.building]
+                .datacenters[this.currentSite.datacenter]
+                .rooms[room]
+                .enclaves[enclave].racks[rackId][indexToConsume].shouldHideSlot = true;
             indexToConsume++;
             numberOfSlotsToConsume--;
         }
