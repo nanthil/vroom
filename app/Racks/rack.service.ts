@@ -38,8 +38,6 @@ export class RackService{
 
     updateBrowsers(result: any[]){
         this.browsers = [];
-        
-        console.log(window['Zone'].current.name)
         for(let i = 0; i < result.length; i++){
             if(result[i].toLowerCase().includes('firefox')){
                 this.browsers.push({

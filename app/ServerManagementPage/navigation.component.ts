@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-let browsers = require('../NativeOperations/detectBrowsers');
-declare var importOs: any;
 @Component({
     selector: 'navigation',
     template: `
