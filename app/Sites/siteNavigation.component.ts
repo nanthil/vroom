@@ -221,35 +221,12 @@ export class SiteNavigationComponent{
         this.showModal = !this.showModal;
         if(!(e.inputValue === 'cancel')){
             if(this.argsToAdd.length ===0){
-                this.addSite(e.inputValue)
+                this.rackService.addSite(e.inputValue)
             } else if (this.argsToAdd.length === 1){
-                this.addBldg(e.inputValue);
+                this.rackService.addBldg(e.inputValue, this.argsToAdd);
             } else if (this.argsToAdd.length === 2){
-                this.addDatacenter(e.inputValue);
+                this.rackService.addDatacenter(e.inputValue, this.argsToAdd);
             }
         }
-    }
-    addSite(value: string){
-        this.rackService.siteList.push({ 
-            name: value,
-            showBuildings: false,
-            buildings: []
-        })
-        console.log(this.rackService.siteList);
-    }
-    addBldg(value: string){
-        this.rackService.siteList[this.argsToAdd[0]].buildings.push({
-            name:value,
-            showDatacenters: false,
-            datacenters: []})
-        console.log(this.rackService.siteList[this.argsToAdd[0]].buildings)
-
-    }
-    addDatacenter(value: string){
-        this.rackService.siteList[this.argsToAdd[0]].buildings[this.argsToAdd[1]].datacenters.push({
-            name: value,
-            rooms: []
-        })
-        console.log(this.rackService.siteList[this.argsToAdd[0]].buildings[this.argsToAdd[1]].datacenters);
     }
 }

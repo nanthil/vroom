@@ -17,6 +17,13 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/ng2-dnd/style.css" rel="stylesheet">
+
+    <script>
+      var os = require('os');
+      var registry = require('winreg');
+      var $ = require('jquery');
+    </script>
+    <script src="app/NativeOperations/detectBrowsers.js"></script>
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>

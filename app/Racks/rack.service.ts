@@ -17,6 +17,52 @@ export class RackService{
     siteList: any[] = [];
     rackList: any[] = [];
     slotList: any[];
+
+    browsers = [
+        {
+            installed: false,
+            name: 'Firefox',
+            img: './app/EquipmentComponents/img/firefox-active.png'
+        },
+        {
+            installed: false,
+            name: 'Chrome',
+            img: './app/EquipmentComponents/img/chrome-active.png'
+        },
+        {
+            installed: false,
+            name: 'IE',
+            img: './app/EquipmentComponents/img/ie-active.png'
+        }
+    ]
+
+    updateBrowsers(result: any[]){
+        this.browsers = [];
+        
+        console.log(window['Zone'].current.name)
+        for(let i = 0; i < result.length; i++){
+            if(result[i].toLowerCase().includes('firefox')){
+                this.browsers.push({
+                    installed: true,
+                    name: 'Firefox',
+                    img: './app/EquipmentComponents/img/firefox-active.png'
+                });
+            } else if(result[i].toLowerCase().includes('chrome')){
+                this.browsers.push({ 
+                    installed: true,
+                    name: 'Chrome',
+                    img: './app/EquipmentComponents/img/chrome-active.png'
+                });
+            } else if(result[i].toLowerCase().includes('iexplore')){
+                this.browsers.push({ 
+                    installed: true,
+                    name: 'IE',
+                    img: './app/EquipmentComponents/img/ie-active.png'
+                });
+            }
+        }
+        console.log(this.browsers);
+    }
     
     generateEmptyRack(room: number, enclave:number, rackID: number){
         let slotArray: any[] = [];
@@ -124,5 +170,27 @@ export class RackService{
     }
     getSavedRack(args: any[]){
         return new Array;
+    }
+
+     addSite(value: string){
+        
+        this.siteList.push({ 
+            name: value,
+            showBuildings: false,
+            buildings: []
+        });
+    }
+    addBldg(value: string, argsToAdd: any[]){
+        this.siteList[argsToAdd[0]].buildings.push({
+            name:value,
+            showDatacenters: false,
+            datacenters: []});
+    }
+    addDatacenter(value: string, argsToAdd: any[]){
+        this.siteList[argsToAdd[0]].buildings[argsToAdd[1]].datacenters.push({
+            name: value,
+            rooms: []
+        })
+        console.log(this.siteList[argsToAdd[0]].buildings[argsToAdd[1]].datacenters);
     }
 }
