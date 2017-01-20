@@ -24,7 +24,11 @@ import {AddNewSiteModalComponent} from './ServerManagementPage/addSiteModal.comp
 import {NavigationComponent} from './ServerManagementPage/navigation.component';
 
 import {SiteNavigationComponent} from './Sites/siteNavigation.component';
-import {SiteComponent} from './Sites/site.component'
+import {SiteComponent} from './Sites/site.component';
+
+//import {FileComponent} from './FileFolder/files.component';
+import {FolderComponent} from './FileFolder/folders.component';
+
 
 
 @NgModule({
@@ -46,7 +50,9 @@ import {SiteComponent} from './Sites/site.component'
     NavigationComponent,
     SiteNavigationComponent,
     SiteComponent,
-    AddNewSiteModalComponent
+    AddNewSiteModalComponent,
+   // FileComponent,
+    FolderComponent
    ],
    providers: [RackService, SiteComponent],
   bootstrap:    [ AppComponent ]

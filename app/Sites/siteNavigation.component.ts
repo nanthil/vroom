@@ -5,85 +5,31 @@ import {SiteComponent} from '../Sites/site.component'
 @Component({
     selector: 'site-nav',
     template: `
-        <div site-nav-div>
         <add-new 
-            [showModal]=showModal
-            [whatToAdd]=typeToAdd
-            (newValue)="pushNewItemToService($event)"
+             [showModal]=showModal
+             [whatToAdd]=typeToAdd
+             (newValue)="pushNewItemToService($event)"
         ></add-new>
-        <div class="site-nav-pane">
-            <div>
-                <h4 class="nav-title">Site Navigation
-                    <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
-                        <span (click)="addNew('site', [])"
-                        class="glyphicon glyphicon-plus"></span></a>
-                    </p>
-                </h4>
-                
-            </div>
-            <div *ngIf="rackService.siteList.length === 0">
-                You have no sites saved. Please add a site to begin. 
-            </div>
-            <div *ngFor="let site of rackService.siteList; let i = index">
-                <div class="site accordion-list">
-                    <div class="data side-by-side">{{site.name}}</div>
-                    <div class="show-buttons side-by-side">
-                        <p class="side-by-side"><a href="#" data-tooltip="Add new building to site">
-                            <span (click)="addNew('building', [i])"
-                                class="glyphicon glyphicon-plus">
-                            </span></a>
-                        </p>
-                        <div *ngIf="!site.showBuildings" class="side-by-side">
-                            <p class="side-by-side"><a href="#" data-tooltip="Show buildings for this site.">
-                                <span (click)="toggleShowBuildings(i)" class="glyphicon glyphicon-chevron-down"></span></a>
-                            </p>
-                        </div>
-                        <div *ngIf="site.showBuildings" class="side-by-side">
-                            <p class="side-by-side"><a href="#" data-tooltip="Hide buildings for this site.">
-                                <span (click)="toggleShowBuildings(i)" class="glyphicon glyphicon-chevron-right"></span></a>
-                            </p>
-                        </div>
-                    </div>        
-                </div>
-                <div *ngIf="site.showBuildings">
-                    <div *ngFor="let b of site.buildings; let bi = index">
-                        <div class="building accordion-list">
-                            <div class="data side-by-side">{{b.name}}</div>
-                            <div class="show-buttons side-by-side">
-                                <p class="side-by-side"><a href="#" data-tooltip="Add new datacenter to this building.">
-                                    <span 
-                                        (click)="addNew('datacenter', [i, bi])"
-                                    class="glyphicon glyphicon-plus"></span></a>
-                                </p>
-                                <div *ngIf="!b.showDatacenters" class="side-by-side">
-                                    <p class="side-by-side"><a href="#" data-tooltip="Show datacenters for this building.">
-                                        <span (click)="toggleShowDatacenters(i, bi, b)" class="glyphicon glyphicon-chevron-down"></span></a>
-                                    </p>
-                                </div>
-                                <div *ngIf="b.showDatacenters" class="side-by-side">
-                                    <p class="side-by-side"><a href="#" data-tooltip="Hide datacenters for this building.">
-                                        <span (click)="toggleShowDatacenters(i, bi, b)" class="glyphicon glyphicon-chevron-right"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div *ngIf="b.showDatacenters">
-                            <div class="datacenter accordion-list" *ngFor="let dc of b.datacenters; let dci = index">
-                                <div class="data side-by-side">{{dc.name}}</div>
-                                <div class="show-button side-by-side" (click)="showDataCenterView(i, bi, dci)">ChangeView</div>
-                                
-                            </div>
-                        
-                        </div>
-                    </div>
-                    
+        <div class="folder-nav">
+            <h4 class="nav-title">Site Navigation
+                <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
+                    <span (click)="addNew()"
+                    class="glyphicon glyphicon-plus"></span></a>
+                </p>
+            </h4>
+            <div *ngFor="let folder of rackService.testNewData; let i = index">
+                <div class="accordion-list">
+                    <folder [indent]=0 [content]=folder></folder>
                 </div>
             </div>
-        </div>
         </div>
     `,
     styles: [
     `
+        .folder-nav{
+            overflow:auto;
+            height: 600px;
+        }
         .site-nav-div{
             position: fixed;
             top: 0;
@@ -190,43 +136,102 @@ import {SiteComponent} from '../Sites/site.component'
     ]
 })
 export class SiteNavigationComponent{
+    toggleFolderContents(index:number){
+        console.log(index);
+        console.log(this.rackService.testNewData[index]);
+        this.rackService.testNewData[index].showContents = !this.rackService.testNewData[index].showContents;
+    }
     showModal = false;
     typeToAdd = '';
     argsToAdd: any[] = [];
     constructor(private rackService: RackService, private siteComponent: SiteComponent){}
-    toggleShowBuildings(index:number){
-        this.rackService.siteList[index].showBuildings = !this.rackService.siteList[index].showBuildings;
-    }
-    toggleShowDatacenters(index:number, buildingIndex:number, b:any){
-       this.rackService.siteList[index].buildings[buildingIndex].showDatacenters = !this.rackService.siteList[index].buildings[buildingIndex].showDatacenters;
-       console.log(b.showDatacenters)
-    }
-    showDataCenterView(s: number, b: number, dc: number){
-        //call service with the desired datacenter
-        this.rackService.currentSite = {
-            site: s,
-            building: b,
-            datacenter: dc
-        }
-        
-        this.rackService.thereIsADatacenter = true;
-        console.log(this.rackService.siteList);
-    }
-    addNew(type: string, args: any[]){
+
+    addNew(){
         this.showModal = !this.showModal;
-        this.typeToAdd = type;
-        this.argsToAdd = args;
+        this.typeToAdd = 'File'
     }
     pushNewItemToService(e:any){
         this.showModal = !this.showModal;
         if(!(e.inputValue === 'cancel')){
-            if(this.argsToAdd.length ===0){
-                this.rackService.addSite(e.inputValue)
-            } else if (this.argsToAdd.length === 1){
-                this.rackService.addBldg(e.inputValue, this.argsToAdd);
-            } else if (this.argsToAdd.length === 2){
-                this.rackService.addDatacenter(e.inputValue, this.argsToAdd);
-            }
+            this.rackService.addFolder(e.inputValue)
         }
     }
 }
+
+
+        // <div site-nav-div>
+        // <add-new 
+        //     [showModal]=showModal
+        //     [whatToAdd]=typeToAdd
+        //     (newValue)="pushNewItemToService($event)"
+        // ></add-new>
+        // <div class="site-nav-pane">
+        //     <div>
+        //         <h4 class="nav-title">Site Navigation
+        //             <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
+        //                 <span (click)="addNew('site', [])"
+        //                 class="glyphicon glyphicon-plus"></span></a>
+        //             </p>
+        //         </h4>
+                
+        //     </div>
+        //     <div *ngIf="rackService.siteList.length === 0">
+        //         You have no sites saved. Please add a site to begin. 
+        //     </div>
+        //     <div *ngFor="let site of rackService.siteList; let i = index">
+        //         <div class="site accordion-list">
+        //             <div class="data side-by-side">{{site.name}}</div>
+        //             <div class="show-buttons side-by-side">
+        //                 <p class="side-by-side"><a href="#" data-tooltip="Add new building to site">
+        //                     <span (click)="addNew('building', [i])"
+        //                         class="glyphicon glyphicon-plus">
+        //                     </span></a>
+        //                 </p>
+        //                 <div *ngIf="!site.showBuildings" class="side-by-side">
+        //                     <p class="side-by-side"><a href="#" data-tooltip="Show buildings for this site.">
+        //                         <span (click)="toggleShowBuildings(i)" class="glyphicon glyphicon-chevron-down"></span></a>
+        //                     </p>
+        //                 </div>
+        //                 <div *ngIf="site.showBuildings" class="side-by-side">
+        //                     <p class="side-by-side"><a href="#" data-tooltip="Hide buildings for this site.">
+        //                         <span (click)="toggleShowBuildings(i)" class="glyphicon glyphicon-chevron-right"></span></a>
+        //                     </p>
+        //                 </div>
+        //             </div>        
+        //         </div>
+        //         <div *ngIf="site.showBuildings">
+        //             <div *ngFor="let b of site.buildings; let bi = index">
+        //                 <div class="building accordion-list">
+        //                     <div class="data side-by-side">{{b.name}}</div>
+        //                     <div class="show-buttons side-by-side">
+        //                         <p class="side-by-side"><a href="#" data-tooltip="Add new datacenter to this building.">
+        //                             <span 
+        //                                 (click)="addNew('datacenter', [i, bi])"
+        //                             class="glyphicon glyphicon-plus"></span></a>
+        //                         </p>
+        //                         <div *ngIf="!b.showDatacenters" class="side-by-side">
+        //                             <p class="side-by-side"><a href="#" data-tooltip="Show datacenters for this building.">
+        //                                 <span (click)="toggleShowDatacenters(i, bi, b)" class="glyphicon glyphicon-chevron-down"></span></a>
+        //                             </p>
+        //                         </div>
+        //                         <div *ngIf="b.showDatacenters" class="side-by-side">
+        //                             <p class="side-by-side"><a href="#" data-tooltip="Hide datacenters for this building.">
+        //                                 <span (click)="toggleShowDatacenters(i, bi, b)" class="glyphicon glyphicon-chevron-right"></span></a>
+        //                             </p>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //                 <div *ngIf="b.showDatacenters">
+        //                     <div class="datacenter accordion-list" *ngFor="let dc of b.datacenters; let dci = index">
+        //                         <div class="data side-by-side">{{dc.name}}</div>
+        //                         <div class="show-button side-by-side" (click)="showDataCenterView(i, bi, dci)">ChangeView</div>
+                                
+        //                     </div>
+                        
+        //                 </div>
+        //             </div>
+                    
+        //         </div>
+        //     </div>
+        // </div>
+        // </div>

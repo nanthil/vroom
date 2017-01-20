@@ -8,6 +8,55 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
+    addFolder(name: string){
+        this.testNewData.push({
+            name: name,
+            files: [],
+            folder: []
+        });
+    }
+    testNewData: any[] = [
+      {
+        name: 'sites',
+        showContents: false,
+        files: ['file1', 'file2', 'file3'],
+        folders: [
+            {
+              name: 'folder1',
+              showContents: false,
+              files: ['file1', 'file2'],
+              folders: [{
+                    name: 'folder1-1',
+
+                    showContents: false,
+                    files: ['file1', 'file2', 'file3'],
+                    folders: []
+                
+                  }, 
+                  {
+                    name: 'folder1-2',
+                    showContents: false,
+                    files: ['file1', 'file2', 'file3'],
+                    folders: []
+                
+                  }]
+            }, {
+              name: 'folder2',
+              showContents: false,
+              files: ['file1', 'file2', 'file3', 'file4'],
+              folders: [{
+
+                    showContents: false,
+                    name: 'folder2-1',
+                    files: ['file1', 'file2', 'file3'],
+                    folders: []
+                
+                  }
+                ]
+            }]
+      }
+    ];
+
     thereIsADatacenter = false;
     currentSite= {
         site: -1,
@@ -37,6 +86,8 @@ export class RackService{
     ]
 
     updateBrowsers(result: any[]){
+        //fix the result so that it is correct
+        console.log(result);
         this.browsers = [];
         for(let i = 0; i < result.length; i++){
             if(result[i].toLowerCase().includes('firefox')){
