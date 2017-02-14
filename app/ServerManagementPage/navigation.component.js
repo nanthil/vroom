@@ -12,13 +12,21 @@ var core_1 = require("@angular/core");
 var NavigationComponent = (function () {
     function NavigationComponent() {
         this.rackWidth = 40;
+        this.setView = new core_1.EventEmitter();
     }
+    NavigationComponent.prototype.changeView = function (e) {
+        this.setView.next(e);
+    };
     return NavigationComponent;
 }());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], NavigationComponent.prototype, "setView", void 0);
 NavigationComponent = __decorate([
     core_1.Component({
         selector: 'navigation',
-        template: "\n        <div class=\"nav-bar\">\n            <site-nav></site-nav>\n            <all-equipment [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
+        template: "\n        <div class=\"nav-bar\">\n            <site-nav (setView)=changeView($event)></site-nav>\n            <all-equipment [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
         styles: ["\n        .nav-bar {\n            position:fixed;\n            top:0;\n            right:0;\n            height: 100vh;\n            width: 400px;\n            background-color: blue;\n        }\n    "]
     }),
     __metadata("design:paramtypes", [])

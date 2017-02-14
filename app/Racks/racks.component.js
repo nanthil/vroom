@@ -11,25 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var rack_service_1 = require("./rack.service");
 var RacksComponent = (function () {
+    //TODO 
+    //REFACTOR RACKS TO SEARCH FOR ACTIVE VIEW INSTEAD OF HARD REFERENCING OBJECTS
     function RacksComponent(rackService) {
         this.rackService = rackService;
     }
     RacksComponent.prototype.addNewRack = function () {
-        if (this.rackService.siteList[this.rackService.currentSite.site]
-            .buildings[this.rackService.currentSite.building]
-            .datacenters[this.rackService.currentSite.datacenter]
-            .rooms[this.room]
-            .enclaves[this.enclave].racks.length === 0) {
-            this.rackService.generateEmptyRack(this.room, this.enclave, 0);
-        }
-        else {
-            this.newRackId = this.rackService.siteList[this.rackService.currentSite.site]
-                .buildings[this.rackService.currentSite.building]
-                .datacenters[this.rackService.currentSite.datacenter]
-                .rooms[this.room]
-                .enclaves[this.enclave].racks.length;
-            this.rackService.generateEmptyRack(this.room, this.enclave, this.newRackId);
-        }
+        // if(this.rackService.siteList[this.rackService.currentSite.site]
+        //         .buildings[this.rackService.currentSite.building]
+        //         .datacenters[this.rackService.currentSite.datacenter]
+        //         .rooms[this.room]
+        //         .enclaves[this.enclave].racks.length === 0){
+        //         this.rackService.generateEmptyRack(this.room, this.enclave, 0);
+        //     } else{
+        //     this.newRackId = this.rackService.siteList[this.rackService.currentSite.site]
+        //         .buildings[this.rackService.currentSite.building]
+        //         .datacenters[this.rackService.currentSite.datacenter]
+        //         .rooms[this.room]
+        //         .enclaves[this.enclave].racks.length;
+        //         this.rackService.generateEmptyRack(this.room, this.enclave, this.newRackId);
+        //     }
     };
     return RacksComponent;
 }());

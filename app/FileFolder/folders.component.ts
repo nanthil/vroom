@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Output, Input, EventEmitter} from '@angular/core';
 import {RackService} from '../Racks/rack.service';
 @Component({
   selector: 'folder',
@@ -12,11 +12,11 @@ import {RackService} from '../Racks/rack.service';
               
           </p>
           <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
-            <span (click)="addNew()"
+            <span (click)="addNew('file')"
             class="glyphicon glyphicon-file"></span></a>
           </p>
              <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
-            <span (click)="addNew()"
+            <span (click)="addNew('folder')"
             class="glyphicon glyphicon-folder-open"></span></a>
           </p>	
       </div>
@@ -25,11 +25,11 @@ import {RackService} from '../Racks/rack.service';
               <span (click)="content.showContents = !content.showContents" class="glyphicon glyphicon-chevron-down"></span></a>
           </p>
           <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
-            <span (click)="addNew()"
+            <span (click)="addNew('file')"
             class="glyphicon glyphicon-file"></span></a>
           </p>
              <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
-            <span (click)="addNew()"
+            <span (click)="addNew('folder')"
             class="glyphicon glyphicon-folder-open"></span></a>
           </p>	
       </div>
@@ -37,19 +37,27 @@ import {RackService} from '../Racks/rack.service';
       <br>
     <div *ngIf="content.showContents">
         <div *ngFor="let file of content.files">
-          <div [style.margin-left.px]="indent+15" class="accordion-list">{{file}}</div>
-        </div>
+            <div class="accordion-list">
+                <div [style.margin-left.px]="indent+15" class="side-by-side">{{file}}</div>
+                <div class="side-by-side file-view">
+                    <p class="side-by-side"><span (click)="changeView(file)"><a href="#" data-tooltip="Add new file.">Change View</a></span></p></div>
+                </div>
+            </div>
       
         <div *ngFor="let folder of content.folders"> 
-          <folder [currentDirectory]="currentDirectory + '/' + folder.name" [content]=folder [indent]="indent + 15"></folder>
+          <folder (setView)=changeView($event) [currentDirectory]="currentDirectory + '/' + folder.name" [content]=folder [indent]="indent + 15"></folder>
         </div>
     </div>
   </div>
   `,
   styles: [`
+       
         .side-by-side {
             display: inline-block;
             float: left;
+        } 
+        .file-view {
+            float: right;
         }
         .accordion-list:hover {
             background-color: #ddd;
@@ -128,9 +136,18 @@ export class FolderComponent{
   @Input() indent: any;
   @Input() currentDirectory: string;
   constructor(private rackService: RackService){}
+  @Output() setView = new EventEmitter();
+
+  changeView(e:any){
+        this.setView.next({a: this.currentDirectory, b: e});
+  }
   ngOnInit(){
   }
-  addNew(){
-      this.rackService.addFolder('test', this.currentDirectory);
+  addNew(type:string){
+      if(type === 'file'){
+          this.rackService.addFile('test', this.currentDirectory);
+      } else {
+          this.rackService.addFolder('test', this.currentDirectory);
+      }
   }
 }

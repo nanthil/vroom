@@ -14,13 +14,25 @@ var ServerManagementComponent = (function () {
     function ServerManagementComponent(zone, rackService) {
         this.zone = zone;
         this.rackService = rackService;
+        this.activeSite = '';
     }
+    ServerManagementComponent.prototype.changeView = function (e) {
+        this.getOriginalEvent(e);
+    };
+    ServerManagementComponent.prototype.getOriginalEvent = function (event) {
+        if (typeof (event.b) === 'object') {
+            this.getOriginalEvent(event.b);
+        }
+        else {
+            this.activeSite = event.a + '/' + event.b;
+        }
+    };
     return ServerManagementComponent;
 }());
 ServerManagementComponent = __decorate([
     core_1.Component({
         selector: 'management-page',
-        template: "\n        <single-site></single-site>\n        <navigation></navigation>\n      ",
+        template: "\n        <single-site [currentView]=activeSite></single-site>\n        <navigation (setView)=changeView($event)></navigation>\n      ",
         styles: [
             "\n    "
         ]

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component,Output, EventEmitter} from '@angular/core';
 import {RackService} from '../Racks/rack.service';
 import {SiteComponent} from '../Sites/site.component'
 
@@ -20,7 +20,12 @@ import {SiteComponent} from '../Sites/site.component'
             </h4>
             <div class="fix-overflow" *ngFor="let folder of rackService.testNewData; let i = index">
                 <div class="accordion-list">
-                    <folder [indent]=0 [content]=folder [currentDirectory]=folder.name></folder>
+                    <folder 
+                        (setView)=changeView($event)
+                        [indent]=0 
+                        [content]=folder 
+                        [currentDirectory]=folder.name
+                        ></folder>
                 </div>
             </div>
         </div>
@@ -140,6 +145,12 @@ export class SiteNavigationComponent{
     argsToAdd: any[] = [];
     constructor(private rackService: RackService, private siteComponent: SiteComponent){}
 
+    //MOVE THIS TO A SERVICE 
+    //ANGULAR 2 DOES NOT SUPPORT DEEP NESTED EVENT EMISSION 
+    @Output() setView = new EventEmitter();
+    changeView(e:any){
+        this.setView.emit(e);
+    }
     addNew(){
         this.showModal = !this.showModal;
         this.typeToAdd = 'File'
@@ -147,99 +158,7 @@ export class SiteNavigationComponent{
     pushNewItemToService(e:any){
         this.showModal = !this.showModal;
         if(!(e.inputValue === 'cancel')){
-            this.rackService.addFolder(e.inputValue, null)
+            this.rackService.addFolder(e.inputValue, '')
         }
     }
 }
-
-
-        // <div site-nav-div>
-        // <add-new 
-        //     [showModal]=showModal
-        //     [whatToAdd]=typeToAdd
-        //     (newValue)="pushNewItemToService($event)"
-        // ></add-new>
-        // <div class="site-nav-pane">
-        //     <div>
-        //         <h4 class="nav-title">Site Navigation
-        //             <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
-        //                 <span (click)="addNew('site', [])"
-        //                 class="glyphicon glyphicon-plus"></span></a>
-        //             </p>
-        //         </h4>
-                
-        //     </div>
-        //     <div *ngIf="rackService.siteList.length === 0">
-        //         You have no sites saved. Please add a site to begin. 
-        //     </div>
-        //     <div *ngFor="let site of rackService.siteList; let i = index">
-        //         <div class="site accordion-list">
-        //             <div class="data side-by-side">{{site.name}}</div>
-        //             <div class="show-buttons side-by-side">
-        //                 <p class="side-by-side"><a href="#" data-tooltip="Add new building to site">
-        //                     <span (click)="addNew('building', [i])"
-        //                         class="glyphicon glyphicon-plus">
-        //                     </span></a>
-        //                 </p>
-        //                 <div *ngIf="!site.showBuildings" class="side-by-side">
-        //                     <p class="side-by-side"><a href="#" data-tooltip="Show buildings for this site.">
-        //                         <span (click)="toggleShowBuildings(i)" class="glyphicon glyphicon-chevron-down"></span></a>
-        //                     </p>
-        //                 </div>
-        //                 <div *ngIf="site.showBuildings" class="side-by-side">
-        //                     <p class="side-by-side"><a href="#" data-tooltip="Hide buildings for this site.">
-        //                         <span (click)="toggleShowBuildings(i)" class="glyphicon glyphicon-chevron-right"></span></a>
-        //                     </p>
-        //                 </div>
-        //             </div>        
-        //         </div>
-        //         <div *ngIf="site.showBuildings">
-        //             <div *ngFor="let b of site.buildings; let bi = index">
-        //                 <div class="building accordion-list">
-        //                     <div class="data side-by-side">{{b.name}}</div>
-        //                     <div class="show-buttons side-by-side">
-        //                         <p class="side-by-side"><a href="#" data-tooltip="Add new datacenter to this building.">
-        //                             <span 
-        //                                 (click)="addNew('datacenter', [i, bi])"
-        //                             class="glyphicon glyphicon-plus"></span></a>
-        //                         </p>
-        //                         <div *ngIf="!b.showDatacenters" class="side-by-side">
-        //                             <p class="side-by-side"><a href="#" data-tooltip="Show datacenters for this building.">
-        //                                 <span (click)="toggleShowDatacenters(i, bi, b)" class="glyphicon glyphicon-chevron-down"></span></a>
-        //                             </p>
-        //                         </div>
-        //                         <div *ngIf="b.showDatacenters" class="side-by-side">
-        //                             <p class="side-by-side"><a href="#" data-tooltip="Hide datacenters for this building.">
-        //                                 <span (click)="toggleShowDatacenters(i, bi, b)" class="glyphicon glyphicon-chevron-right"></span></a>
-        //                             </p>
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //                 <div *ngIf="b.showDatacenters">
-        //                     <div class="datacenter accordion-list" *ngFor="let dc of b.datacenters; let dci = index">
-        //                         <div class="data side-by-side">{{dc.name}}</div>
-        //                         <div class="show-button side-by-side" (click)="showDataCenterView(i, bi, dci)">ChangeView</div>
-                                
-        //                     </div>
-                        
-        //                 </div>
-        //             </div>
-                    
-        //         </div>
-        //     </div>
-        // </div>
-        // </div>
-
-        // //display:block;
-        //      background-color: #eee;
-        //     color: #444;
-        //     cursor: pointer;
-        //     padding: 18px;
-        //     width: 100%;
-        //     border: none;
-        //     outline: none;
-        //     font-size: 15px;
-        //     transition: 0.4s;
-        //     height: 40px;
-        //     width:100%;
-        //     margin-bottom:10px;

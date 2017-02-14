@@ -8,8 +8,8 @@ import {NavigationComponent} from './navigation.component';
 @Component({
     selector: 'management-page',
     template: `
-        <single-site></single-site>
-        <navigation></navigation>
+        <single-site [currentView]=activeSite></single-site>
+        <navigation (setView)=changeView($event)></navigation>
       `,
     styles: [
     `
@@ -19,4 +19,15 @@ import {NavigationComponent} from './navigation.component';
 })
 export class ServerManagementComponent{
     constructor(private zone: NgZone, private rackService: RackService){}
+    activeSite:string ='';
+    changeView(e:any){
+        this.getOriginalEvent(e);
+    }
+    getOriginalEvent(event:any){
+        if(typeof(event.b) === 'object'){
+            this.getOriginalEvent(event.b);
+        } else{
+            this.activeSite=  event.a + '/' + event.b;
+        }
+    }
 }

@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 @Component({
     selector: 'navigation',
     template: `
         <div class="nav-bar">
-            <site-nav></site-nav>
+            <site-nav (setView)=changeView($event)></site-nav>
             <all-equipment [width]="rackWidth"></all-equipment>
         </div>
     `,
@@ -21,4 +21,8 @@ import {Component} from '@angular/core';
 export class NavigationComponent{
     rackWidth = 40;
     something: any;
+    @Output() setView = new EventEmitter();
+    changeView(e:any){
+        this.setView.next(e);
+    }
 }

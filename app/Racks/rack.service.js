@@ -79,9 +79,26 @@ var RackService = (function () {
         ];
     }
     RackService.prototype.addFile = function (name, directory) {
-        for (var d in this.testNewData) {
-            if (this.recursiveCheckForFolder(directory.split('/'), this.testNewData !== undefined)) {
-                this.directoryToAdd.files.push('test file');
+        name = 'working';
+        var localname = name;
+        if (directory != '') {
+            this.directoryToAdd = {};
+            for (var d in this.testNewData) {
+                if (this.recursiveCheckForFolder(directory.split('/'), this.testNewData[d]) !== undefined) {
+                    for (var file in this.directoryToAdd.files) {
+                        //if so add the correct number to the end of the file
+                        var highestNumber = 0;
+                        //the highest number already appended to filename
+                        var numberoffileswithname = parseInt(this.directoryToAdd.files[file].substring(localname.length, this.directoryToAdd.files[file].length));
+                        if (this.directoryToAdd.files[file].includes(localname)) {
+                            if (numberoffileswithname > highestNumber) {
+                                highestNumber = numberoffileswithname;
+                            }
+                            name = localname + (highestNumber + 1);
+                        }
+                    }
+                    this.directoryToAdd.files.push(name);
+                }
             }
         }
     };
@@ -117,11 +134,6 @@ var RackService = (function () {
                 ;
             }
         }
-        this.testNewData.push({
-            name: name,
-            files: [],
-            folders: []
-        });
     };
     RackService.prototype.recursiveIterate = function (directories, obj) {
         var numberOfExistingFiles = 0;
