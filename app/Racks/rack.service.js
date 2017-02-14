@@ -14,6 +14,7 @@ require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 var RackService = (function () {
     function RackService() {
+        this.foldercount = 0;
         this.testNewData = [
             {
                 name: 'sites',
@@ -77,12 +78,75 @@ var RackService = (function () {
             }
         ];
     }
-    RackService.prototype.addFolder = function (name) {
+    RackService.prototype.addFile = function (name, directory) {
+        for (var d in this.testNewData) {
+            if (this.recursiveCheckForFolder(directory.split('/'), this.testNewData !== undefined)) {
+                this.directoryToAdd.files.push('test file');
+            }
+        }
+    };
+    RackService.prototype.addFolder = function (name, directory) {
+        name = 'working';
+        var localname = name;
+        if (directory != '') {
+            this.directoryToAdd = {};
+            //look in data object
+            for (var d in this.testNewData) {
+                //recurse over list of directory names
+                if (this.recursiveCheckForFolder(directory.split('/'), this.testNewData[d]) !== undefined) {
+                    //if object is found
+                    //check to see if file name already exists
+                    for (var folder in this.directoryToAdd.folders) {
+                        //if so add the correct number to the end of the file
+                        var highestNumber = 0;
+                        //the highest number already appended to filename
+                        var numberoffiles = parseInt(this.directoryToAdd.folders[folder].name.substring(localname.length, this.directoryToAdd.folders[folder].name.length));
+                        if (this.directoryToAdd.folders[folder].name.includes(localname)) {
+                            if (numberoffiles > highestNumber) {
+                                highestNumber = numberoffiles;
+                            }
+                            name = localname + (highestNumber + 1);
+                        }
+                    }
+                    this.directoryToAdd.folders.push({
+                        name: name,
+                        files: [],
+                        folders: []
+                    });
+                }
+                ;
+            }
+        }
         this.testNewData.push({
             name: name,
             files: [],
-            folder: []
+            folders: []
         });
+    };
+    RackService.prototype.recursiveIterate = function (directories, obj) {
+        var numberOfExistingFiles = 0;
+        if (obj.length === 1) {
+            return this.recursiveCheckForFolder(directories, obj[0]);
+        }
+        for (var folder in obj) {
+            if (obj[folder].name === directories[0]) {
+                return this.recursiveCheckForFolder(directories, obj[folder]);
+            }
+        }
+    };
+    RackService.prototype.recursiveCheckForFolder = function (directories, obj) {
+        for (var d in directories) {
+            if (obj.name === directories[d]) {
+                if (directories.length > 1) {
+                    directories.shift();
+                    return this.recursiveIterate(directories, obj.folders);
+                }
+                else {
+                    this.directoryToAdd = obj;
+                    return obj;
+                }
+            }
+        }
     };
     RackService.prototype.updateBrowsers = function (result) {
         //fix the result so that it is correct

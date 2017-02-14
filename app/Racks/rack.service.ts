@@ -8,12 +8,84 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
-    addFolder(name: string){
+    directoryToAdd: any;
+    foldercount = 0;
+    addFile(name:string, directory: string){
+        for(var d in this.testNewData){
+            if(this.recursiveCheckForFolder(directory.split('/'), this.testNewData !== undefined)){
+                this.directoryToAdd.files.push('test file');
+            }
+        }
+    }
+    
+    addFolder(name: string, directory: string){
+        name = 'working'
+        var localname = name;
+        if(directory != ''){
+            this.directoryToAdd = {};
+
+            //look in data object
+            for(var d in this.testNewData){
+
+                //recurse over list of directory names
+                if(this.recursiveCheckForFolder(directory.split('/'), this.testNewData[d]) !== undefined){
+                    //if object is found
+                    //check to see if file name already exists
+                    for(var folder in this.directoryToAdd.folders){
+                        //if so add the correct number to the end of the file
+                        var highestNumber = 0;
+                        
+                        //the highest number already appended to filename
+                        var numberoffiles = parseInt(this.directoryToAdd.folders[folder].name.substring(localname.length, this.directoryToAdd.folders[folder].name.length));
+                        if(this.directoryToAdd.folders[folder].name.includes(localname)){
+                            
+                            if (numberoffiles > highestNumber){
+                                highestNumber = numberoffiles;
+                            }
+                            
+                            name = localname + (highestNumber + 1);
+                        }
+                    }
+                    this.directoryToAdd.folders.push({
+                        name: name,
+                        files: [],
+                        folders: []
+                    });
+                };
+            }
+           
+        }
         this.testNewData.push({
             name: name,
             files: [],
-            folder: []
+            folders: []
         });
+    }
+    recursiveIterate(directories: any, obj: any) : any{
+        var numberOfExistingFiles = 0;
+        if(obj.length === 1){
+            return this.recursiveCheckForFolder(directories, obj[0]);
+        }
+       
+        for(var folder in obj){
+            if(obj[folder].name === directories[0]){
+                return this.recursiveCheckForFolder(directories, obj[folder]);
+            }
+        }
+    }
+    recursiveCheckForFolder(directories:any, obj: any): any{
+        for(var d in directories){
+            if(obj.name === directories[d]){
+                if(directories.length > 1){
+                    directories.shift();
+                    return this.recursiveIterate(directories, obj.folders);
+                }
+                else {
+                    this.directoryToAdd= obj;
+                    return obj;
+                }
+            }
+        }
     }
     testNewData: any[] = [
       {

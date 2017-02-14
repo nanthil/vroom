@@ -14,18 +14,23 @@ import {SiteComponent} from '../Sites/site.component'
             <h4 class="nav-title">Site Navigation
                 <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
                     <span (click)="addNew()"
-                    class="glyphicon glyphicon-plus"></span></a>
+                    class="glyphicon glyphicon-folder-open"></span></a>
                 </p>
+                
             </h4>
-            <div *ngFor="let folder of rackService.testNewData; let i = index">
+            <div class="fix-overflow" *ngFor="let folder of rackService.testNewData; let i = index">
                 <div class="accordion-list">
-                    <folder [indent]=0 [content]=folder></folder>
+                    <folder [indent]=0 [content]=folder [currentDirectory]=folder.name></folder>
                 </div>
             </div>
         </div>
     `,
     styles: [
     `
+        .fix-overflow{
+            display: block;
+            width: 100%;
+        }
         .folder-nav{
             overflow:auto;
             height: 600px;
@@ -41,7 +46,7 @@ import {SiteComponent} from '../Sites/site.component'
             width: 200px;
         }
         .side-by-side {
-            display: inline-block;
+            display: block;
             float: left;
         }
         .site {
@@ -53,21 +58,10 @@ import {SiteComponent} from '../Sites/site.component'
         }
         .accordion-list:hover {
             background-color: #ddd;
+            
         }
         .accordion-list {
-
-             background-color: #eee;
-            color: #444;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 15px;
-            transition: 0.4s;
-            height: 40px;
-            width:100%;
-            margin-bottom:10px;
+            
         }
         .building {
             margin-left:10px;
@@ -153,7 +147,7 @@ export class SiteNavigationComponent{
     pushNewItemToService(e:any){
         this.showModal = !this.showModal;
         if(!(e.inputValue === 'cancel')){
-            this.rackService.addFolder(e.inputValue)
+            this.rackService.addFolder(e.inputValue, null)
         }
     }
 }
@@ -235,3 +229,17 @@ export class SiteNavigationComponent{
         //     </div>
         // </div>
         // </div>
+
+        // //display:block;
+        //      background-color: #eee;
+        //     color: #444;
+        //     cursor: pointer;
+        //     padding: 18px;
+        //     width: 100%;
+        //     border: none;
+        //     outline: none;
+        //     font-size: 15px;
+        //     transition: 0.4s;
+        //     height: 40px;
+        //     width:100%;
+        //     margin-bottom:10px;
