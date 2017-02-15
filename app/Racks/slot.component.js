@@ -24,6 +24,7 @@ var SlotComponent = (function () {
     SlotComponent.prototype._updateRack = function (e) {
         var _this = this;
         if (this.equipmentActive) {
+            //TODO
             //will delete old are you sure?
             //get user input
             this.showConfig = false;

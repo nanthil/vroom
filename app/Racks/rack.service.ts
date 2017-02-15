@@ -8,8 +8,9 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
+    
     directoryToAdd: any;
-    foldercount = 0;
+
     addFile(name:string, directory: string){
         name = 'working'
         var localname = name;    
@@ -72,7 +73,6 @@ export class RackService{
                     });
                 };
             }
-           
         }
     }
     recursiveIterate(directories: any, obj: any) : any{
@@ -149,9 +149,7 @@ export class RackService{
         building: -1,
         datacenter: -1
     };
-    siteList: any[] = [];
-    rackList: any[] = [];
-    slotList: any[];
+    rackList: any[] = []
 
     browsers = [
         {
@@ -230,65 +228,40 @@ export class RackService{
             this.rackList[directory] = [];
         }
         
-        var rackID = 'rack' + this.rackList[directory].length;
-        this.rackList[directory].push({id: rackID, slots: slotArray})
-        // this.rackList[directory].push(slotArray);
-        // console.log(this.currentSite);
-        // this.siteList[this.currentSite.site]
-        //     .buildings[this.currentSite.building]
-        //     .datacenters[this.currentSite.datacenter]
-        //     .rooms[room]
-        //     .enclaves[enclave].racks[rackID] = slotArray;
-        //     console.log('success');
+        var rackID = 'rack-' + this.rackList[directory].length;
+        this.rackList[directory].push({id: rackID, slots: slotArray});
     }
+    
     updateRack(directory:string, rackId: number, slotId: number, newSlotValue: any, activeStatus: boolean){
         let success = false;
         if(newSlotValue.e.height > 1){
-            //success = this.checkSlotsForValid(room, enclave, rackId, slotId, newSlotValue.e.height)
+            success = this.checkSlotsForValid(directory, rackId, slotId, newSlotValue.e.height)
         } else if (newSlotValue.e.height === 1){
             success = true;
         }
 
-        // if(success){
-        //     this.siteList[this.currentSite.site]
-        //         .buildings[this.currentSite.building]
-        //         .datacenters[this.currentSite.datacenter]
-        //         .rooms[room]
-        //         .enclaves[enclave].racks[rackId][slotId].equipmentActive = activeStatus;
-
-
-
-        //     this.siteList[this.currentSite.site]
-        //         .buildings[this.currentSite.building]
-        //         .datacenters[this.currentSite.datacenter]
-        //         .rooms[room]
-        //         .enclaves[enclave].racks[rackId][slotId].object = {
-        //             e : newSlotValue.e,
-        //             w : newSlotValue.w
-        //         };
-        //     // this.slotList[slotId].equipmentActive = activeStatus
-        //     // this.slotList[slotId].object = {
-        //     //     e : newSlotValue.e,
-        //     //     w : newSlotValue.w
-        //     // };
-        //     this.consumeSlots(room, enclave, rackId, slotId, newSlotValue.e.height)
-            
-        // } 
-        // return success;
+        if(success){
+            //'rack-0', 'rack-10', 'rack-12' etc, split on '-'
+            //the first index [rack, 0] is the index of this.racklist[directory]
+            this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId].equipmentActive = activeStatus;
+            this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId].object = {
+                    e : newSlotValue.e,
+                    w : newSlotValue.w
+                };
+            this.consumeSlots(directory, rackId, slotId, newSlotValue.e.height)
+        } 
+        return success;
        
     }
-    checkSlotsForValid(room: number, enclave:number,rackId: number, startIndex: number, numberOfSlotsToConsume: number){
+
+    checkSlotsForValid(directory: string, rackId: number, startIndex: number, numberOfSlotsToConsume: number){
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
-            //this.slotList[indexToConsume]
-            if(this.siteList[this.currentSite.site]
-                .buildings[this.currentSite.building]
-                .datacenters[this.currentSite.datacenter]
-                .rooms[room]
-                .enclaves[enclave].racks[rackId][indexToConsume].equipmentActive){
-                //notify user
+            //check to see if slot is occupied and active already
+            if(this.rackList[directory][rackId.toString().split('-')[1]].slots[indexToConsume].equipmentActive){
+                //if so, don't add, slot is occupied and configured
                 return false;
             }
             indexToConsume++;
@@ -297,23 +270,19 @@ export class RackService{
         return true;
 
     }
-    consumeSlots(room: number, enclave:number, rackId: number, startIndex: number, numberOfSlotsToConsume: number){
+    consumeSlots(directory: string, rackId: number, startIndex: number, numberOfSlotsToConsume: number){
         //don't consume the current slot
         
         let indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
-            this.siteList[this.currentSite.site]
-                .buildings[this.currentSite.building]
-                .datacenters[this.currentSite.datacenter]
-                .rooms[room]
-                .enclaves[enclave].racks[rackId][indexToConsume].shouldHideSlot = true;
+            this.rackList[directory][rackId.toString().split('-')[1]].slots[indexToConsume].shouldHideSlot = true;
             indexToConsume++;
             numberOfSlotsToConsume--;
         }
-
     }
+
     getSavedRack(args: any[]){
         return new Array;
     }

@@ -7,12 +7,18 @@ import {RackService} from './rack.service';
         <button (click)="addNewRack()">Add New Rack</button>
 
         <div *ngFor="let rack of getRacksByPath(currentView)">
-            <single-rack [slots]=rack.slots [rackId]="rack.id" [directory]="currentView"></single-rack>
+            <single-rack class="racks" 
+                [slots]=rack.slots 
+                [rackId]="rack.id" 
+                [directory]="currentView">
+            </single-rack>
         </div>
     `,
     styles: [`
         .racks {
             float:left;
+            margin-left:5px;
+
         }
     `]
 })

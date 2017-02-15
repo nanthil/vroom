@@ -51,6 +51,7 @@ export class SlotComponent{
     //emits event from drop
     private _updateRack(e:any){
         if(this.equipmentActive){
+            //TODO
             //will delete old are you sure?
             //get user input
             this.showConfig = false;
