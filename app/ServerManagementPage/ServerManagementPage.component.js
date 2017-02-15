@@ -14,7 +14,7 @@ var ServerManagementComponent = (function () {
     function ServerManagementComponent(zone, rackService) {
         this.zone = zone;
         this.rackService = rackService;
-        this.activeSite = '';
+        this.activeView = '';
     }
     ServerManagementComponent.prototype.changeView = function (e) {
         this.getOriginalEvent(e);
@@ -24,7 +24,8 @@ var ServerManagementComponent = (function () {
             this.getOriginalEvent(event.b);
         }
         else {
-            this.activeSite = event.a + '/' + event.b;
+            this.activeView = event.a + '/' + event.b;
+            console.log(this.activeView);
         }
     };
     return ServerManagementComponent;
@@ -32,7 +33,7 @@ var ServerManagementComponent = (function () {
 ServerManagementComponent = __decorate([
     core_1.Component({
         selector: 'management-page',
-        template: "\n        <single-site [currentView]=activeSite></single-site>\n        <navigation (setView)=changeView($event)></navigation>\n      ",
+        template: "\n        <div *ngIf=\"activeView !== ''\">\n            <single-site [currentView]=\"activeView\"></single-site>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
         styles: [
             "\n    "
         ]

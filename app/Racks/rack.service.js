@@ -160,6 +160,9 @@ var RackService = (function () {
             }
         }
     };
+    RackService.prototype.getRacksByPath = function (directory) {
+        return this.rackList[directory];
+    };
     RackService.prototype.updateBrowsers = function (result) {
         //fix the result so that it is correct
         console.log(result);
@@ -189,7 +192,8 @@ var RackService = (function () {
         }
         console.log(this.browsers);
     };
-    RackService.prototype.generateEmptyRack = function (room, enclave, rackID) {
+    RackService.prototype.generateEmptyRack = function (directory) {
+        console.log(directory);
         var slotArray = [];
         var rackSize = 42;
         var rackWidth = 190;
@@ -211,44 +215,49 @@ var RackService = (function () {
                 'object': emptySlot,
             });
         }
-        console.log(this.currentSite);
-        this.siteList[this.currentSite.site]
-            .buildings[this.currentSite.building]
-            .datacenters[this.currentSite.datacenter]
-            .rooms[room]
-            .enclaves[enclave].racks[rackID] = slotArray;
-        console.log('success');
+        if (this.rackList[directory] === undefined) {
+            this.rackList[directory] = [];
+        }
+        var rackID = 'rack' + this.rackList[directory].length;
+        this.rackList[directory].push({ id: rackID, slots: slotArray });
+        // this.rackList[directory].push(slotArray);
+        // console.log(this.currentSite);
+        // this.siteList[this.currentSite.site]
+        //     .buildings[this.currentSite.building]
+        //     .datacenters[this.currentSite.datacenter]
+        //     .rooms[room]
+        //     .enclaves[enclave].racks[rackID] = slotArray;
+        //     console.log('success');
     };
-    RackService.prototype.updateRack = function (room, enclave, rackId, slotId, newSlotValue, activeStatus) {
+    RackService.prototype.updateRack = function (directory, rackId, slotId, newSlotValue, activeStatus) {
         var success = false;
         if (newSlotValue.e.height > 1) {
-            success = this.checkSlotsForValid(room, enclave, rackId, slotId, newSlotValue.e.height);
         }
         else if (newSlotValue.e.height === 1) {
             success = true;
         }
-        if (success) {
-            this.siteList[this.currentSite.site]
-                .buildings[this.currentSite.building]
-                .datacenters[this.currentSite.datacenter]
-                .rooms[room]
-                .enclaves[enclave].racks[rackId][slotId].equipmentActive = activeStatus;
-            this.siteList[this.currentSite.site]
-                .buildings[this.currentSite.building]
-                .datacenters[this.currentSite.datacenter]
-                .rooms[room]
-                .enclaves[enclave].racks[rackId][slotId].object = {
-                e: newSlotValue.e,
-                w: newSlotValue.w
-            };
-            // this.slotList[slotId].equipmentActive = activeStatus
-            // this.slotList[slotId].object = {
-            //     e : newSlotValue.e,
-            //     w : newSlotValue.w
-            // };
-            this.consumeSlots(room, enclave, rackId, slotId, newSlotValue.e.height);
-        }
-        return success;
+        // if(success){
+        //     this.siteList[this.currentSite.site]
+        //         .buildings[this.currentSite.building]
+        //         .datacenters[this.currentSite.datacenter]
+        //         .rooms[room]
+        //         .enclaves[enclave].racks[rackId][slotId].equipmentActive = activeStatus;
+        //     this.siteList[this.currentSite.site]
+        //         .buildings[this.currentSite.building]
+        //         .datacenters[this.currentSite.datacenter]
+        //         .rooms[room]
+        //         .enclaves[enclave].racks[rackId][slotId].object = {
+        //             e : newSlotValue.e,
+        //             w : newSlotValue.w
+        //         };
+        //     // this.slotList[slotId].equipmentActive = activeStatus
+        //     // this.slotList[slotId].object = {
+        //     //     e : newSlotValue.e,
+        //     //     w : newSlotValue.w
+        //     // };
+        //     this.consumeSlots(room, enclave, rackId, slotId, newSlotValue.e.height)
+        // } 
+        // return success;
     };
     RackService.prototype.checkSlotsForValid = function (room, enclave, rackId, startIndex, numberOfSlotsToConsume) {
         var indexToConsume = startIndex + 1;
@@ -273,7 +282,6 @@ var RackService = (function () {
         var indexToConsume = startIndex + 1;
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
         while (numberOfSlotsToConsume > 0) {
-            console.log('something');
             this.siteList[this.currentSite.site]
                 .buildings[this.currentSite.building]
                 .datacenters[this.currentSite.datacenter]
@@ -285,27 +293,6 @@ var RackService = (function () {
     };
     RackService.prototype.getSavedRack = function (args) {
         return new Array;
-    };
-    RackService.prototype.addSite = function (value) {
-        this.siteList.push({
-            name: value,
-            showBuildings: false,
-            buildings: []
-        });
-    };
-    RackService.prototype.addBldg = function (value, argsToAdd) {
-        this.siteList[argsToAdd[0]].buildings.push({
-            name: value,
-            showDatacenters: false,
-            datacenters: []
-        });
-    };
-    RackService.prototype.addDatacenter = function (value, argsToAdd) {
-        this.siteList[argsToAdd[0]].buildings[argsToAdd[1]].datacenters.push({
-            name: value,
-            rooms: []
-        });
-        console.log(this.siteList[argsToAdd[0]].buildings[argsToAdd[1]].datacenters);
     };
     return RackService;
 }());

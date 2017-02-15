@@ -16,39 +16,31 @@ var RacksComponent = (function () {
     function RacksComponent(rackService) {
         this.rackService = rackService;
     }
+    RacksComponent.prototype.getRacksByPath = function (directory) {
+        return this.rackService.getRacksByPath(directory);
+    };
     RacksComponent.prototype.addNewRack = function () {
-        // if(this.rackService.siteList[this.rackService.currentSite.site]
-        //         .buildings[this.rackService.currentSite.building]
-        //         .datacenters[this.rackService.currentSite.datacenter]
-        //         .rooms[this.room]
-        //         .enclaves[this.enclave].racks.length === 0){
-        //         this.rackService.generateEmptyRack(this.room, this.enclave, 0);
-        //     } else{
-        //     this.newRackId = this.rackService.siteList[this.rackService.currentSite.site]
-        //         .buildings[this.rackService.currentSite.building]
-        //         .datacenters[this.rackService.currentSite.datacenter]
-        //         .rooms[this.room]
-        //         .enclaves[this.enclave].racks.length;
-        //         this.rackService.generateEmptyRack(this.room, this.enclave, this.newRackId);
-        //     }
+        this.rackService.generateEmptyRack(this.currentView);
+        console.log(this.rackService.rackList);
     };
     return RacksComponent;
 }());
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Number)
-], RacksComponent.prototype, "room", void 0);
+    __metadata("design:type", Object)
+], RacksComponent.prototype, "currentView", void 0);
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Number)
-], RacksComponent.prototype, "enclave", void 0);
+    __metadata("design:type", Object)
+], RacksComponent.prototype, "racks", void 0);
 RacksComponent = __decorate([
     core_1.Component({
         selector: 'all-racks',
-        template: "\n        <button (click)=\"addNewRack()\">Add New Rack</button>\n        <div *ngFor=\"let rack of rackService.siteList[rackService.currentSite.site]\n            .buildings[rackService.currentSite.building]\n            .datacenters[rackService.currentSite.datacenter]\n            .rooms[room]\n            .enclaves[enclave].racks; let i = index\">\n            <div class=\"racks\">\n                <single-rack\n                    [room]=room\n                    [enclave]=enclave\n                    [rackId]=i\n                    ></single-rack>\n            </div>\n        </div>\n    ",
+        template: "\n        <button (click)=\"addNewRack()\">Add New Rack</button>\n\n        <div *ngFor=\"let rack of getRacksByPath(currentView)\">\n            <single-rack [slots]=rack.slots [rackId]=\"rack.id\" [directory]=\"currentView\"></single-rack>\n        </div>\n    ",
         styles: ["\n        .racks {\n            float:left;\n        }\n    "]
     }),
     __metadata("design:paramtypes", [rack_service_1.RackService])
 ], RacksComponent);
 exports.RacksComponent = RacksComponent;
+// /<single-rack [directory]=currentView [rackId]=rack.></single-rack> 
 //# sourceMappingURL=racks.component.js.map

@@ -17,8 +17,13 @@ var SiteComponent = (function () {
         this.typeToAdd = 'room';
         this.selectedRoom = 0;
         this.selectedEnclave = 0;
+        this.testmessage = 'ding';
     }
     ;
+    SiteComponent.prototype.getRacksByPath = function () {
+        var result = this.rackService.getRacksByPath(this.currentView);
+        return result;
+    };
     SiteComponent.prototype.changeSelectedRoom = function (index) {
         // this.selectedRoom = index;
         // if(this.rackService.siteList[this.rackService.currentSite.site]
@@ -75,7 +80,7 @@ __decorate([
 SiteComponent = __decorate([
     core_1.Component({
         selector: 'single-site',
-        template: "\n        <add-new \n            [showModal]=showModal\n            [whatToAdd]=typeToAdd\n            (newValue)=\"_pushNewItemToService($event)\"\n        ></add-new>\n        {{currentView}}\n          \n        \n    "
+        template: "\n        <add-new \n            [showModal]=showModal\n            [whatToAdd]=typeToAdd\n            (newValue)=\"_pushNewItemToService($event)\"\n        ></add-new>\n        {{currentView}}\n        <div *ngIf=\"currentView !== 'undefined'\">\n            <all-racks\n                [racks]=\"testmessage\"\n                [currentView]=currentView\n            ></all-racks>\n        </div>\n          \n        \n    "
     }),
     __metadata("design:paramtypes", [rack_service_1.RackService])
 ], SiteComponent);
@@ -128,8 +133,4 @@ exports.SiteComponent = SiteComponent;
 //                 </div>        
 //             </div>
 //         </div>
-//  <all-racks
-//                     [room]=selectedRoom
-//                     [enclave]=selectedEnclave
-//                 ></all-racks> 
 //# sourceMappingURL=site.component.js.map

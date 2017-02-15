@@ -171,6 +171,10 @@ export class RackService{
         }
     ]
 
+
+    getRacksByPath(directory:string){
+        return this.rackList[directory];
+    }
     updateBrowsers(result: any[]){
         //fix the result so that it is correct
         console.log(result);
@@ -199,7 +203,8 @@ export class RackService{
         console.log(this.browsers);
     }
     
-    generateEmptyRack(room: number, enclave:number, rackID: number){
+    generateEmptyRack(directory: string){
+        console.log(directory);
         let slotArray: any[] = [];
         let rackSize = 42;
         let rackWidth = 190;
@@ -221,48 +226,55 @@ export class RackService{
                 'object': emptySlot,
             });
         }
-        console.log(this.currentSite);
-        this.siteList[this.currentSite.site]
-            .buildings[this.currentSite.building]
-            .datacenters[this.currentSite.datacenter]
-            .rooms[room]
-            .enclaves[enclave].racks[rackID] = slotArray;
-            console.log('success');
+        if(this.rackList[directory] === undefined){
+            this.rackList[directory] = [];
+        }
+        
+        var rackID = 'rack' + this.rackList[directory].length;
+        this.rackList[directory].push({id: rackID, slots: slotArray})
+        // this.rackList[directory].push(slotArray);
+        // console.log(this.currentSite);
+        // this.siteList[this.currentSite.site]
+        //     .buildings[this.currentSite.building]
+        //     .datacenters[this.currentSite.datacenter]
+        //     .rooms[room]
+        //     .enclaves[enclave].racks[rackID] = slotArray;
+        //     console.log('success');
     }
-    updateRack(room: number, enclave:number, rackId: number, slotId: number, newSlotValue: any, activeStatus: boolean){
+    updateRack(directory:string, rackId: number, slotId: number, newSlotValue: any, activeStatus: boolean){
         let success = false;
         if(newSlotValue.e.height > 1){
-            success = this.checkSlotsForValid(room, enclave, rackId, slotId, newSlotValue.e.height)
+            //success = this.checkSlotsForValid(room, enclave, rackId, slotId, newSlotValue.e.height)
         } else if (newSlotValue.e.height === 1){
             success = true;
         }
 
-        if(success){
-            this.siteList[this.currentSite.site]
-                .buildings[this.currentSite.building]
-                .datacenters[this.currentSite.datacenter]
-                .rooms[room]
-                .enclaves[enclave].racks[rackId][slotId].equipmentActive = activeStatus;
+        // if(success){
+        //     this.siteList[this.currentSite.site]
+        //         .buildings[this.currentSite.building]
+        //         .datacenters[this.currentSite.datacenter]
+        //         .rooms[room]
+        //         .enclaves[enclave].racks[rackId][slotId].equipmentActive = activeStatus;
 
 
 
-            this.siteList[this.currentSite.site]
-                .buildings[this.currentSite.building]
-                .datacenters[this.currentSite.datacenter]
-                .rooms[room]
-                .enclaves[enclave].racks[rackId][slotId].object = {
-                    e : newSlotValue.e,
-                    w : newSlotValue.w
-                };
-            // this.slotList[slotId].equipmentActive = activeStatus
-            // this.slotList[slotId].object = {
-            //     e : newSlotValue.e,
-            //     w : newSlotValue.w
-            // };
-            this.consumeSlots(room, enclave, rackId, slotId, newSlotValue.e.height)
+        //     this.siteList[this.currentSite.site]
+        //         .buildings[this.currentSite.building]
+        //         .datacenters[this.currentSite.datacenter]
+        //         .rooms[room]
+        //         .enclaves[enclave].racks[rackId][slotId].object = {
+        //             e : newSlotValue.e,
+        //             w : newSlotValue.w
+        //         };
+        //     // this.slotList[slotId].equipmentActive = activeStatus
+        //     // this.slotList[slotId].object = {
+        //     //     e : newSlotValue.e,
+        //     //     w : newSlotValue.w
+        //     // };
+        //     this.consumeSlots(room, enclave, rackId, slotId, newSlotValue.e.height)
             
-        } 
-        return success;
+        // } 
+        // return success;
        
     }
     checkSlotsForValid(room: number, enclave:number,rackId: number, startIndex: number, numberOfSlotsToConsume: number){
@@ -292,7 +304,6 @@ export class RackService{
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
 
         while(numberOfSlotsToConsume > 0){
-            console.log('something');
             this.siteList[this.currentSite.site]
                 .buildings[this.currentSite.building]
                 .datacenters[this.currentSite.datacenter]
@@ -305,27 +316,5 @@ export class RackService{
     }
     getSavedRack(args: any[]){
         return new Array;
-    }
-
-     addSite(value: string){
-        
-        this.siteList.push({ 
-            name: value,
-            showBuildings: false,
-            buildings: []
-        });
-    }
-    addBldg(value: string, argsToAdd: any[]){
-        this.siteList[argsToAdd[0]].buildings.push({
-            name:value,
-            showDatacenters: false,
-            datacenters: []});
-    }
-    addDatacenter(value: string, argsToAdd: any[]){
-        this.siteList[argsToAdd[0]].buildings[argsToAdd[1]].datacenters.push({
-            name: value,
-            rooms: []
-        })
-        console.log(this.siteList[argsToAdd[0]].buildings[argsToAdd[1]].datacenters);
     }
 }

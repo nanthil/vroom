@@ -18,7 +18,7 @@ var RackComponent = (function () {
         this.rackName = "rack";
     }
     RackComponent.prototype.callUpdateService = function (e) {
-        var success = this.rackService.updateRack(this.room, this.enclave, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
+        var success = this.rackService.updateRack(this.directory, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
         if (!success) {
             //error
             console.log('error');
@@ -32,16 +32,16 @@ __decorate([
 ], RackComponent.prototype, "rackId", void 0);
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Number)
-], RackComponent.prototype, "room", void 0);
+    __metadata("design:type", String)
+], RackComponent.prototype, "directory", void 0);
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Number)
-], RackComponent.prototype, "enclave", void 0);
+    __metadata("design:type", Object)
+], RackComponent.prototype, "slots", void 0);
 RackComponent = __decorate([
     core_1.Component({
         selector: 'single-rack',
-        template: "\n      <div class=\"rack\">\n         <div *ngFor=\"let s of rackService.siteList[rackService.currentSite.site]\n            .buildings[rackService.currentSite.building]\n            .datacenters[rackService.currentSite.datacenter]\n            .rooms[room]\n            .enclaves[enclave].racks[rackId]\">\n          <slot *ngIf=\"!s.shouldHideSlot\"\n            [equipmentObject]=s.object\n            [slotid]=s.slotid\n            [height]=\"s.object.e.height * 19.55\"\n            [equipmentActive]=s.equipmentActive\n            (updateRack)=\"callUpdateService($event)\"\n          ></slot>\n        </div>\n      </div>",
+        template: "\n      <div class=\"rack\">\n         <div *ngFor=\"let s of slots\">\n          <slot *ngIf=\"!s.shouldHideSlot\"\n            [equipmentObject]=s.object\n            [slotid]=s.slotid\n            [height]=\"s.object.e.height * 19.55\"\n            [equipmentActive]=s.equipmentActive\n            (updateRack)=\"callUpdateService($event)\"\n          ></slot>\n        </div>\n      </div>",
         styles: [
             "\n        .rack {\n          padding-top:28.5px;\n          height: 875px;\n          width: 266px;\n          background-image: url(\"./app/Racks/img/42uRack.png\"); \n        }\n     "
         ]

@@ -6,7 +6,7 @@ import {RackService} from '../Racks/rack.service';
   <div [style.margin-left.px]="indent">
     <div class="accordion-list">
       <div class="side-by-side">{{content.name}}</div>
-      <div *ngIf="!content.showContents" class="side-by-side">
+      <div *ngIf="!content.showContents" class="side-by-side file-buttons">
           <p class="side-by-side"><a href="#" data-tooltip="Show folder contents">
               <span (click)="content.showContents = !content.showContents" class="glyphicon glyphicon-chevron-right"></span></a>
               
@@ -20,7 +20,7 @@ import {RackService} from '../Racks/rack.service';
             class="glyphicon glyphicon-folder-open"></span></a>
           </p>	
       </div>
-      <div *ngIf="content.showContents" class="side-by-side">
+      <div *ngIf="content.showContents" class="side-by-side file-buttons">
           <p class="side-by-side"><a href="#" data-tooltip="Hide Folder Contents">
               <span (click)="content.showContents = !content.showContents" class="glyphicon glyphicon-chevron-down"></span></a>
           </p>
@@ -37,15 +37,17 @@ import {RackService} from '../Racks/rack.service';
       <br>
     <div *ngIf="content.showContents">
         <div *ngFor="let file of content.files">
-            <div class="accordion-list">
-                <div [style.margin-left.px]="indent+15" class="side-by-side">{{file}}</div>
-                <div class="side-by-side file-view">
-                    <p class="side-by-side"><span (click)="changeView(file)"><a href="#" data-tooltip="Add new file.">Change View</a></span></p></div>
+            <div [style.margin-left.px]="indent +10">
+                <div class="accordion-list">
+                    <div class="side-by-side">{{file}}</div>
+                    <div class="side-by-side file-view">
+                        <p class="side-by-side"><span (click)="changeView(file)"><a href="#" data-tooltip="Add new file.">Change View</a></span></p></div>
+                    </div>
                 </div>
             </div>
       
         <div *ngFor="let folder of content.folders"> 
-          <folder (setView)=changeView($event) [currentDirectory]="currentDirectory + '/' + folder.name" [content]=folder [indent]="indent + 15"></folder>
+          <folder (setView)=changeView($event) [currentDirectory]="currentDirectory + '/' + folder.name" [content]=folder [indent]="indent + 10"></folder>
         </div>
     </div>
   </div>
@@ -56,6 +58,9 @@ import {RackService} from '../Racks/rack.service';
             display: inline-block;
             float: left;
         } 
+        .file-buttons{
+            float: right;
+        }
         .file-view {
             float: right;
         }

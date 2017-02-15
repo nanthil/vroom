@@ -9,6 +9,12 @@ import {RackService} from '../Racks/rack.service'
             (newValue)="_pushNewItemToService($event)"
         ></add-new>
         {{currentView}}
+        <div *ngIf="currentView !== 'undefined'">
+            <all-racks
+                [racks]="testmessage"
+                [currentView]=currentView
+            ></all-racks>
+        </div>
           
         
     `
@@ -19,7 +25,12 @@ export class SiteComponent{
     constructor(private rackService: RackService){};
     selectedRoom = 0;
     selectedEnclave = 0;
+    testmessage = 'ding';
     @Input() currentView:string;
+    getRacksByPath(){
+        var result = this.rackService.getRacksByPath(this.currentView);
+        return result;
+    }
     changeSelectedRoom(index:number){
         // this.selectedRoom = index;
         // if(this.rackService.siteList[this.rackService.currentSite.site]
@@ -33,6 +44,7 @@ export class SiteComponent{
 
         //         }
     }
+
     changeSelectedEnclave(index:number){
         this.selectedEnclave = index;
     }
@@ -128,7 +140,4 @@ export class SiteComponent{
                 
 //         </div>
 
-    //  <all-racks
-    //                     [room]=selectedRoom
-    //                     [enclave]=selectedEnclave
-    //                 ></all-racks>
+  
