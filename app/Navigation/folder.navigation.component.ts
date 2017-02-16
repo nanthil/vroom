@@ -11,7 +11,7 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
              (newValue)="pushNewItemToService($event)"
         ></add-new>
         <div class="folder-nav">
-            <h4 class="nav-title">Site Navigation
+            <h4 class="nav-title"><p class="side-by-side">Project Explorer</p>
                 <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
                     <span (click)="addNew('folder')"
                     class="glyphicon glyphicon-folder-open"></span></a>
@@ -46,6 +46,7 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
         }
         .nav-title {
             color: #ffffff;
+            display:inline-block;
         }
         .data {
             width: 200px;

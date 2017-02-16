@@ -166,11 +166,13 @@ export class FolderComponent{
   }
 
   pushNewItemToService(e:any){
-    if(e.added === 'file'){
-        this.rackService.addFile(e.inputValue, this.currentDirectory);
-    } else {
-        this.rackService.addFolder(e.inputValue, this.currentDirectory);
-    }
+    if(e.inputValue !== 'cancel'){
+        if(e.added === 'file'){
+            this.rackService.addFile(e.inputValue, this.currentDirectory);
+        } else {
+            this.rackService.addFolder(e.inputValue, this.currentDirectory);
+        }
+    } 
     this.showModal = false;
   }
 

@@ -46,6 +46,10 @@ export class RackService{
     
     addFolder(name: string, directory: string){
         var localname = name;
+
+        //TODO: FIX 
+        //CURRENTLY DOES NOT CHECK FOR DUPLICATES IN THE HOME directory
+        //HOME DIRECTORY SHOULD ONLY CONTAIN 1 FOLDER "PROJECTNAME"
         if(directory === 'home'){
             this.testNewData.push({
                 name: name,

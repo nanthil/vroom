@@ -21,6 +21,9 @@ var ServerManagementComponent = (function () {
         this.getOriginalEvent(e);
     };
     ServerManagementComponent.prototype.closeView = function (viewName) {
+        //TODO:
+        //GET INDEX OF FOUND view
+        //SET ACTIVE VIEW TO INDEX -1 or index +1
         this.listActiveViews = this.listActiveViews.filter(function (str) { return str !== viewName; });
         if (this.listActiveViews.length === 0) {
             this.activeView = '';
