@@ -42,10 +42,11 @@ export class AddNewSiteModalComponent{
     @Input() whatToAdd: string;
     @Output() newValue = new EventEmitter();
     private _newValue(){
+        
         if(this.inputValue.length === 0){
             this.showError = true;
         } else {
-            this.newValue.emit({added: this.whatToAdd,inputValue: this.inputValue})
+            this.newValue.emit({added: this.whatToAdd, inputValue: this.inputValue})
             this.inputValue = '';
         }
     }

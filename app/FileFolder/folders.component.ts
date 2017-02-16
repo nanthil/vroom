@@ -3,6 +3,11 @@ import {RackService} from '../Racks/rack.service';
 @Component({
   selector: 'folder',
   template: `
+  <add-new 
+             [showModal]=showModal
+             [whatToAdd]=whatToAdd
+             (newValue)="pushNewItemToService($event)"
+        ></add-new>
   <div [style.margin-left.px]="indent">
     <div class="accordion-list">
       <div class="side-by-side">{{content.name}}</div>
@@ -140,6 +145,8 @@ export class FolderComponent{
   @Input() content: any;
   @Input() indent: any;
   @Input() currentDirectory: string;
+  showModal = false;
+  whatToAdd: string;
   constructor(private rackService: RackService){}
   @Output() setView = new EventEmitter();
 
@@ -148,11 +155,17 @@ export class FolderComponent{
   }
   ngOnInit(){
   }
+  pushNewItemToService(e:any){
+      console.log(e);
+    if(e.added === 'file'){
+        this.rackService.addFile(e.inputValue, this.currentDirectory);
+    } else {
+        this.rackService.addFolder(e.inputValue, this.currentDirectory);
+    }
+    this.showModal = false;
+  }
   addNew(type:string){
-      if(type === 'file'){
-          this.rackService.addFile('test', this.currentDirectory);
-      } else {
-          this.rackService.addFolder('test', this.currentDirectory);
-      }
+    this.showModal = true;
+    this.whatToAdd = type;
   }
 }

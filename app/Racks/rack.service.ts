@@ -8,11 +8,10 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class RackService{ 
-    
+    //this is used as a global for a recursive result that is difficult to catch
     directoryToAdd: any;
 
     addFile(name:string, directory: string){
-        name = 'working'
         var localname = name;    
         if(directory != ''){
             this.directoryToAdd = {};
@@ -39,8 +38,14 @@ export class RackService{
     }
     
     addFolder(name: string, directory: string){
-        name = 'working'
         var localname = name;
+        if(directory === 'home'){
+            this.testNewData.push({
+                name: name,
+                files: [],
+                folders: []
+            });
+        }
         if(directory != ''){
             this.directoryToAdd = {};
 
@@ -102,45 +107,45 @@ export class RackService{
         }
     }
     testNewData: any[] = [
-      {
-        name: 'sites',
-        showContents: false,
-        files: ['file1', 'file2', 'file3'],
-        folders: [
-            {
-              name: 'folder1',
-              showContents: false,
-              files: ['file1', 'file2'],
-              folders: [{
-                    name: 'folder1-1',
+    //   {
+    //     name: 'sites',
+    //     showContents: false,
+    //     files: ['file1', 'file2', 'file3'],
+    //     folders: [
+    //         {
+    //           name: 'folder1',
+    //           showContents: false,
+    //           files: ['file1', 'file2'],
+    //           folders: [{
+    //                 name: 'folder1-1',
 
-                    showContents: false,
-                    files: ['file1', 'file2', 'file3'],
-                    folders: []
+    //                 showContents: false,
+    //                 files: ['file1', 'file2', 'file3'],
+    //                 folders: []
                 
-                  }, 
-                  {
-                    name: 'folder1-2',
-                    showContents: false,
-                    files: ['file1', 'file2', 'file3'],
-                    folders: []
+    //               }, 
+    //               {
+    //                 name: 'folder1-2',
+    //                 showContents: false,
+    //                 files: ['file1', 'file2', 'file3'],
+    //                 folders: []
                 
-                  }]
-            }, {
-              name: 'folder2',
-              showContents: false,
-              files: ['file1', 'file2', 'file3', 'file4'],
-              folders: [{
+    //               }]
+    //         }, {
+    //           name: 'folder2',
+    //           showContents: false,
+    //           files: ['file1', 'file2', 'file3', 'file4'],
+    //           folders: [{
 
-                    showContents: false,
-                    name: 'folder2-1',
-                    files: ['file1', 'file2', 'file3'],
-                    folders: []
+    //                 showContents: false,
+    //                 name: 'folder2-1',
+    //                 files: ['file1', 'file2', 'file3'],
+    //                 folders: []
                 
-                  }
-                ]
-            }]
-      }
+    //               }
+    //             ]
+    //         }]
+    //   }
     ];
 
     thereIsADatacenter = false;
@@ -177,6 +182,7 @@ export class RackService{
         //fix the result so that it is correct
         console.log(result);
         this.browsers = [];
+        console.log(result);
         for(let i = 0; i < result.length; i++){
             if(result[i].toLowerCase().includes('firefox')){
                 this.browsers.push({

@@ -15,6 +15,7 @@ var SiteNavigationComponent = (function () {
     function SiteNavigationComponent(rackService, siteComponent) {
         this.rackService = rackService;
         this.siteComponent = siteComponent;
+        this.directory = 'home';
         this.showModal = false;
         this.typeToAdd = '';
         this.argsToAdd = [];
@@ -30,14 +31,15 @@ var SiteNavigationComponent = (function () {
     SiteNavigationComponent.prototype.changeView = function (e) {
         this.setView.emit(e);
     };
-    SiteNavigationComponent.prototype.addNew = function () {
+    SiteNavigationComponent.prototype.addNew = function (type) {
         this.showModal = !this.showModal;
-        this.typeToAdd = 'File';
+        this.typeToAdd = type;
     };
     SiteNavigationComponent.prototype.pushNewItemToService = function (e) {
         this.showModal = !this.showModal;
+        console.log(this.directory);
         if (!(e.inputValue === 'cancel')) {
-            this.rackService.addFolder(e.inputValue, '');
+            this.rackService.addFolder(e.inputValue, this.directory);
         }
     };
     return SiteNavigationComponent;
@@ -49,7 +51,7 @@ __decorate([
 SiteNavigationComponent = __decorate([
     core_1.Component({
         selector: 'site-nav',
-        template: "\n        <add-new \n             [showModal]=showModal\n             [whatToAdd]=typeToAdd\n             (newValue)=\"pushNewItemToService($event)\"\n        ></add-new>\n        <div class=\"folder-nav\">\n            <h4 class=\"nav-title\">Site Navigation\n                <p class=\"side-by-side\"><a href=\"#\" data-tooltip=\"Add new site.\">\n                    <span (click)=\"addNew()\"\n                    class=\"glyphicon glyphicon-folder-open\"></span></a>\n                </p>\n                \n            </h4>\n            <div class=\"fix-overflow\" *ngFor=\"let folder of rackService.testNewData; let i = index\">\n                <div class=\"accordion-list\">\n                    <folder \n                        (setView)=changeView($event)\n                        [indent]=0 \n                        [content]=folder \n                        [currentDirectory]=folder.name\n                        ></folder>\n                </div>\n            </div>\n        </div>\n    ",
+        template: "\n        <add-new \n             [showModal]=showModal\n             [whatToAdd]=typeToAdd\n             (newValue)=\"pushNewItemToService($event)\"\n        ></add-new>\n        <div class=\"folder-nav\">\n            <h4 class=\"nav-title\">Site Navigation\n                <p class=\"side-by-side\"><a href=\"#\" data-tooltip=\"Add new site.\">\n                    <span (click)=\"addNew('folder')\"\n                    class=\"glyphicon glyphicon-folder-open\"></span></a>\n                </p>\n                \n            </h4>\n            <div class=\"fix-overflow\" *ngFor=\"let folder of rackService.testNewData; let i = index\">\n                <div class=\"accordion-list\">\n                    <folder \n                        (setView)=changeView($event)\n                        [indent]=0 \n                        [content]=folder \n                        [currentDirectory]=folder.name\n                        ></folder>\n                </div>\n            </div>\n        </div>\n    ",
         styles: [
             "\n        .fix-overflow{\n            display: block;\n            width: 100%;\n        }\n        .folder-nav{\n            overflow:auto;\n            height: 600px;\n        }\n        .site-nav-div{\n            position: fixed;\n            top: 0;\n        }\n        .nav-title {\n            color: #ffffff;\n        }\n        .data {\n            width: 200px;\n        }\n        .side-by-side {\n            display: block;\n            float: left;\n        }\n        .site {\n        }\n        .site-nav-pane {\n            height: 400px;\n            border-radius: 4px;\n            overflow:auto;\n        }\n        .accordion-list:hover {\n            background-color: #ddd;\n            \n        }\n        .accordion-list {\n            \n        }\n        .building {\n            margin-left:10px;\n        }\n        .datacenter{\n            margin-left: 20px;\n        }\n        [data-tooltip] {\n  position: relative;\n  z-index: 2;\n  cursor: pointer;\n}\n\n[data-tooltip]:before,\n[data-tooltip]:after {\n  visibility: hidden;\n  -ms-filter: \"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)\";\n  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);\n  opacity: 0;\n  pointer-events: none;\n}\n\n[data-tooltip]:before {\n  position: absolute;\n  bottom: 150%;\n  left: 50%;\n  margin-bottom: 5px;\n  margin-left: -80px;\n  padding: 7px;\n  width: 160px;\n  -webkit-border-radius: 3px;\n  -moz-border-radius: 3px;\n  border-radius: 3px;\n  background-color: #000;\n  background-color: hsla(0, 0%, 20%, 0.9);\n  color: #fff;\n  content: attr(data-tooltip);\n  text-align: center;\n  font-size: 14px;\n  line-height: 1.2;\n}\n\n[data-tooltip]:after {\n  position: absolute;\n  bottom: 150%;\n  left: 50%;\n  margin-left: -5px;\n  width: 0;\n  border-top: 5px solid #000;\n  border-top: 5px solid hsla(0, 0%, 20%, 0.9);\n  border-right: 5px solid transparent;\n  border-left: 5px solid transparent;\n  content: \" \";\n  font-size: 0;\n  line-height: 0;\n}\n\n[data-tooltip]:hover:before,\n[data-tooltip]:hover:after {\n  visibility: visible;\n  -ms-filter: \"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)\";\n  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);\n  opacity: 1;\n}\n    "
         ]

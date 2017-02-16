@@ -14,43 +14,7 @@ require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 var RackService = (function () {
     function RackService() {
-        this.testNewData = [
-            {
-                name: 'sites',
-                showContents: false,
-                files: ['file1', 'file2', 'file3'],
-                folders: [
-                    {
-                        name: 'folder1',
-                        showContents: false,
-                        files: ['file1', 'file2'],
-                        folders: [{
-                                name: 'folder1-1',
-                                showContents: false,
-                                files: ['file1', 'file2', 'file3'],
-                                folders: []
-                            },
-                            {
-                                name: 'folder1-2',
-                                showContents: false,
-                                files: ['file1', 'file2', 'file3'],
-                                folders: []
-                            }]
-                    }, {
-                        name: 'folder2',
-                        showContents: false,
-                        files: ['file1', 'file2', 'file3', 'file4'],
-                        folders: [{
-                                showContents: false,
-                                name: 'folder2-1',
-                                files: ['file1', 'file2', 'file3'],
-                                folders: []
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
+        this.testNewData = [];
         this.thereIsADatacenter = false;
         this.currentSite = {
             site: -1,
@@ -77,7 +41,6 @@ var RackService = (function () {
         ];
     }
     RackService.prototype.addFile = function (name, directory) {
-        name = 'working';
         var localname = name;
         if (directory != '') {
             this.directoryToAdd = {};
@@ -101,8 +64,14 @@ var RackService = (function () {
         }
     };
     RackService.prototype.addFolder = function (name, directory) {
-        name = 'working';
         var localname = name;
+        if (directory === 'home') {
+            this.testNewData.push({
+                name: name,
+                files: [],
+                folders: []
+            });
+        }
         if (directory != '') {
             this.directoryToAdd = {};
             //look in data object
@@ -165,6 +134,7 @@ var RackService = (function () {
         //fix the result so that it is correct
         console.log(result);
         this.browsers = [];
+        console.log(result);
         for (var i = 0; i < result.length; i++) {
             if (result[i].toLowerCase().includes('firefox')) {
                 this.browsers.push({

@@ -13,7 +13,7 @@ import {SiteComponent} from '../Sites/site.component'
         <div class="folder-nav">
             <h4 class="nav-title">Site Navigation
                 <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
-                    <span (click)="addNew()"
+                    <span (click)="addNew('folder')"
                     class="glyphicon glyphicon-folder-open"></span></a>
                 </p>
                 
@@ -140,6 +140,7 @@ export class SiteNavigationComponent{
         console.log(this.rackService.testNewData[index]);
         this.rackService.testNewData[index].showContents = !this.rackService.testNewData[index].showContents;
     }
+    directory = 'home';
     showModal = false;
     typeToAdd = '';
     argsToAdd: any[] = [];
@@ -151,14 +152,15 @@ export class SiteNavigationComponent{
     changeView(e:any){
         this.setView.emit(e);
     }
-    addNew(){
+    addNew(type: string){
         this.showModal = !this.showModal;
-        this.typeToAdd = 'File'
+        this.typeToAdd = type;
     }
     pushNewItemToService(e:any){
         this.showModal = !this.showModal;
+        console.log(this.directory);
         if(!(e.inputValue === 'cancel')){
-            this.rackService.addFolder(e.inputValue, '')
+            this.rackService.addFolder(e.inputValue, this.directory)
         }
     }
 }
