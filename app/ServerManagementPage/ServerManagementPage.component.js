@@ -15,17 +15,30 @@ var ServerManagementComponent = (function () {
         this.zone = zone;
         this.rackService = rackService;
         this.activeView = '';
+        this.listActiveViews = [];
     }
     ServerManagementComponent.prototype.changeView = function (e) {
         this.getOriginalEvent(e);
     };
+    ServerManagementComponent.prototype.closeView = function (viewName) {
+        this.listActiveViews = this.listActiveViews.filter(function (str) { return str !== viewName; });
+        if (this.listActiveViews.length === 0) {
+            this.activeView = '';
+        }
+    };
     ServerManagementComponent.prototype.getOriginalEvent = function (event) {
+        //folder is a nested component, and as such the event also happens recursively
+        //unpack the object b until b is a string of the selected file in the path
+        //this path/to/my/selected/file is the file that will be viewed in the single-enclave component
         if (typeof (event.b) === 'object') {
             this.getOriginalEvent(event.b);
         }
         else {
-            this.activeView = event.a + '/' + event.b;
-            console.log(this.activeView);
+            var eventPath = event.a + '/' + event.b;
+            if (this.listActiveViews.every(function (str) { return str !== eventPath; })) {
+                this.listActiveViews.push(eventPath);
+            }
+            this.activeView = eventPath;
         }
     };
     return ServerManagementComponent;
@@ -33,9 +46,9 @@ var ServerManagementComponent = (function () {
 ServerManagementComponent = __decorate([
     core_1.Component({
         selector: 'management-page',
-        template: "\n        <div *ngIf=\"activeView !== ''\">\n            <single-enclave [currentView]=\"activeView\"></single-enclave>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
+        template: "\n        <div class=\"main-view\">\n            <div *ngFor=\"let viewName of listActiveViews\"><div (click)=\"closeView(viewName)\">{{viewName}}</div></div>\n            <div *ngIf=\"activeView !== ''\">\n                <single-enclave [currentView]=\"activeView\"></single-enclave>\n            </div>\n            <div *ngIf=\"activeView === ''\">\n                <div class=\"empty-main\">\n                    NO FILE CURRENTLY SELECTED\n                </div>\n            </div>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
         styles: [
-            "\n    "
+            "\n        .main-view{\n            height: 100vh;\n            background-color: gainsboro;\n        }\n        .empty-main {\n            padding:10%;\n            margin:auto;\n            font-size: 50px;\n        }\n    "
         ]
     }),
     __metadata("design:paramtypes", [core_1.NgZone, rack_service_1.RackService])

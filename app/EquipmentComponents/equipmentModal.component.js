@@ -17,13 +17,17 @@ var EquipmentModalComponent = (function () {
         this.rackService = rackService;
         this.zone = zone;
     }
+    //implementation found in native operations
     EquipmentModalComponent.prototype.detect = function (service, z) {
         detectBrowsers().done(function (result) {
+            //regular js executes outside of angular2's zone. force it to execute within angular2's zone with sone.run()
             z.run(function () {
                 service.updateBrowsers(result);
             });
         });
     };
+    //Only stop propogation on navigation menu components
+    //if the equipment is found equipped in a slot, this.show is true and will not stop propogation
     EquipmentModalComponent.prototype.onEvent = function (e) {
         e.stopPropagation();
     };

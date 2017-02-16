@@ -1,4 +1,11 @@
 
+//custom code is found in node_modules/winreg/lib
+//line 495
+// if(items[i].includes('HKEY_LOCAL_MACHINE')){
+//           result.push(items[i].replace(/^.*[\\\/]/, ''));
+//         }
+//place this code in the for loop and comment out other code
+//this is the only way to extract the browsers we wish to see from the registry
 function detectBrowsers(){
     var foundBrowsers = [];
     var deferred = new $.Deferred();

@@ -12,10 +12,22 @@ import {RackService} from '../Racks/rack.service';
     <div class="accordion-list">
       <div class="side-by-side">{{content.name}}</div>
       <div *ngIf="!content.showContents" class="side-by-side file-buttons">
+          
+          <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
+            <span (click)="addNew('file')"
+            class="glyphicon glyphicon-file"></span></a>
+          </p>
+             <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
+            <span (click)="addNew('folder')"
+            class="glyphicon glyphicon-folder-open"></span></a>
+          </p>	
           <p class="side-by-side"><a href="#" data-tooltip="Show folder contents">
               <span (click)="content.showContents = !content.showContents" class="glyphicon glyphicon-chevron-right"></span></a>
               
           </p>
+      </div>
+      <div *ngIf="content.showContents" class="side-by-side file-buttons">
+          
           <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
             <span (click)="addNew('file')"
             class="glyphicon glyphicon-file"></span></a>
@@ -24,19 +36,9 @@ import {RackService} from '../Racks/rack.service';
             <span (click)="addNew('folder')"
             class="glyphicon glyphicon-folder-open"></span></a>
           </p>	
-      </div>
-      <div *ngIf="content.showContents" class="side-by-side file-buttons">
           <p class="side-by-side"><a href="#" data-tooltip="Hide Folder Contents">
               <span (click)="content.showContents = !content.showContents" class="glyphicon glyphicon-chevron-down"></span></a>
           </p>
-          <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
-            <span (click)="addNew('file')"
-            class="glyphicon glyphicon-file"></span></a>
-          </p>
-             <p class="side-by-side"><a href="#" data-tooltip="Add new file.">
-            <span (click)="addNew('folder')"
-            class="glyphicon glyphicon-folder-open"></span></a>
-          </p>	
       </div>
     </div>
       <br>
@@ -141,6 +143,9 @@ import {RackService} from '../Racks/rack.service';
 }
         `]
 })
+//TODO: ALLOW DND ON FILES AND FOLDERS TO OTHER FILES AND FOLDERS
+//TODO: ENABLE RENAMING OF FILES AND FOLDERS
+//TODO: IMPLEMENT DELETION OF FILES AND FOLDERS
 export class FolderComponent{
   @Input() content: any;
   @Input() indent: any;
@@ -148,15 +153,19 @@ export class FolderComponent{
   showModal = false;
   whatToAdd: string;
   constructor(private rackService: RackService){}
-  @Output() setView = new EventEmitter();
 
+  //Sets the current enclave view model
+  //This event bubbles to the serverManagementPage
+  @Output() setView = new EventEmitter();
   changeView(e:any){
-        this.setView.next({a: this.currentDirectory, b: e});
+    //as folders is a recursive Component
+    //the event handles recursively for each level "this" folder is nested inside of
+    //that being the case, the value we're interested is the first event pushed to b
+    //the unpacking of this recursive object is handled in serverManagementPage
+    this.setView.next({a: this.currentDirectory, b: e});
   }
-  ngOnInit(){
-  }
+
   pushNewItemToService(e:any){
-      console.log(e);
     if(e.added === 'file'){
         this.rackService.addFile(e.inputValue, this.currentDirectory);
     } else {
@@ -164,8 +173,18 @@ export class FolderComponent{
     }
     this.showModal = false;
   }
+
+  //this does not add, it simply activates the add modal found in shared components
   addNew(type:string){
     this.showModal = true;
     this.whatToAdd = type;
+  }
+
+  remove(){
+      //remove from racklist as well as from directory
+      //remove any nested data if necessary
+  }
+  rename(){
+      this.remove();
   }
 }

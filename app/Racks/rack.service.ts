@@ -11,16 +11,23 @@ export class RackService{
     //this is used as a global for a recursive result that is difficult to catch
     directoryToAdd: any;
 
+    //add file to the correct directory
     addFile(name:string, directory: string){
-        var localname = name;    
+        var localname = name;
+        
         if(directory != ''){
+            //this is a hack workaround javascript recursive implementation returning 'undefined'
             this.directoryToAdd = {};
             for(var d in this.testNewData){
+                //another hack
+                //if this one specific returned result !== undefined, allow logic to continue
                 if(this.recursiveCheckForFolder(directory.split('/'), this.testNewData[d]) !== undefined){
+                    //preventing duplicates
                     for(var file in this.directoryToAdd.files){
-                        //if so add the correct number to the end of the file
                         var highestNumber = 0;
-                        //the highest number already appended to filename
+
+                        //select additional characters not in specified name
+                        //for example: if name === file and file already exists, append, creating file1, file2, file3 etc
                         var numberoffileswithname = parseInt(this.directoryToAdd.files[file].substring(localname.length, this.directoryToAdd.files[file].length));
                         if(this.directoryToAdd.files[file].includes(localname)){
                             
@@ -57,10 +64,8 @@ export class RackService{
                     //if object is found
                     //check to see if file name already exists
                     for(var folder in this.directoryToAdd.folders){
-                        //if so add the correct number to the end of the file
                         var highestNumber = 0;
                         
-                        //the highest number already appended to filename
                         var numberoffiles = parseInt(this.directoryToAdd.folders[folder].name.substring(localname.length, this.directoryToAdd.folders[folder].name.length));
                         if(this.directoryToAdd.folders[folder].name.includes(localname)){
                             
@@ -80,27 +85,41 @@ export class RackService{
             }
         }
     }
+
+    //Check to see if there are more folders in the found directory 
     recursiveIterate(directories: any, obj: any) : any{
         var numberOfExistingFiles = 0;
-        if(obj.length === 1){
-            return this.recursiveCheckForFolder(directories, obj[0]);
-        }
+        //obj is a folder
+        //if there is only 1 folder in this folder
+        // if(obj.length === 1){
+        //     //check for the name we want in directories[0]
+        //     return this.recursiveCheckForFolder(directories, obj[0]);
+        // }
        
+        
         for(var folder in obj){
             if(obj[folder].name === directories[0]){
                 return this.recursiveCheckForFolder(directories, obj[folder]);
             }
         }
     }
+
+    //look for folder name
     recursiveCheckForFolder(directories:any, obj: any): any{
         for(var d in directories){
+            //found foldername
             if(obj.name === directories[d]){
+                //if there are more directories to check for
                 if(directories.length > 1){
+                    //pop off the one we already found
                     directories.shift();
+                    //check to see if there are more folders in this directory
                     return this.recursiveIterate(directories, obj.folders);
                 }
+                //there are no more directories in directory.split('/')
                 else {
                     this.directoryToAdd = obj;
+                    //return the object we want
                     return obj;
                 }
             }

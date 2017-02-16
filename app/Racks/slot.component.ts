@@ -45,8 +45,6 @@ export class SlotComponent{
     showConfig = false;
 
     constructor(private rackComponent: RackComponent, private zone: NgZone){}
-    //set default height of slot
-    //ngOnInit(){this.height = 19.55;}
 
     //emits event from drop
     private _updateRack(e:any){

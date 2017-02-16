@@ -83,13 +83,17 @@ export class EquipmentModalComponent {
     
     constructor(private rackService: RackService, private zone: NgZone){}
     
+    //implementation found in native operations
     detect(service: RackService, z: NgZone){
         detectBrowsers().done(function(result:any){
+            //regular js executes outside of angular2's zone. force it to execute within angular2's zone with sone.run()
             z.run(() => {
                 service.updateBrowsers(result);
             });
         });
     }
+    //Only stop propogation on navigation menu components
+    //if the equipment is found equipped in a slot, this.show is true and will not stop propogation
     onEvent(e:any){
         e.stopPropagation();
     }

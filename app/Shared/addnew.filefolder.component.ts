@@ -42,7 +42,6 @@ export class AddNewFileFolderModalComponent{
     @Input() whatToAdd: string;
     @Output() newValue = new EventEmitter();
     private _newValue(){
-        
         if(this.inputValue.length === 0){
             this.showError = true;
         } else {

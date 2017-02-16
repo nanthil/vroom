@@ -18,8 +18,6 @@ var SlotComponent = (function () {
         this.updateRack = new core_1.EventEmitter();
         this.showConfig = false;
     }
-    //set default height of slot
-    //ngOnInit(){this.height = 19.55;}
     //emits event from drop
     SlotComponent.prototype._updateRack = function (e) {
         var _this = this;
