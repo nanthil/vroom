@@ -35,7 +35,7 @@ import {RackService} from '../Racks/rack.service';
         }
     `]
 })
-export class AddNewSiteModalComponent{
+export class AddNewFileFolderModalComponent{
     inputValue: string = '';
     showError = false;
     @Input() showModal: boolean;

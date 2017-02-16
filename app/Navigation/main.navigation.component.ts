@@ -18,7 +18,7 @@ import {Component, Output, EventEmitter} from '@angular/core';
         }
     `]
 })
-export class NavigationComponent{
+export class MainNavigationComponent{
     rackWidth = 40;
     something: any;
     @Output() setView = new EventEmitter();

@@ -1,7 +1,7 @@
 import {Component, NgZone} from '@angular/core'
 import {RacksComponent} from '../Racks/racks.component';
 import {RackService} from '../Racks/rack.service';
-import {NavigationComponent} from './navigation.component';
+import {MainNavigationComponent} from '../Navigation/main.navigation.component';
 
 
 
@@ -9,7 +9,7 @@ import {NavigationComponent} from './navigation.component';
     selector: 'management-page',
     template: `
         <div *ngIf="activeView !== ''">
-            <single-site [currentView]="activeView"></single-site>
+            <single-enclave [currentView]="activeView"></single-enclave>
         </div>
         <navigation (setView)="changeView($event)"></navigation>
       `,

@@ -26,10 +26,10 @@ var rack_component_1 = require("./Racks/rack.component");
 var rack_service_1 = require("./Racks/rack.service");
 var slot_component_1 = require("./Racks/slot.component");
 var ServerManagementPage_component_1 = require("./ServerManagementPage/ServerManagementPage.component");
-var addSiteModal_component_1 = require("./ServerManagementPage/addSiteModal.component");
-var navigation_component_1 = require("./ServerManagementPage/navigation.component");
-var siteNavigation_component_1 = require("./Sites/siteNavigation.component");
-var site_component_1 = require("./Sites/site.component");
+var addnew_filefolder_component_1 = require("./Shared/addnew.filefolder.component");
+var main_navigation_component_1 = require("./Navigation/main.navigation.component");
+var folder_navigation_component_1 = require("./Navigation/folder.navigation.component");
+var enclave_view_component_1 = require("./Enclaves/enclave.view.component");
 //import {FileComponent} from './FileFolder/files.component';
 var folders_component_1 = require("./FileFolder/folders.component");
 var AppModule = (function () {
@@ -55,14 +55,14 @@ AppModule = __decorate([
             rack_component_1.RackComponent,
             racks_component_1.RacksComponent,
             ServerManagementPage_component_1.ServerManagementComponent,
-            navigation_component_1.NavigationComponent,
-            siteNavigation_component_1.SiteNavigationComponent,
-            site_component_1.SiteComponent,
-            addSiteModal_component_1.AddNewSiteModalComponent,
+            main_navigation_component_1.MainNavigationComponent,
+            folder_navigation_component_1.FolderNavigationComponent,
+            enclave_view_component_1.EnclaveViewComponent,
+            addnew_filefolder_component_1.AddNewFileFolderModalComponent,
             // FileComponent,
             folders_component_1.FolderComponent
         ],
-        providers: [rack_service_1.RackService, site_component_1.SiteComponent],
+        providers: [rack_service_1.RackService, enclave_view_component_1.EnclaveViewComponent],
         bootstrap: [app_component_1.AppComponent]
     }),
     __metadata("design:paramtypes", [])

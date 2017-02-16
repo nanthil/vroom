@@ -33,7 +33,7 @@ var ServerManagementComponent = (function () {
 ServerManagementComponent = __decorate([
     core_1.Component({
         selector: 'management-page',
-        template: "\n        <div *ngIf=\"activeView !== ''\">\n            <single-site [currentView]=\"activeView\"></single-site>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
+        template: "\n        <div *ngIf=\"activeView !== ''\">\n            <single-enclave [currentView]=\"activeView\"></single-enclave>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
         styles: [
             "\n    "
         ]

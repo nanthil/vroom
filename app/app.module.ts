@@ -20,11 +20,11 @@ import {RackService} from './Racks/rack.service';
 import {SlotComponent} from './Racks/slot.component';
 
 import {ServerManagementComponent} from './ServerManagementPage/ServerManagementPage.component';
-import {AddNewSiteModalComponent} from './ServerManagementPage/addSiteModal.component';
-import {NavigationComponent} from './ServerManagementPage/navigation.component';
+import {AddNewFileFolderModalComponent} from './Shared/addnew.filefolder.component';
+import {MainNavigationComponent} from './Navigation/main.navigation.component';
 
-import {SiteNavigationComponent} from './Sites/siteNavigation.component';
-import {SiteComponent} from './Sites/site.component';
+import {FolderNavigationComponent} from './Navigation/folder.navigation.component';
+import {EnclaveViewComponent} from './Enclaves/enclave.view.component';
 
 //import {FileComponent} from './FileFolder/files.component';
 import {FolderComponent} from './FileFolder/folders.component';
@@ -47,14 +47,14 @@ import {FolderComponent} from './FileFolder/folders.component';
     RackComponent,
     RacksComponent,
     ServerManagementComponent,
-    NavigationComponent,
-    SiteNavigationComponent,
-    SiteComponent,
-    AddNewSiteModalComponent,
+    MainNavigationComponent,
+    FolderNavigationComponent,
+    EnclaveViewComponent,
+    AddNewFileFolderModalComponent,
    // FileComponent,
     FolderComponent
    ],
-   providers: [RackService, SiteComponent],
+   providers: [RackService, EnclaveViewComponent],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

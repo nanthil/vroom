@@ -9,27 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var NavigationComponent = (function () {
-    function NavigationComponent() {
+var MainNavigationComponent = (function () {
+    function MainNavigationComponent() {
         this.rackWidth = 40;
         this.setView = new core_1.EventEmitter();
     }
-    NavigationComponent.prototype.changeView = function (e) {
+    MainNavigationComponent.prototype.changeView = function (e) {
         this.setView.next(e);
     };
-    return NavigationComponent;
+    return MainNavigationComponent;
 }());
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], NavigationComponent.prototype, "setView", void 0);
-NavigationComponent = __decorate([
+], MainNavigationComponent.prototype, "setView", void 0);
+MainNavigationComponent = __decorate([
     core_1.Component({
         selector: 'navigation',
         template: "\n        <div class=\"nav-bar\">\n            <site-nav (setView)=changeView($event)></site-nav>\n            <all-equipment [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
         styles: ["\n        .nav-bar {\n            position:fixed;\n            top:0;\n            right:0;\n            height: 100vh;\n            width: 400px;\n            background-color: blue;\n        }\n    "]
     }),
     __metadata("design:paramtypes", [])
-], NavigationComponent);
-exports.NavigationComponent = NavigationComponent;
-//# sourceMappingURL=navigation.component.js.map
+], MainNavigationComponent);
+exports.MainNavigationComponent = MainNavigationComponent;
+//# sourceMappingURL=main.navigation.component.js.map

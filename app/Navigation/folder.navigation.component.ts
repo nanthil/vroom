@@ -1,6 +1,6 @@
 import {Component,Output, EventEmitter} from '@angular/core';
 import {RackService} from '../Racks/rack.service';
-import {SiteComponent} from '../Sites/site.component'
+import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
 
 @Component({
     selector: 'site-nav',
@@ -134,7 +134,7 @@ import {SiteComponent} from '../Sites/site.component'
     `
     ]
 })
-export class SiteNavigationComponent{
+export class FolderNavigationComponent{
     toggleFolderContents(index:number){
         console.log(index);
         console.log(this.rackService.testNewData[index]);
@@ -144,7 +144,7 @@ export class SiteNavigationComponent{
     showModal = false;
     typeToAdd = '';
     argsToAdd: any[] = [];
-    constructor(private rackService: RackService, private siteComponent: SiteComponent){}
+    constructor(private rackService: RackService, private enclaveViewComponent: EnclaveViewComponent){}
 
     //MOVE THIS TO A SERVICE 
     //ANGULAR 2 DOES NOT SUPPORT DEEP NESTED EVENT EMISSION 
