@@ -4,10 +4,16 @@ import {Component, Output, EventEmitter} from '@angular/core';
     template: `
         <div class="nav-bar">
             <site-nav (setView)=changeView($event)></site-nav>
-            <all-equipment [width]="rackWidth"></all-equipment>
+            <all-equipment [isNav]="true" [width]="rackWidth"></all-equipment>
         </div>
     `,
     styles: [`
+        .test{
+            right:0;
+            position:fixed;
+            top:0;
+            background:red;
+        }
         .nav-bar {
             position:fixed;
             top:0;
@@ -24,5 +30,8 @@ export class MainNavigationComponent{
     @Output() setView = new EventEmitter();
     changeView(e:any){
         this.setView.next(e);
+    }
+    resize(e:any){
+        console.log(e);
     }
 }

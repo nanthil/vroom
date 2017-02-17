@@ -17,6 +17,9 @@ var MainNavigationComponent = (function () {
     MainNavigationComponent.prototype.changeView = function (e) {
         this.setView.next(e);
     };
+    MainNavigationComponent.prototype.resize = function (e) {
+        console.log(e);
+    };
     return MainNavigationComponent;
 }());
 __decorate([
@@ -26,8 +29,8 @@ __decorate([
 MainNavigationComponent = __decorate([
     core_1.Component({
         selector: 'navigation',
-        template: "\n        <div class=\"nav-bar\">\n            <site-nav (setView)=changeView($event)></site-nav>\n            <all-equipment [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
-        styles: ["\n        .nav-bar {\n            position:fixed;\n            top:0;\n            right:0;\n            height: 100vh;\n            width: 400px;\n            background-color: blue;\n        }\n    "]
+        template: "\n        <div class=\"nav-bar\">\n            <site-nav (setView)=changeView($event)></site-nav>\n            <all-equipment [isNav]=\"true\" [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
+        styles: ["\n        .test{\n            right:0;\n            position:fixed;\n            top:0;\n            background:red;\n        }\n        .nav-bar {\n            position:fixed;\n            top:0;\n            right:0;\n            height: 100vh;\n            width: 400px;\n            background-color: blue;\n        }\n    "]
     }),
     __metadata("design:paramtypes", [])
 ], MainNavigationComponent);

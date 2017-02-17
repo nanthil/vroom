@@ -32,6 +32,9 @@ var folder_navigation_component_1 = require("./Navigation/folder.navigation.comp
 var enclave_view_component_1 = require("./Enclaves/enclave.view.component");
 //import {FileComponent} from './FileFolder/files.component';
 var folders_component_1 = require("./FileFolder/folders.component");
+var tag_manager_1 = require("./Shared/tag.manager");
+var title_bar_component_1 = require("./Shared/title.bar.component");
+var close_button_component_1 = require("./Shared/close.button.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -59,7 +62,9 @@ AppModule = __decorate([
             folder_navigation_component_1.FolderNavigationComponent,
             enclave_view_component_1.EnclaveViewComponent,
             addnew_filefolder_component_1.AddNewFileFolderModalComponent,
-            // FileComponent,
+            tag_manager_1.TagManagerComponent,
+            title_bar_component_1.TitleBarComponent,
+            close_button_component_1.CloseButtonComponent,
             folders_component_1.FolderComponent
         ],
         providers: [rack_service_1.RackService, enclave_view_component_1.EnclaveViewComponent],

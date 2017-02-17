@@ -10,7 +10,7 @@ import {Component,
     selector: 'single-equipment',
     template: `
         <e-modal [show]="showConfig"></e-modal>
-        <div class="equipment">
+        <div class="equipment" [ngClass]="{'nav-equipment': isNav}">
         <img class="e-image" dnd-draggable [dragEnabled]="true"
             [dragData]="transferData"
             [alt]="name"
@@ -26,9 +26,13 @@ import {Component,
         .equipment{
             display: table;
             height: 100%;
+        }
+        .nav-equipment{
+            margin: 3px;
         }`]
 })
 export class EquipmentComponent{
+    @Input() isNav: boolean;
     @Input() isActive: boolean;
     @Input() equipment: any;
     @Input() width: number;

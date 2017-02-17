@@ -21,7 +21,7 @@ var RackComponent = (function () {
         var success = this.rackService.updateRack(this.directory, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
         if (!success) {
             //error
-            console.log('error');
+            console.log('Failed to add new component to the rack. Please try again.');
         }
     };
     return RackComponent;
@@ -41,7 +41,7 @@ __decorate([
 RackComponent = __decorate([
     core_1.Component({
         selector: 'single-rack',
-        template: "\n      <div class=\"rack\">\n         <div *ngFor=\"let s of slots\">\n          <slot *ngIf=\"!s.shouldHideSlot\"\n            [equipmentObject]=s.object\n            [slotid]=s.slotid\n            [height]=\"s.object.e.height * 19.55\"\n            [equipmentActive]=s.equipmentActive\n            (updateRack)=\"callUpdateService($event)\"\n          ></slot>\n        </div>\n      </div>",
+        template: "\n      <div class=\"rack\">\n         <div *ngFor=\"let s of slots\">\n          <slot *ngIf=\"!s.shouldHideSlot\"\n            [isNav]=\"false\"\n            [equipmentObject]=s.object\n            [slotid]=s.slotid\n            [height]=\"s.object.e.height * 19.55\"\n            [equipmentActive]=s.equipmentActive\n            (updateRack)=\"callUpdateService($event)\"\n          ></slot>\n        </div>\n      </div>",
         styles: [
             "\n        .rack {\n          padding-top:28.5px;\n          height: 875px;\n          width: 266px;\n          background-image: url(\"./app/Racks/img/42uRack.png\"); \n        }\n     "
         ]

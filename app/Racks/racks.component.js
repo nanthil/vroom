@@ -21,7 +21,6 @@ var RacksComponent = (function () {
     };
     RacksComponent.prototype.addNewRack = function () {
         this.rackService.generateEmptyRack(this.currentView);
-        console.log(this.rackService.rackList);
     };
     return RacksComponent;
 }());

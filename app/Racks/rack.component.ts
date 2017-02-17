@@ -7,6 +7,7 @@ import {RackService} from './rack.service';
       <div class="rack">
          <div *ngFor="let s of slots">
           <slot *ngIf="!s.shouldHideSlot"
+            [isNav]="false"
             [equipmentObject]=s.object
             [slotid]=s.slotid
             [height]="s.object.e.height * 19.55"
@@ -39,7 +40,7 @@ export class RackComponent{
       let success = this.rackService.updateRack(this.directory, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
       if(!success){
         //error
-        console.log('error');
+        console.log('Failed to add new component to the rack. Please try again.');
       }
     }
 }

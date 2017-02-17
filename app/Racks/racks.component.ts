@@ -34,7 +34,6 @@ export class RacksComponent{
     }
     addNewRack(){
         this.rackService.generateEmptyRack(this.currentView);
-        console.log(this.rackService.rackList);
     }
 }
 

@@ -9,6 +9,7 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
                 (onDropSuccess)="_updateRack($event)"
                 [style.height.px]="height">
                 <single-equipment 
+                    [isNav]="isNav"
                     (click)="toggleConfig()"
                     [width]="equipmentObject.w"
                     [height]="equipmentObject.e.height * 19.55"
@@ -42,6 +43,7 @@ export class SlotComponent{
     //event to trigger rack to update
     @Output() updateRack = new EventEmitter();
     @Input() height: number;
+    @Input() isNav: boolean;
     showConfig = false;
 
     constructor(private rackComponent: RackComponent, private zone: NgZone){}

@@ -13,6 +13,8 @@ declare var detectBrowsers: any;
             <div class="mymodal">
                 <div class="configureForm">
                     <form>
+                        
+                    <title-bar [name]="titleName" (close)="closeWindow($event)"></title-bar>
                         DisplayName <input type="text" name="dname"><br>
                         FQDN <input type="text" name="FQDN"><br>
                         Management IP Address <input type="text" name="ipaddress"><br>
@@ -80,7 +82,10 @@ declare var detectBrowsers: any;
 })
 export class EquipmentModalComponent {
     @Input() show: boolean;
-    
+    titleName = "Equipment Config";
+    closeWindow(e:any){
+        console.log('close e config');
+    }
     constructor(private rackService: RackService, private zone: NgZone){}
     
     //implementation found in native operations

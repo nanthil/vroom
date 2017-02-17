@@ -17,6 +17,10 @@ var ServerManagementComponent = (function () {
         this.activeView = '';
         this.listActiveViews = [];
     }
+    ServerManagementComponent.prototype.switchActiveView = function (event) {
+        this.listActiveViews = this.listActiveViews.map(function (e) { return { name: e.name, isActive: (event.name === e.name) }; });
+        this.activeView = event.name;
+    };
     ServerManagementComponent.prototype.changeView = function (e) {
         this.getOriginalEvent(e);
     };
@@ -24,7 +28,7 @@ var ServerManagementComponent = (function () {
         //TODO:
         //GET INDEX OF FOUND view
         //SET ACTIVE VIEW TO INDEX -1 or index +1
-        this.listActiveViews = this.listActiveViews.filter(function (str) { return str !== viewName; });
+        this.listActiveViews = this.listActiveViews.filter(function (str) { return str.name !== viewName; });
         if (this.listActiveViews.length === 0) {
             this.activeView = '';
         }
@@ -38,8 +42,12 @@ var ServerManagementComponent = (function () {
         }
         else {
             var eventPath = event.a + '/' + event.b;
-            if (this.listActiveViews.every(function (str) { return str !== eventPath; })) {
-                this.listActiveViews.push(eventPath);
+            if (this.listActiveViews.every(function (str) { return str.name !== eventPath; })) {
+                this.listActiveViews = this.listActiveViews.map(function (e) { return { name: e.name, isActive: false }; });
+                this.listActiveViews.push({ name: eventPath, isActive: true });
+            }
+            else {
+                this.listActiveViews = this.listActiveViews.map(function (e) { return { name: e.name, isActive: (eventPath === e.name) }; });
             }
             this.activeView = eventPath;
         }
@@ -49,9 +57,8 @@ var ServerManagementComponent = (function () {
 ServerManagementComponent = __decorate([
     core_1.Component({
         selector: 'management-page',
-        template: "\n        <div class=\"main-view\">\n            <div *ngFor=\"let viewName of listActiveViews\"><div (click)=\"closeView(viewName)\">{{viewName}}</div></div>\n            <div *ngIf=\"activeView !== ''\">\n                <single-enclave [currentView]=\"activeView\"></single-enclave>\n            </div>\n            <div *ngIf=\"activeView === ''\">\n                <div class=\"empty-main\">\n                    NO FILE CURRENTLY SELECTED\n                </div>\n            </div>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
-        styles: [
-            "\n        .main-view{\n            height: 100vh;\n            background-color: gainsboro;\n        }\n        .empty-main {\n            padding:10%;\n            margin:auto;\n            font-size: 50px;\n        }\n    "
+        template: "\n        <tag-manager></tag-manager>\n        <div class=\"main-view\">\n            <nav>\n                <ul class=\"nav nav-pills list-inline enclave-bar\">\n                    <li *ngFor=\"let view of listActiveViews\" \n                        class=\"top-nav-pill\" \n                        role=\"presentation\">\n                        <a [ngClass]=\"{'my-active': view.isActive}\"\n                            (click)=\"switchActiveView(view)\">\n                            <close (close)=\"closeView(view.name)\"></close>\n                            {{view.name}}\n                        </a>\n                    </li>\n                </ul>\n            </nav>\n            <div *ngIf=\"activeView !== ''\">\n                <single-enclave [currentView]=\"activeView\"></single-enclave>\n            </div>\n            <div *ngIf=\"activeView === ''\">\n                <div class=\"empty-main\">\n                    NO FILE CURRENTLY SELECTED\n                </div>\n            </div>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
+        styles: ["\n        .enclave-bar {\n            background: #336688;\n        }\n        .my-active {\n            background: #456789 !important;\n        }\n        .top-nav-pill {\n            border-radius:2% !important;\n            border-color: #cccccc;\n            border-style:solid;\n            border-width:2px;\n            margin:0;\n            padding:0;\n        }\n        .top-nav-pill a {\n            background: #555555;\n            color: #cccccc; \n        }\n        .top-nav-pill a:hover {\n            background: #444444;\n            color: #dddddd; \n        }\n    \n        .close-button{\n            float: right;\n        }\n        .close-button:hover{\n            color: #cc5588;\n        }\n        .main-view{\n            height: 100vh;\n            background-color: gainsboro;\n        }\n        .empty-main {\n            padding:10%;\n            margin:auto;\n            font-size: 50px;\n        }\n    "
         ]
     }),
     __metadata("design:paramtypes", [core_1.NgZone, rack_service_1.RackService])

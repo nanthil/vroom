@@ -63,10 +63,14 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", Number)
 ], SlotComponent.prototype, "height", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], SlotComponent.prototype, "isNav", void 0);
 SlotComponent = __decorate([
     core_1.Component({
         selector: 'slot',
-        template: "\n            <div class=\"slot\" \n                dnd-droppable\n                (onDropSuccess)=\"_updateRack($event)\"\n                [style.height.px]=\"height\">\n                <single-equipment \n                    (click)=\"toggleConfig()\"\n                    [width]=\"equipmentObject.w\"\n                    [height]=\"equipmentObject.e.height * 19.55\"\n                    [equipment]=\"equipmentObject.e\"\n                    [isActive]=\"equipmentActive\"\n                    [showConfig]=\"showConfig\"\n                >\n                </single-equipment>\n\n            </div>\n            ",
+        template: "\n            <div class=\"slot\" \n                dnd-droppable\n                (onDropSuccess)=\"_updateRack($event)\"\n                [style.height.px]=\"height\">\n                <single-equipment \n                    [isNav]=\"isNav\"\n                    (click)=\"toggleConfig()\"\n                    [width]=\"equipmentObject.w\"\n                    [height]=\"equipmentObject.e.height * 19.55\"\n                    [equipment]=\"equipmentObject.e\"\n                    [isActive]=\"equipmentActive\"\n                    [showConfig]=\"showConfig\"\n                >\n                </single-equipment>\n\n            </div>\n            ",
         styles: [
             " \n        .slot {\n            margin-left: 34.3px;\n            background-color: blue;\n            width: 200px;\n        }\n     "
         ]

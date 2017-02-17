@@ -19,15 +19,11 @@ var FolderNavigationComponent = (function () {
         this.showModal = false;
         this.typeToAdd = '';
         this.argsToAdd = [];
-        //MOVE THIS TO A SERVICE 
-        //ANGULAR 2 DOES NOT SUPPORT DEEP NESTED EVENT EMISSION 
+        //TODO: MOVE THIS TO A service
+        //CURRENTLY ANGULAR2 DOESN'T EXPLICITLY SUPPORT THIS BEHAVIOR
+        //THIS IS A HACK TO RECEIVE RECURSIVE EVENTS HANDLED IN SERVERMANAGEMENTPAGE
         this.setView = new core_1.EventEmitter();
     }
-    FolderNavigationComponent.prototype.toggleFolderContents = function (index) {
-        console.log(index);
-        console.log(this.rackService.testNewData[index]);
-        this.rackService.testNewData[index].showContents = !this.rackService.testNewData[index].showContents;
-    };
     FolderNavigationComponent.prototype.changeView = function (e) {
         this.setView.emit(e);
     };
@@ -37,7 +33,6 @@ var FolderNavigationComponent = (function () {
     };
     FolderNavigationComponent.prototype.pushNewItemToService = function (e) {
         this.showModal = !this.showModal;
-        console.log(this.directory);
         if (!(e.inputValue === 'cancel')) {
             this.rackService.addFolder(e.inputValue, this.directory);
         }

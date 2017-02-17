@@ -32,6 +32,10 @@ var EquipmentComponent = (function () {
 __decorate([
     core_1.Input(),
     __metadata("design:type", Boolean)
+], EquipmentComponent.prototype, "isNav", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
 ], EquipmentComponent.prototype, "isActive", void 0);
 __decorate([
     core_1.Input(),
@@ -52,8 +56,8 @@ __decorate([
 EquipmentComponent = __decorate([
     core_1.Component({
         selector: 'single-equipment',
-        template: "\n        <e-modal [show]=\"showConfig\"></e-modal>\n        <div class=\"equipment\">\n        <img class=\"e-image\" dnd-draggable [dragEnabled]=\"true\"\n            [dragData]=\"transferData\"\n            [alt]=\"name\"\n            [src]=\"equipmentImg\"\n            [style.height.px]=\"height\" />\n        </div>\n     ",
-        styles: ["\n        .e-image {\n            display: table;\n            width: 100%\n        }\n        .equipment{\n            display: table;\n            height: 100%;\n        }"]
+        template: "\n        <e-modal [show]=\"showConfig\"></e-modal>\n        <div class=\"equipment\" [ngClass]=\"{'nav-equipment': isNav}\">\n        <img class=\"e-image\" dnd-draggable [dragEnabled]=\"true\"\n            [dragData]=\"transferData\"\n            [alt]=\"name\"\n            [src]=\"equipmentImg\"\n            [style.height.px]=\"height\" />\n        </div>\n     ",
+        styles: ["\n        .e-image {\n            display: table;\n            width: 100%\n        }\n        .equipment{\n            display: table;\n            height: 100%;\n        }\n        .nav-equipment{\n            margin: 3px;\n        }"]
     }),
     __metadata("design:paramtypes", [])
 ], EquipmentComponent);

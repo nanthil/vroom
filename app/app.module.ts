@@ -28,7 +28,9 @@ import {EnclaveViewComponent} from './Enclaves/enclave.view.component';
 
 //import {FileComponent} from './FileFolder/files.component';
 import {FolderComponent} from './FileFolder/folders.component';
-
+import {TagManagerComponent} from './Shared/tag.manager';
+import {TitleBarComponent} from './Shared/title.bar.component';
+import {CloseButtonComponent} from './Shared/close.button.component'
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import {FolderComponent} from './FileFolder/folders.component';
     FolderNavigationComponent,
     EnclaveViewComponent,
     AddNewFileFolderModalComponent,
-   // FileComponent,
+    TagManagerComponent,
+    TitleBarComponent,
+    CloseButtonComponent,
     FolderComponent
    ],
    providers: [RackService, EnclaveViewComponent],

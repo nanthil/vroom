@@ -100,8 +100,10 @@ var RackService = (function () {
                     }
                     this.directoryToAdd.folders.push({
                         name: name,
+                        showContents: false,
                         files: [],
-                        folders: []
+                        folders: [],
+                        tags: []
                     });
                 }
                 ;
@@ -111,12 +113,6 @@ var RackService = (function () {
     //Check to see if there are more folders in the found directory 
     RackService.prototype.recursiveIterate = function (directories, obj) {
         var numberOfExistingFiles = 0;
-        //obj is a folder
-        //if there is only 1 folder in this folder
-        // if(obj.length === 1){
-        //     //check for the name we want in directories[0]
-        //     return this.recursiveCheckForFolder(directories, obj[0]);
-        // }
         for (var folder in obj) {
             if (obj[folder].name === directories[0]) {
                 return this.recursiveCheckForFolder(directories, obj[folder]);
@@ -137,6 +133,7 @@ var RackService = (function () {
                 }
                 else {
                     this.directoryToAdd = obj;
+                    this.directoryToAdd.showContents = true;
                     //return the object we want
                     return obj;
                 }
@@ -147,10 +144,7 @@ var RackService = (function () {
         return this.rackList[directory];
     };
     RackService.prototype.updateBrowsers = function (result) {
-        //fix the result so that it is correct
-        console.log(result);
         this.browsers = [];
-        console.log(result);
         for (var i = 0; i < result.length; i++) {
             if (result[i].toLowerCase().includes('firefox')) {
                 this.browsers.push({

@@ -136,19 +136,15 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
     ]
 })
 export class FolderNavigationComponent{
-    toggleFolderContents(index:number){
-        console.log(index);
-        console.log(this.rackService.testNewData[index]);
-        this.rackService.testNewData[index].showContents = !this.rackService.testNewData[index].showContents;
-    }
     directory = 'home';
     showModal = false;
     typeToAdd = '';
     argsToAdd: any[] = [];
     constructor(private rackService: RackService, private enclaveViewComponent: EnclaveViewComponent){}
 
-    //MOVE THIS TO A SERVICE 
-    //ANGULAR 2 DOES NOT SUPPORT DEEP NESTED EVENT EMISSION 
+    //TODO: MOVE THIS TO A service
+    //CURRENTLY ANGULAR2 DOESN'T EXPLICITLY SUPPORT THIS BEHAVIOR
+    //THIS IS A HACK TO RECEIVE RECURSIVE EVENTS HANDLED IN SERVERMANAGEMENTPAGE
     @Output() setView = new EventEmitter();
     changeView(e:any){
         this.setView.emit(e);
@@ -159,7 +155,6 @@ export class FolderNavigationComponent{
     }
     pushNewItemToService(e:any){
         this.showModal = !this.showModal;
-        console.log(this.directory);
         if(!(e.inputValue === 'cancel')){
             this.rackService.addFolder(e.inputValue, this.directory)
         }

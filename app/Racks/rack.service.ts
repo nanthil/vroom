@@ -82,8 +82,10 @@ export class RackService{
                     }
                     this.directoryToAdd.folders.push({
                         name: name,
+                        showContents: false,
                         files: [],
-                        folders: []
+                        folders: [],
+                        tags: []
                     });
                 };
             }
@@ -93,14 +95,6 @@ export class RackService{
     //Check to see if there are more folders in the found directory 
     recursiveIterate(directories: any, obj: any) : any{
         var numberOfExistingFiles = 0;
-        //obj is a folder
-        //if there is only 1 folder in this folder
-        // if(obj.length === 1){
-        //     //check for the name we want in directories[0]
-        //     return this.recursiveCheckForFolder(directories, obj[0]);
-        // }
-       
-        
         for(var folder in obj){
             if(obj[folder].name === directories[0]){
                 return this.recursiveCheckForFolder(directories, obj[folder]);
@@ -123,53 +117,14 @@ export class RackService{
                 //there are no more directories in directory.split('/')
                 else {
                     this.directoryToAdd = obj;
+                    this.directoryToAdd.showContents = true;
                     //return the object we want
                     return obj;
                 }
             }
         }
     }
-    testNewData: any[] = [
-    //   {
-    //     name: 'sites',
-    //     showContents: false,
-    //     files: ['file1', 'file2', 'file3'],
-    //     folders: [
-    //         {
-    //           name: 'folder1',
-    //           showContents: false,
-    //           files: ['file1', 'file2'],
-    //           folders: [{
-    //                 name: 'folder1-1',
-
-    //                 showContents: false,
-    //                 files: ['file1', 'file2', 'file3'],
-    //                 folders: []
-                
-    //               }, 
-    //               {
-    //                 name: 'folder1-2',
-    //                 showContents: false,
-    //                 files: ['file1', 'file2', 'file3'],
-    //                 folders: []
-                
-    //               }]
-    //         }, {
-    //           name: 'folder2',
-    //           showContents: false,
-    //           files: ['file1', 'file2', 'file3', 'file4'],
-    //           folders: [{
-
-    //                 showContents: false,
-    //                 name: 'folder2-1',
-    //                 files: ['file1', 'file2', 'file3'],
-    //                 folders: []
-                
-    //               }
-    //             ]
-    //         }]
-    //   }
-    ];
+    testNewData: any[] = [];
 
     thereIsADatacenter = false;
     currentSite= {
@@ -202,10 +157,7 @@ export class RackService{
         return this.rackList[directory];
     }
     updateBrowsers(result: any[]){
-        //fix the result so that it is correct
-        console.log(result);
         this.browsers = [];
-        console.log(result);
         for(let i = 0; i < result.length; i++){
             if(result[i].toLowerCase().includes('firefox')){
                 this.browsers.push({

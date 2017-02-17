@@ -7,6 +7,7 @@ import { EquipmentService } from './equipment.services';
             <ul class="equipment-list">
                 <li *ngFor="let e of equipmentJson" >
                     <single-equipment 
+                    [isNav]="isNav"
                     [width]="width" 
                     [height]="e.height * 19.55"
                     [equipment]="e"
@@ -26,7 +27,7 @@ import { EquipmentService } from './equipment.services';
     providers: [EquipmentService]
 })
 export class EquipmentsComponent{
-    
+    @Input() isNav: boolean;
     @Input() width: number;
     equipmentJson = new Array();
     equipmentIsActive = false;
