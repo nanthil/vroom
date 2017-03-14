@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var equipment_services_1 = require("./equipment.services");
+var core_1 = require('@angular/core');
+var equipment_services_1 = require('./equipment.services');
 var EquipmentsComponent = (function () {
     function EquipmentsComponent(equipmentService) {
         this.equipmentService = equipmentService;
@@ -30,25 +30,25 @@ var EquipmentsComponent = (function () {
             }
         }
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], EquipmentsComponent.prototype, "isNav", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], EquipmentsComponent.prototype, "width", void 0);
+    EquipmentsComponent = __decorate([
+        core_1.Component({
+            selector: 'all-equipment',
+            template: "\n            <ul class=\"equipment-list\">\n                <li *ngFor=\"let e of equipmentJson\" >\n                    <single-equipment \n                    [isNav]=\"isNav\"\n                    [width]=\"width\" \n                    [height]=\"e.height * 19.55\"\n                    [equipment]=\"e\"\n                    [isActive]=\"equipmentIsActive\">\n                    </single-equipment>\n                </li>\n            <ul>\n    ",
+            styles: ["\n    .equipment-list{\n        overflow:auto;\n        list-style-type: none;\n        display: list-item;\n        border: 3px solid #73AD21;\n        height: 400px;\n    }"],
+            providers: [equipment_services_1.EquipmentService]
+        }), 
+        __metadata('design:paramtypes', [equipment_services_1.EquipmentService])
+    ], EquipmentsComponent);
     return EquipmentsComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], EquipmentsComponent.prototype, "isNav", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number)
-], EquipmentsComponent.prototype, "width", void 0);
-EquipmentsComponent = __decorate([
-    core_1.Component({
-        selector: 'all-equipment',
-        template: "\n            <ul class=\"equipment-list\">\n                <li *ngFor=\"let e of equipmentJson\" >\n                    <single-equipment \n                    [isNav]=\"isNav\"\n                    [width]=\"width\" \n                    [height]=\"e.height * 19.55\"\n                    [equipment]=\"e\"\n                    [isActive]=\"equipmentIsActive\">\n                    </single-equipment>\n                </li>\n            <ul>\n    ",
-        styles: ["\n    .equipment-list{\n        overflow:auto;\n        list-style-type: none;\n        display: list-item;\n        border: 3px solid #73AD21;\n        height: 400px;\n    }"],
-        providers: [equipment_services_1.EquipmentService]
-    }),
-    __metadata("design:paramtypes", [equipment_services_1.EquipmentService])
-], EquipmentsComponent);
 exports.EquipmentsComponent = EquipmentsComponent;
 // position: fixed;
 //     overflow:auto;

@@ -191,7 +191,7 @@ export class RackService{
         let emptySlot = {
             'e': {
                 'name': 'Empty',
-                'imgUrl': './app/Racks/img/1274237_300x300.jpg',
+                'imgUrl': '',
                 'height': 1
             },
             'w': 190

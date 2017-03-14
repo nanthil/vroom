@@ -8,10 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
+var core_1 = require('@angular/core');
 // Import RxJs required methods
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/catch");
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/catch');
 var RackService = (function () {
     function RackService() {
         this.testNewData = [];
@@ -179,7 +179,7 @@ var RackService = (function () {
         var emptySlot = {
             'e': {
                 'name': 'Empty',
-                'imgUrl': './app/Racks/img/1274237_300x300.jpg',
+                'imgUrl': '',
                 'height': 1
             },
             'w': 190
@@ -246,11 +246,11 @@ var RackService = (function () {
     RackService.prototype.getSavedRack = function (args) {
         return new Array;
     };
+    RackService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], RackService);
     return RackService;
 }());
-RackService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [])
-], RackService);
 exports.RackService = RackService;
 //# sourceMappingURL=rack.service.js.map

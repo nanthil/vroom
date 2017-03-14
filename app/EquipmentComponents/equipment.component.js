@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
+var core_1 = require('@angular/core');
 var EquipmentComponent = (function () {
     function EquipmentComponent() {
     }
@@ -27,39 +27,39 @@ var EquipmentComponent = (function () {
             w: this.width
         };
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], EquipmentComponent.prototype, "isNav", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], EquipmentComponent.prototype, "isActive", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], EquipmentComponent.prototype, "equipment", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], EquipmentComponent.prototype, "width", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], EquipmentComponent.prototype, "showConfig", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], EquipmentComponent.prototype, "height", void 0);
+    EquipmentComponent = __decorate([
+        core_1.Component({
+            selector: 'single-equipment',
+            template: "\n        <e-modal [show]=\"showConfig\"></e-modal>\n        <div class=\"equipment\" [ngClass]=\"{'nav-equipment': isNav}\">\n            <div *ngIf=\"isActive || isNav\">\n                <img class=\"e-image\" dnd-draggable [dragEnabled]=\"true\"\n                    [dragData]=\"transferData\"\n                    [alt]=\"name\"\n                    [src]=\"equipmentImg\"\n                    [style.height.px]=\"height\" />\n            </div>\n        </div>\n     ",
+            styles: ["\n        .e-image {\n            display: table;\n            width: 100%\n        }\n        .equipment{\n            display: table;\n            height: 100%;\n        }\n        .nav-equipment{\n            margin: 3px;\n        }"]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], EquipmentComponent);
     return EquipmentComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], EquipmentComponent.prototype, "isNav", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], EquipmentComponent.prototype, "isActive", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], EquipmentComponent.prototype, "equipment", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number)
-], EquipmentComponent.prototype, "width", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], EquipmentComponent.prototype, "showConfig", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number)
-], EquipmentComponent.prototype, "height", void 0);
-EquipmentComponent = __decorate([
-    core_1.Component({
-        selector: 'single-equipment',
-        template: "\n        <e-modal [show]=\"showConfig\"></e-modal>\n        <div class=\"equipment\" [ngClass]=\"{'nav-equipment': isNav}\">\n        <img class=\"e-image\" dnd-draggable [dragEnabled]=\"true\"\n            [dragData]=\"transferData\"\n            [alt]=\"name\"\n            [src]=\"equipmentImg\"\n            [style.height.px]=\"height\" />\n        </div>\n     ",
-        styles: ["\n        .e-image {\n            display: table;\n            width: 100%\n        }\n        .equipment{\n            display: table;\n            height: 100%;\n        }\n        .nav-equipment{\n            margin: 3px;\n        }"]
-    }),
-    __metadata("design:paramtypes", [])
-], EquipmentComponent);
 exports.EquipmentComponent = EquipmentComponent;
 //# sourceMappingURL=equipment.component.js.map

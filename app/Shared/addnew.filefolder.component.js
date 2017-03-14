@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
+var core_1 = require('@angular/core');
 var AddNewFileFolderModalComponent = (function () {
     function AddNewFileFolderModalComponent() {
         this.inputValue = '';
@@ -28,27 +28,27 @@ var AddNewFileFolderModalComponent = (function () {
         this.newValue.emit({ added: this.whatToAdd, inputValue: 'cancel' });
         this.inputValue = '';
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], AddNewFileFolderModalComponent.prototype, "showModal", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], AddNewFileFolderModalComponent.prototype, "whatToAdd", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], AddNewFileFolderModalComponent.prototype, "newValue", void 0);
+    AddNewFileFolderModalComponent = __decorate([
+        core_1.Component({
+            selector: 'add-new',
+            template: "\n        <div *ngIf=\"showModal\" class=\"addmodal\"> \n            <div class=\"add-form\">\n                Add new {{whatToAdd}} <input type=\"text\" name=\"dname\" [(ngModel)]=\"inputValue\"><br>\n                <div (click)=\"_newValue()\" class=\"btn btn-primary\">Submit</div>\n                <div (click)=\"_cancel()\" class=\"btn btn-danger\">Cancel</div>\n            </div>\n        </div>\n    ",
+            styles: ["\n       .add-form {\n            position:fixed;\n            top: 50%;\n            left: 50%;\n            margin-top: -300px; /*set to a negative number 1/2 of your height*/\n            margin-left: -200px; /*set to a negative number 1/2 of your width*/\n            background-color: #cccccc;\n            border: 3px solid #73AD21;\n        }\n        .addmodal {\n            position: fixed; /* Stay in place */\n            z-index: 1; /* Sit on top */\n            left: 0;\n            top: 0;\n            width: 100%; /* Full width */\n            height: 100%; /* Full height */\n            overflow: auto; /* Enable scroll if needed */\n            background-color: rgb(0,0,0); /* Fallback color */\n            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n        }\n    "]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AddNewFileFolderModalComponent);
     return AddNewFileFolderModalComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], AddNewFileFolderModalComponent.prototype, "showModal", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", String)
-], AddNewFileFolderModalComponent.prototype, "whatToAdd", void 0);
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", Object)
-], AddNewFileFolderModalComponent.prototype, "newValue", void 0);
-AddNewFileFolderModalComponent = __decorate([
-    core_1.Component({
-        selector: 'add-new',
-        template: "\n        <div *ngIf=\"showModal\" class=\"addmodal\"> \n            <div class=\"add-form\">\n                Add new {{whatToAdd}} <input type=\"text\" name=\"dname\" [(ngModel)]=\"inputValue\"><br>\n                <div (click)=\"_newValue()\" class=\"btn btn-primary\">Submit</div>\n                <div (click)=\"_cancel()\" class=\"btn btn-danger\">Cancel</div>\n            </div>\n        </div>\n    ",
-        styles: ["\n       .add-form {\n            position:fixed;\n            top: 50%;\n            left: 50%;\n            margin-top: -300px; /*set to a negative number 1/2 of your height*/\n            margin-left: -200px; /*set to a negative number 1/2 of your width*/\n            background-color: #cccccc;\n            border: 3px solid #73AD21;\n        }\n        .addmodal {\n            position: fixed; /* Stay in place */\n            z-index: 1; /* Sit on top */\n            left: 0;\n            top: 0;\n            width: 100%; /* Full width */\n            height: 100%; /* Full height */\n            overflow: auto; /* Enable scroll if needed */\n            background-color: rgb(0,0,0); /* Fallback color */\n            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n        }\n    "]
-    }),
-    __metadata("design:paramtypes", [])
-], AddNewFileFolderModalComponent);
 exports.AddNewFileFolderModalComponent = AddNewFileFolderModalComponent;
 //# sourceMappingURL=addnew.filefolder.component.js.map

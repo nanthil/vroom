@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
+var core_1 = require('@angular/core');
 var MainNavigationComponent = (function () {
     function MainNavigationComponent() {
         this.rackWidth = 40;
@@ -20,19 +20,19 @@ var MainNavigationComponent = (function () {
     MainNavigationComponent.prototype.resize = function (e) {
         console.log(e);
     };
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], MainNavigationComponent.prototype, "setView", void 0);
+    MainNavigationComponent = __decorate([
+        core_1.Component({
+            selector: 'navigation',
+            template: "\n        <div class=\"nav-bar\">\n            <site-nav (setView)=changeView($event)></site-nav>\n            <all-equipment [isNav]=\"true\" [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
+            styles: ["\n        .test{\n            right:0;\n            position:fixed;\n            top:0;\n            background:red;\n        }\n        .nav-bar {\n            position:fixed;\n            top:0;\n            right:0;\n            height: 100vh;\n            width: 400px;\n            background-color: blue;\n        }\n    "]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MainNavigationComponent);
     return MainNavigationComponent;
 }());
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", Object)
-], MainNavigationComponent.prototype, "setView", void 0);
-MainNavigationComponent = __decorate([
-    core_1.Component({
-        selector: 'navigation',
-        template: "\n        <div class=\"nav-bar\">\n            <site-nav (setView)=changeView($event)></site-nav>\n            <all-equipment [isNav]=\"true\" [width]=\"rackWidth\"></all-equipment>\n        </div>\n    ",
-        styles: ["\n        .test{\n            right:0;\n            position:fixed;\n            top:0;\n            background:red;\n        }\n        .nav-bar {\n            position:fixed;\n            top:0;\n            right:0;\n            height: 100vh;\n            width: 400px;\n            background-color: blue;\n        }\n    "]
-    }),
-    __metadata("design:paramtypes", [])
-], MainNavigationComponent);
 exports.MainNavigationComponent = MainNavigationComponent;
 //# sourceMappingURL=main.navigation.component.js.map

@@ -31,6 +31,7 @@ import {FolderComponent} from './FileFolder/folders.component';
 import {TagManagerComponent} from './Shared/tag.manager';
 import {TitleBarComponent} from './Shared/title.bar.component';
 import {CloseButtonComponent} from './Shared/close.button.component'
+import {ContextMenuComponent} from './Shared/contextMenu.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {CloseButtonComponent} from './Shared/close.button.component'
     TagManagerComponent,
     TitleBarComponent,
     CloseButtonComponent,
-    FolderComponent
+    FolderComponent,
+    ContextMenuComponent
    ],
    providers: [RackService, EnclaveViewComponent],
   bootstrap:    [ AppComponent ]

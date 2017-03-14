@@ -5,9 +5,12 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     selector: 'slot',
     template: `
             <div class="slot" 
+                (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
                 dnd-droppable
                 (onDropSuccess)="_updateRack($event)"
-                [style.height.px]="height">
+                [style.height.px]="height"
+                [ngClass]="{'slot-mouseover': !hover || equipmentActive}"
+                [ngClass]="{'transparent': equipmentObject.e.name !== 'Empty'}">
                 <single-equipment 
                     [isNav]="isNav"
                     (click)="toggleConfig()"
@@ -24,10 +27,17 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
       
     styles: [
       ` 
+        .transparent {
+            opacity: 0;
+        }
         .slot {
             margin-left: 34.3px;
             background-color: blue;
             width: 200px;
+        }
+        .slot-mouseover{
+            background: blue;
+            opacity: .5 !important;
         }
      `
     ]
@@ -35,6 +45,10 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
 export class SlotComponent{
     //variables
     //id of slot
+    hover = false;
+    changeStyle($event:any){
+        this.hover = !this.hover;
+    }
     @Input() slotid: number;
     //the object that contains data for the equipment component
     @Input() equipmentObject: any;
@@ -68,8 +82,7 @@ export class SlotComponent{
     }
     
     toggleConfig(){
-        if(this.equipmentActive){
-            
+        if(this.equipmentActive){ 
             this.showConfig = !this.showConfig;
         }
     }

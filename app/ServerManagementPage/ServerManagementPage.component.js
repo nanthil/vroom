@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var rack_service_1 = require("../Racks/rack.service");
+var core_1 = require('@angular/core');
+var rack_service_1 = require('../Racks/rack.service');
 var ServerManagementComponent = (function () {
     function ServerManagementComponent(zone, rackService) {
         this.zone = zone;
@@ -52,16 +52,16 @@ var ServerManagementComponent = (function () {
             this.activeView = eventPath;
         }
     };
+    ServerManagementComponent = __decorate([
+        core_1.Component({
+            selector: 'management-page',
+            template: "\n        <tag-manager></tag-manager>\n        <div class=\"main-view\">\n            <nav>\n                <ul class=\"nav nav-pills list-inline enclave-bar\">\n                    <li *ngFor=\"let view of listActiveViews\" \n                        class=\"top-nav-pill\" \n                        role=\"presentation\">\n                        <a [ngClass]=\"{'my-active': view.isActive}\"\n                            (click)=\"switchActiveView(view)\">\n                            <close (close)=\"closeView(view.name)\"></close>\n                            {{view.name}}\n                        </a>\n                    </li>\n                </ul>\n            </nav>\n            <div *ngIf=\"activeView !== ''\">\n                <single-enclave [currentView]=\"activeView\"></single-enclave>\n            </div>\n            <div *ngIf=\"activeView === ''\">\n                <div class=\"empty-main\">\n                    NO FILE CURRENTLY SELECTED\n                </div>\n            </div>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
+            styles: ["\n        .enclave-bar {\n            background: #336688;\n        }\n        .my-active {\n            background: #456789 !important;\n        }\n        .top-nav-pill {\n            border-radius:2% !important;\n            border-color: #cccccc;\n            border-style:solid;\n            border-width:2px;\n            margin:0;\n            padding:0;\n        }\n        .top-nav-pill a {\n            background: #555555;\n            color: #cccccc; \n        }\n        .top-nav-pill a:hover {\n            background: #444444;\n            color: #dddddd; \n        }\n    \n        .close-button{\n            float: right;\n        }\n        .close-button:hover{\n            color: #cc5588;\n        }\n        .main-view{\n            height: 100vh;\n            background-color: gainsboro;\n        }\n        .empty-main {\n            padding:10%;\n            margin:auto;\n            font-size: 50px;\n        }\n    "
+            ]
+        }), 
+        __metadata('design:paramtypes', [core_1.NgZone, rack_service_1.RackService])
+    ], ServerManagementComponent);
     return ServerManagementComponent;
 }());
-ServerManagementComponent = __decorate([
-    core_1.Component({
-        selector: 'management-page',
-        template: "\n        <tag-manager></tag-manager>\n        <div class=\"main-view\">\n            <nav>\n                <ul class=\"nav nav-pills list-inline enclave-bar\">\n                    <li *ngFor=\"let view of listActiveViews\" \n                        class=\"top-nav-pill\" \n                        role=\"presentation\">\n                        <a [ngClass]=\"{'my-active': view.isActive}\"\n                            (click)=\"switchActiveView(view)\">\n                            <close (close)=\"closeView(view.name)\"></close>\n                            {{view.name}}\n                        </a>\n                    </li>\n                </ul>\n            </nav>\n            <div *ngIf=\"activeView !== ''\">\n                <single-enclave [currentView]=\"activeView\"></single-enclave>\n            </div>\n            <div *ngIf=\"activeView === ''\">\n                <div class=\"empty-main\">\n                    NO FILE CURRENTLY SELECTED\n                </div>\n            </div>\n        </div>\n        <navigation (setView)=\"changeView($event)\"></navigation>\n      ",
-        styles: ["\n        .enclave-bar {\n            background: #336688;\n        }\n        .my-active {\n            background: #456789 !important;\n        }\n        .top-nav-pill {\n            border-radius:2% !important;\n            border-color: #cccccc;\n            border-style:solid;\n            border-width:2px;\n            margin:0;\n            padding:0;\n        }\n        .top-nav-pill a {\n            background: #555555;\n            color: #cccccc; \n        }\n        .top-nav-pill a:hover {\n            background: #444444;\n            color: #dddddd; \n        }\n    \n        .close-button{\n            float: right;\n        }\n        .close-button:hover{\n            color: #cc5588;\n        }\n        .main-view{\n            height: 100vh;\n            background-color: gainsboro;\n        }\n        .empty-main {\n            padding:10%;\n            margin:auto;\n            font-size: 50px;\n        }\n    "
-        ]
-    }),
-    __metadata("design:paramtypes", [core_1.NgZone, rack_service_1.RackService])
-], ServerManagementComponent);
 exports.ServerManagementComponent = ServerManagementComponent;
 //# sourceMappingURL=ServerManagementPage.component.js.map

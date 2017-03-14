@@ -3,13 +3,15 @@ import {RackService} from '../Racks/rack.service';
 @Component({
   selector: 'folder',
   template: `
+  <context-menu [showContextMenu]="showContextMenu"
+                [options]="contextMenuOptions"></context-menu>
   <add-new 
              [showModal]=showModal
              [whatToAdd]=whatToAdd
              (newValue)="pushNewItemToService($event)"
         ></add-new>
   <div [style.margin-left.px]="indent">
-    <div class="accordion-list">
+    <div class="accordion-list"  (contextmenu)="contextMenu($event)">
       <div class="side-by-side">{{content.name}}</div>
       <div *ngIf="!content.showContents" class="side-by-side file-buttons">
           
@@ -147,6 +149,8 @@ import {RackService} from '../Racks/rack.service';
 //TODO: ENABLE RENAMING OF FILES AND FOLDERS
 //TODO: IMPLEMENT DELETION OF FILES AND FOLDERS
 export class FolderComponent{
+  contextMenuOptions = ['add file', 'add folder', 'delete', 'rename'];
+  showContextMenu = false;
   @Input() content: any;
   @Input() indent: any;
   @Input() currentDirectory: string;
@@ -165,6 +169,9 @@ export class FolderComponent{
     this.setView.next({a: this.currentDirectory, b: e});
   }
 
+  contextMenu(e:any){
+      this.showContextMenu = true;
+  }
   pushNewItemToService(e:any){
     if(e.inputValue !== 'cancel'){
         if(e.added === 'file'){

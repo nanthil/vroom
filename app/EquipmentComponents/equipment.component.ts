@@ -11,11 +11,13 @@ import {Component,
     template: `
         <e-modal [show]="showConfig"></e-modal>
         <div class="equipment" [ngClass]="{'nav-equipment': isNav}">
-        <img class="e-image" dnd-draggable [dragEnabled]="true"
-            [dragData]="transferData"
-            [alt]="name"
-            [src]="equipmentImg"
-            [style.height.px]="height" />
+            <div *ngIf="isActive || isNav">
+                <img class="e-image" dnd-draggable [dragEnabled]="true"
+                    [dragData]="transferData"
+                    [alt]="name"
+                    [src]="equipmentImg"
+                    [style.height.px]="height" />
+            </div>
         </div>
      `,
      styles: [ `
