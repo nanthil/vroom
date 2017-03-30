@@ -8,6 +8,7 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
         <add-new 
              [showModal]=showModal
              [whatToAdd]=typeToAdd
+             [whatAction]=action
              (newValue)="pushNewItemToService($event)"
         ></add-new>
         <div class="folder-nav">
@@ -139,6 +140,7 @@ export class FolderNavigationComponent{
     directory = 'home';
     showModal = false;
     typeToAdd = '';
+    aciton = 'Add New'
     argsToAdd: any[] = [];
     constructor(private rackService: RackService, private enclaveViewComponent: EnclaveViewComponent){}
 
@@ -156,7 +158,7 @@ export class FolderNavigationComponent{
     pushNewItemToService(e:any){
         this.showModal = !this.showModal;
         if(!(e.inputValue === 'cancel')){
-            this.rackService.addFolder(e.inputValue, this.directory)
+            this.rackService.findFolder(e.inputValue, this.directory, undefined)
         }
     }
 }

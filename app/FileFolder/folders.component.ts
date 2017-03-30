@@ -3,15 +3,21 @@ import {RackService} from '../Racks/rack.service';
 @Component({
   selector: 'folder',
   template: `
-  <context-menu [showContextMenu]="showContextMenu"
-                [options]="contextMenuOptions"></context-menu>
+
+    <context-menu [showContextMenu]="showContextMenu"
+                  [options]="contextMenuOptions"
+                  [x]="contextMenuX"
+                  [y]="contextMenuY"
+                  (selected)="handleContextMenu($event)"></context-menu>
+
   <add-new 
+             [whatAction]=whatAction
              [showModal]=showModal
              [whatToAdd]=whatToAdd
              (newValue)="pushNewItemToService($event)"
         ></add-new>
   <div [style.margin-left.px]="indent">
-    <div class="accordion-list"  (contextmenu)="contextMenu($event)">
+    <div class="accordion-list"  (contextmenu)="contextMenu($event, 'folder')">
       <div class="side-by-side">{{content.name}}</div>
       <div *ngIf="!content.showContents" class="side-by-side file-buttons">
           
@@ -47,7 +53,7 @@ import {RackService} from '../Racks/rack.service';
     <div *ngIf="content.showContents">
         <div *ngFor="let file of content.files">
             <div [style.margin-left.px]="indent +10">
-                <div class="accordion-list">
+                <div class="accordion-list" (contextmenu)="contextMenu($event, 'file', file)">
                     <div class="side-by-side">{{file}}</div>
                     <div class="side-by-side file-view">
                         <p class="side-by-side"><span (click)="changeView(file)"><a href="#" data-tooltip="Add new file.">Change View</a></span></p></div>
@@ -155,8 +161,13 @@ export class FolderComponent{
   @Input() indent: any;
   @Input() currentDirectory: string;
   showModal = false;
+  whatAction: string;
   whatToAdd: string;
+  oldFileNameForRenameFile: string;
   constructor(private rackService: RackService){}
+
+  contextMenuX = 0;
+  contextMenuY = 0;
 
   //Sets the current enclave view model
   //This event bubbles to the serverManagementPage
@@ -169,31 +180,58 @@ export class FolderComponent{
     this.setView.next({a: this.currentDirectory, b: e});
   }
 
-  contextMenu(e:any){
+  contextMenu(e:any, type:string, file:any){
+      //todo use content to know how to rename with the rackService
+      this.contextMenuOptions = type==='file' ? ['delete', 'rename'] : ['add file', 'add folder', 'delete', 'rename'];
       this.showContextMenu = true;
+      this.contextMenuX = e.screenX;
+      this.contextMenuY = e.screenY;
+      this.oldFileNameForRenameFile = file;
   }
   pushNewItemToService(e:any){
     if(e.inputValue !== 'cancel'){
-        if(e.added === 'file'){
-            this.rackService.addFile(e.inputValue, this.currentDirectory);
+        if(e.action === 'Rename'){
+            this.isFileOrFolder(e,
+                this.rackService.renameFile,
+                this.rackService.renameFolder);
         } else {
-            this.rackService.addFolder(e.inputValue, this.currentDirectory);
-        }
-    } 
+            this.isFileOrFolder(e,
+                this.rackService.addFileToDirectory,
+                this.rackService.addFolderToDirectory);
+        } 
+    }
     this.showModal = false;
   }
+  isFileOrFolder(e:any, actionFile:any, actionFolder:any){
+      
+      if(e.changed === 'file'){
+            this.rackService.findFile(e.inputValue, this.currentDirectory, actionFile, this.oldFileNameForRenameFile);
+        } else {
+            this.rackService.findFolder(e.inputValue, this.currentDirectory, actionFolder);
+        }
+  }
 
+  handleContextMenu(e:any){
+      if(e ==='add file'){
+          this.addNew('file', 'Add new');
+      } else if(e === 'add folder'){
+          this.addNew('folder', 'Add new');
+      } else if(e === 'remove'){
+          
+      } else if(e === 'rename'){
+          this.addNew(this.whatToAdd, 'Rename');
+      }
+      this.showContextMenu = false;
+  }
   //this does not add, it simply activates the add modal found in shared components
-  addNew(type:string){
+  addNew(type:string, action: string){
     this.showModal = true;
+    this.whatAction = action;
     this.whatToAdd = type;
   }
 
-  remove(){
-      //remove from racklist as well as from directory
-      //remove any nested data if necessary
-  }
-  rename(){
-      this.remove();
+  deleteFileFolder(type: string){
+      this.whatToAdd = type;
+      console.log(this.content, this.currentDirectory);
   }
 }

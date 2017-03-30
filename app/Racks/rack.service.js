@@ -41,7 +41,7 @@ var RackService = (function () {
         ];
     }
     //add file to the correct directory
-    RackService.prototype.addFile = function (name, directory) {
+    RackService.prototype.findFile = function (name, directory, action, oldFileName) {
         var localname = name;
         if (directory != '') {
             //this is a hack workaround javascript recursive implementation returning 'undefined'
@@ -63,12 +63,13 @@ var RackService = (function () {
                             name = localname + (highestNumber + 1);
                         }
                     }
-                    this.directoryToAdd.files.push(name);
+                    if (action !== undefined)
+                        action(this.directoryToAdd, name, oldFileName);
                 }
             }
         }
     };
-    RackService.prototype.addFolder = function (name, directory) {
+    RackService.prototype.findFolder = function (name, directory, action) {
         var localname = name;
         //TODO: FIX 
         //CURRENTLY DOES NOT CHECK FOR DUPLICATES IN THE HOME directory
@@ -98,17 +99,31 @@ var RackService = (function () {
                             name = localname + (highestNumber + 1);
                         }
                     }
-                    this.directoryToAdd.folders.push({
-                        name: name,
-                        showContents: false,
-                        files: [],
-                        folders: [],
-                        tags: []
-                    });
+                    //do
+                    if (action !== undefined)
+                        action(this.directoryToAdd, name);
                 }
                 ;
             }
         }
+    };
+    RackService.prototype.addFileToDirectory = function (directory, name) {
+        directory.files.push(name);
+    };
+    RackService.prototype.addFolderToDirectory = function (directory, name) {
+        directory.folders.push({
+            name: name,
+            showContents: false,
+            files: [],
+            folders: [],
+            tags: []
+        });
+    };
+    RackService.prototype.renameFile = function (directory, name, oldFileName) {
+        directory.files = directory.files.map(function (x) { return x = x === oldFileName ? name : x; });
+    };
+    RackService.prototype.renameFolder = function (directory, name) {
+        directory.name = name;
     };
     //Check to see if there are more folders in the found directory 
     RackService.prototype.recursiveIterate = function (directories, obj) {

@@ -23,7 +23,6 @@ function detectBrowsers(){
             foundBrowsers = items;
             deferred.resolve(foundBrowsers);
         }
-            
     });
     return deferred.promise();
 }

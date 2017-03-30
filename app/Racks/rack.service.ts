@@ -12,7 +12,7 @@ export class RackService{
     directoryToAdd: any;
 
     //add file to the correct directory
-    addFile(name:string, directory: string){
+    findFile(name:string, directory: string, action: any, oldFileName: any){
         var localname = name;
         
         if(directory != ''){
@@ -37,14 +37,15 @@ export class RackService{
                             
                             name = localname + (highestNumber + 1);
                         }
+
                     }
-                    this.directoryToAdd.files.push(name);
+                    if(action !== undefined) action(this.directoryToAdd, name, oldFileName);
                 }
             }
         }
     }
     
-    addFolder(name: string, directory: string){
+    findFolder(name: string, directory: string, action: any){
         var localname = name;
 
         //TODO: FIX 
@@ -80,16 +81,30 @@ export class RackService{
                             name = localname + (highestNumber + 1);
                         }
                     }
-                    this.directoryToAdd.folders.push({
+                    //do
+                   if(action !== undefined) action(this.directoryToAdd, name);
+                };
+            }
+        }
+    }
+    addFileToDirectory(directory: any, name:string){
+        
+        directory.files.push(name);
+    }
+    addFolderToDirectory(directory: any, name: string){
+         directory.folders.push({
                         name: name,
                         showContents: false,
                         files: [],
                         folders: [],
                         tags: []
                     });
-                };
-            }
-        }
+    }
+    renameFile(directory:any, name:string, oldFileName:any){
+        directory.files = directory.files.map((x:any) => x = x === oldFileName ? name : x);
+    }
+    renameFolder(directory:any, name:string){
+        directory.name = name;
     }
 
     //Check to see if there are more folders in the found directory 

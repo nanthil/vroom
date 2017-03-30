@@ -22,8 +22,12 @@
       var os = require('os');
       var registry = require('winreg');
       var $ = require('jquery');
+      var puttyPath = '';
     </script>
+
     <script src="app/NativeOperations/detectBrowsers.js"></script>
+    <script src="app/NativeOperations/checkForPutty.js"></script>
+
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
