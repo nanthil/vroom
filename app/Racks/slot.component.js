@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var rack_component_1 = require('./rack.component');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var rack_component_1 = require("./rack.component");
 var SlotComponent = (function () {
     function SlotComponent(rackComponent, zone) {
         this.rackComponent = rackComponent;
@@ -47,41 +48,41 @@ var SlotComponent = (function () {
             this.showConfig = !this.showConfig;
         }
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Number)
-    ], SlotComponent.prototype, "slotid", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], SlotComponent.prototype, "equipmentObject", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Boolean)
-    ], SlotComponent.prototype, "equipmentActive", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], SlotComponent.prototype, "updateRack", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Number)
-    ], SlotComponent.prototype, "height", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Boolean)
-    ], SlotComponent.prototype, "isNav", void 0);
-    SlotComponent = __decorate([
-        core_1.Component({
-            selector: 'slot',
-            template: "\n            <div class=\"slot\" \n                (mouseover)=\"changeStyle($event)\" (mouseout)=\"changeStyle($event)\"\n                dnd-droppable\n                (onDropSuccess)=\"_updateRack($event)\"\n                [style.height.px]=\"height\"\n                [ngClass]=\"{'slot-mouseover': !hover || equipmentActive}\"\n                [ngClass]=\"{'transparent': equipmentObject.e.name !== 'Empty'}\">\n                <single-equipment \n                    [isNav]=\"isNav\"\n                    (click)=\"toggleConfig()\"\n                    [width]=\"equipmentObject.w\"\n                    [height]=\"equipmentObject.e.height * 19.55\"\n                    [equipment]=\"equipmentObject.e\"\n                    [isActive]=\"equipmentActive\"\n                    [showConfig]=\"showConfig\"\n                >\n                </single-equipment>\n\n            </div>\n            ",
-            styles: [
-                " \n        .transparent {\n            opacity: 0;\n        }\n        .slot {\n            margin-left: 34.3px;\n            background-color: blue;\n            width: 200px;\n        }\n        .slot-mouseover{\n            background: blue;\n            opacity: .5 !important;\n        }\n     "
-            ]
-        }), 
-        __metadata('design:paramtypes', [rack_component_1.RackComponent, core_1.NgZone])
-    ], SlotComponent);
     return SlotComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], SlotComponent.prototype, "slotid", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], SlotComponent.prototype, "equipmentObject", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], SlotComponent.prototype, "equipmentActive", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], SlotComponent.prototype, "updateRack", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], SlotComponent.prototype, "height", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], SlotComponent.prototype, "isNav", void 0);
+SlotComponent = __decorate([
+    core_1.Component({
+        selector: 'slot',
+        template: "\n            <div class=\"slot\" \n                (mouseover)=\"changeStyle($event)\" (mouseout)=\"changeStyle($event)\"\n                dnd-droppable\n                (onDropSuccess)=\"_updateRack($event)\"\n                [style.height.px]=\"height\"\n                [ngClass]=\"{'slot-mouseover': !hover || equipmentActive}\"\n                [ngClass]=\"{'transparent': equipmentObject.e.name !== 'Empty'}\">\n                <single-equipment \n                    [isNav]=\"isNav\"\n                    (click)=\"toggleConfig()\"\n                    [width]=\"equipmentObject.w\"\n                    [height]=\"equipmentObject.e.height * 19.55\"\n                    [equipment]=\"equipmentObject.e\"\n                    [isActive]=\"equipmentActive\"\n                    [showConfig]=\"showConfig\"\n                >\n                </single-equipment>\n\n            </div>\n            ",
+        styles: [
+            " \n        .transparent {\n            opacity: 0;\n        }\n        .slot {\n            margin-left: 34.3px;\n            background-color: blue;\n            width: 200px;\n        }\n        .slot-mouseover{\n            background: blue;\n            opacity: .5 !important;\n        }\n     "
+        ]
+    }),
+    __metadata("design:paramtypes", [rack_component_1.RackComponent, core_1.NgZone])
+], SlotComponent);
 exports.SlotComponent = SlotComponent;
 //# sourceMappingURL=slot.component.js.map

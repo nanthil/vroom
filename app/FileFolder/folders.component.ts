@@ -181,6 +181,7 @@ export class FolderComponent{
   }
 
   contextMenu(e:any, type:string, file:any){
+      console.log(e.screenX, e.screenY);
       //todo use content to know how to rename with the rackService
       this.contextMenuOptions = type==='file' ? ['delete', 'rename'] : ['add file', 'add folder', 'delete', 'rename'];
       this.showContextMenu = true;

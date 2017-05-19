@@ -1,82 +1,72 @@
 {
     "1u":{
-        "Generic Control Station":{
+        "CISCO 3048":{
             "height": 1,
             "equipmentType": "",
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "Generic Control Station"
-        },
-        "Cisco UCS 6148UP":{
-            "height": 1,
-            "equipmentType": 1,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "Cisco UCS 6148UP"
-        },
-        "Cisco Nexu 3948T":{
-            "height": 1,
-            "equipmentType": 2,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "Cisco Nexu 3948T"
-        }, 
-        "EMC RecoverPoint":{
-            "height": 1,
-            "equipmentType": 3,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "EMC RecoverPoint"
+            "imgUrl": "./app/EquipmentComponents/img/Cisco-3048PX.PNG",
+            "name": "CISCO 3048"
         }
     },
     "2u":{
-        "Cisco UCS 6296UP":{
+        "Cisco-6296-FI":{
             "height": 2,
             "equipmentType": 1,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "Cisco UCS 6296UP"
+            "imgUrl": "./app/EquipmentComponents/img/Cisco-6296-FI.PNG",
+            "name": "Cisco-6296-FI"
         },
-        "EMC Data Movers":{
+        "Cisco-C240M-CSeries":{
             "height": 2,
-            "equipmentType": 3,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "EMC Data Movers"
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/Cisco-C240M-CSeries.PNG",
+            "name": "Cisco-C240M-CSeries"
         },
-        "EMC Disk Array Enc 2.5":{
+        "Cisco-Nexus-9396UP":{
             "height": 2,
-            "equipmentType": 3,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "EMC Disk Array Enc 2.5"
-        }, 
-        "Cisco Nexus 5596UP":{
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/Cisco-Nexus-9396UP.PNG",
+            "name": "Cisco-Nexus-9396UP"
+        },
+        "DAE-2U":{
             "height": 2,
-            "equipmentType": 2,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "Cisco Nexus 5596UP"
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/DAE-2U.PNG",
+            "name": "DAE-2U"
+        },
+        "EMC-VNX8000-DM-2U":{
+            "height": 2,
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/EMC-VNX8000-DM-2U.PNG",
+            "name": "EMC-VNX8000-DM-2U"
+        },
+        "EMC-VNX8000-SP-SPS-":{
+            "height": 2,
+            "equipmentType": 1,
+            "imgUrl": "./app/EquipmentComponents/img/EMC-VNX8000-SP-SPS-.PNG",
+            "name": "EMC-VNX8000-SP-SPS"
         }
     },
     "3u":{
-        "EMC Disk Array Enc 3.6":{
+        "DAE-3U":{
             "height": 3,
             "equipmentType": 3,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "EMC Disk Array Enc 3.6"
-        },
-        "EMC Storage Processors":{
-            "height": 3,
+            "imgUrl": "./app/EquipmentComponents/img/DAE-3U.PNG",
+            "name": "DAE-3U"
+        }
+    },
+    "4u":{
+        "EMC-VNX8000-SP-4U":{
+            "height": 4,
             "equipmentType": 3,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "EMC Storage Processors"
+            "imgUrl": "./app/EquipmentComponents/img/EMC-VNX8000-SP-4U.PNG",
+            "name": "EMC-VNX8000-SP-4U"
         }
     },
     "6u":{
-        "Cisco UCS 5108 Blade Chassis":{
+        "Cisco-5108-BSeries":{
             "height": 6,
             "equipmentType": 1,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "Cisco UCS 5108 Blade Chassis"
-        },
-        "EMC XtremIO Single":{
-            "height": 6,
-            "equipmentType": 3,
-            "imgUrl": "./app/EquipmentComponents/img/unnamed.jpg",
-            "name": "EMC XtremIO Single"
+            "imgUrl": "./app/EquipmentComponents/img/CIsco-5108-BSeries.PNG",
+            "name": "Cisco-5108-BSeries"
         }
     }
 }

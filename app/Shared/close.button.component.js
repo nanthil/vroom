@@ -8,7 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var CloseButtonComponent = (function () {
     function CloseButtonComponent() {
         this.close = new core_1.EventEmitter();
@@ -16,19 +17,18 @@ var CloseButtonComponent = (function () {
     CloseButtonComponent.prototype.closeWindow = function (e) {
         this.close.next(e);
     };
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], CloseButtonComponent.prototype, "close", void 0);
-    CloseButtonComponent = __decorate([
-        core_1.Component({
-            selector: 'close',
-            template: "\n        <span class=\"close-button glyphicon glyphicon-remove\"\n            (click)=\"closeWindow(e)\"></span>\n    ",
-            styles: ["\n        .close-button {\n            float:right;\n            background: #cc5588;\n        }\n        .close-button:hover{\n            color: #cc5588;\n            background: none;\n        }\n    "]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], CloseButtonComponent);
     return CloseButtonComponent;
 }());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CloseButtonComponent.prototype, "close", void 0);
+CloseButtonComponent = __decorate([
+    core_1.Component({
+        selector: 'close',
+        template: "\n        <span class=\"close-button glyphicon glyphicon-remove\"\n            (click)=\"closeWindow(e)\"></span>\n    ",
+        styles: ["\n        .close-button {\n            float:right;\n            background: #cc5588;\n        }\n        .close-button:hover{\n            color: #cc5588;\n            background: none;\n        }\n    "]
+    })
+], CloseButtonComponent);
 exports.CloseButtonComponent = CloseButtonComponent;
 //# sourceMappingURL=close.button.component.js.map

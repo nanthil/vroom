@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var rack_service_1 = require('../Racks/rack.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var rack_service_1 = require("../Racks/rack.service");
 var EnclaveViewComponent = (function () {
     function EnclaveViewComponent(rackService) {
         this.rackService = rackService;
@@ -19,18 +20,18 @@ var EnclaveViewComponent = (function () {
         var result = this.rackService.getRacksByPath(this.currentView);
         return result;
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', String)
-    ], EnclaveViewComponent.prototype, "currentView", void 0);
-    EnclaveViewComponent = __decorate([
-        core_1.Component({
-            selector: 'single-enclave',
-            template: "\n        <div *ngIf=\"currentView !== 'undefined'\">\n            <all-racks\n                [racks]=\"testmessage\"\n                [currentView]=currentView\n            ></all-racks>\n        </div>\n          \n        \n    "
-        }), 
-        __metadata('design:paramtypes', [rack_service_1.RackService])
-    ], EnclaveViewComponent);
     return EnclaveViewComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], EnclaveViewComponent.prototype, "currentView", void 0);
+EnclaveViewComponent = __decorate([
+    core_1.Component({
+        selector: 'single-enclave',
+        template: "\n        <div *ngIf=\"currentView !== 'undefined'\">\n            <all-racks\n                [racks]=\"testmessage\"\n                [currentView]=currentView\n            ></all-racks>\n        </div>\n          \n        \n    "
+    }),
+    __metadata("design:paramtypes", [rack_service_1.RackService])
+], EnclaveViewComponent);
 exports.EnclaveViewComponent = EnclaveViewComponent;
 //# sourceMappingURL=enclave.view.component.js.map
