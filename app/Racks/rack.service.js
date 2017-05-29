@@ -10,6 +10,21 @@ var core_1 = require("@angular/core");
 // Import RxJs required methods
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
+//TODO:
+//data format
+//[0] project
+// -> folders
+//      -> folders
+//      -> files
+//          -> enclaves
+//              -> equipment
+//                  -> config
+//[1]active files
+//TODO: for active files
+//when a file or folder is renamed,
+//figure out the path to the file
+//look to see if that is in the active files
+//rename that file or folder
 var RackService = (function () {
     function RackService() {
         this.testNewData = [];

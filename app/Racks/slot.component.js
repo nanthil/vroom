@@ -79,7 +79,7 @@ SlotComponent = __decorate([
         selector: 'slot',
         template: "\n            <div class=\"slot\" \n                (mouseover)=\"changeStyle($event)\" (mouseout)=\"changeStyle($event)\"\n                dnd-droppable\n                (onDropSuccess)=\"_updateRack($event)\"\n                [style.height.px]=\"height\"\n                [ngClass]=\"{'slot-mouseover': !hover || equipmentActive}\"\n                [ngClass]=\"{'transparent': equipmentObject.e.name !== 'Empty'}\">\n                <single-equipment \n                    [isNav]=\"isNav\"\n                    (click)=\"toggleConfig()\"\n                    [width]=\"equipmentObject.w\"\n                    [height]=\"equipmentObject.e.height * 19.55\"\n                    [equipment]=\"equipmentObject.e\"\n                    [isActive]=\"equipmentActive\"\n                    [showConfig]=\"showConfig\"\n                >\n                </single-equipment>\n\n            </div>\n            ",
         styles: [
-            " \n        .transparent {\n            opacity: 0;\n        }\n        .slot {\n            margin-left: 34.3px;\n            background-color: blue;\n            width: 200px;\n        }\n        .slot-mouseover{\n            background: blue;\n            opacity: .5 !important;\n        }\n     "
+            " \n        .transparent {\n        }\n        .slot {\n            margin-left: 34.3px;\n            width: 200px;\n        }\n        .slot-mouseover{\n        }\n     "
         ]
     }),
     __metadata("design:paramtypes", [rack_component_1.RackComponent, core_1.NgZone])

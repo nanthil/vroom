@@ -8,7 +8,7 @@ import {MainNavigationComponent} from '../Navigation/main.navigation.component';
 @Component({
     selector: 'management-page',
     template: `
-        <tag-manager></tag-manager>
+        <!--<tag-manager></tag-manager>-->
         <div class="main-view">
             <nav>
                 <ul class="nav nav-pills list-inline enclave-bar">

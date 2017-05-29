@@ -18,7 +18,6 @@ import {RackService} from './rack.service';
         .racks {
             float:left;
             margin-left:5px;
-
         }
     `]
 })

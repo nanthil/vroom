@@ -37,7 +37,7 @@ RacksComponent = __decorate([
     core_1.Component({
         selector: 'all-racks',
         template: "\n        <button (click)=\"addNewRack()\">Add New Rack</button>\n\n        <div *ngFor=\"let rack of getRacksByPath(currentView)\">\n            <single-rack class=\"racks\" \n                [slots]=rack.slots \n                [rackId]=\"rack.id\" \n                [directory]=\"currentView\">\n            </single-rack>\n        </div>\n    ",
-        styles: ["\n        .racks {\n            float:left;\n            margin-left:5px;\n\n        }\n    "]
+        styles: ["\n        .racks {\n            float:left;\n            margin-left:5px;\n        }\n    "]
     }),
     __metadata("design:paramtypes", [rack_service_1.RackService])
 ], RacksComponent);

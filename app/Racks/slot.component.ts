@@ -28,16 +28,12 @@ import { EquipmentModalComponent } from '../EquipmentComponents/equipmentModal.c
     styles: [
       ` 
         .transparent {
-            opacity: 0;
         }
         .slot {
             margin-left: 34.3px;
-            background-color: blue;
             width: 200px;
         }
         .slot-mouseover{
-            background: blue;
-            opacity: .5 !important;
         }
      `
     ]

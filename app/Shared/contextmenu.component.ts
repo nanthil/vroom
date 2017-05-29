@@ -32,5 +32,6 @@ export class ContextMenuComponent{
    @Input() options: any = [];
    @Input() x: any;
    @Input() y: any;
-   
+   //TODO on selecting an option, output that option
+   //@Output() selected: any;
 }

@@ -13,6 +13,8 @@ var core_1 = require("@angular/core");
 var ContextMenuComponent = (function () {
     function ContextMenuComponent() {
         this.options = [];
+        //TODO on selecting an option, output that option
+        //@Output() selected: any;
     }
     return ContextMenuComponent;
 }());

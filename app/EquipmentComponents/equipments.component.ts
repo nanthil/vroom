@@ -22,7 +22,7 @@ import { EquipmentService } from './equipment.services';
         list-style-type: none;
         display: list-item;
         border: 3px solid #73AD21;
-        height: 400px;
+        height: 400px; 
     }`],
     providers: [EquipmentService]
 })
