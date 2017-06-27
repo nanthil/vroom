@@ -5,17 +5,16 @@ import {RackService} from './rack.service';
     selector: 'single-rack',
     template: `
       <div class="rack">
-         <div *ngFor="let s of rackService.siteList[rackService.currentSite.site]
-            .buildings[rackService.currentSite.building]
-            .datacenters[rackService.currentSite.datacenter]
-            .rooms[room]
-            .enclaves[enclave].racks[rackId]">
+         <div *ngFor="let s of slots">
           <slot *ngIf="!s.shouldHideSlot"
+            [rackId]="rackId"
+            [isNav]="false"
             [equipmentObject]=s.object
             [slotid]=s.slotid
             [height]="s.object.e.height * 19.55"
             [equipmentActive]=s.equipmentActive
             (updateRack)="callUpdateService($event)"
+            (newConfig)="recieveNewConfig($event)"
           ></slot>
         </div>
       </div>`,
@@ -35,15 +34,23 @@ export class RackComponent{
     rackWidth = 190;
     rackName = "rack";
     @Input() rackId: number;
-    
-    @Input() room:number;
-    @Input() enclave:number;
+    @Input() directory:string;
+    @Input() slots: any;
+    recieveNewConfig(e:any){
+        this.rackService.updateEquipmentConfigInRack(this.directory, this.rackId, e.slotid, e.e);
+    }
     constructor(private rackService: RackService){}
     callUpdateService(e:any){
-      let success = this.rackService.updateRack(this.room, this.enclave, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
-      if(!success){
-        //error
-        console.log('error');
+      
+      if(e.delete) this.rackService.deleteSlot(this.directory, this.rackId, e.eventObject.dragData.relocateInRack.oldRackId, e.id, e.eventObject.dragData.relocateInRack.oldSlot, e.eventObject.dragData.e);
+      
+      else {
+        
+        let success = this.rackService.updateRack(this.directory, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
+        if(!success){
+          //error
+          console.log('Failed to add new component to the rack. Please try again.');
+        }
       }
     }
 }

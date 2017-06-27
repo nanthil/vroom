@@ -6,7 +6,7 @@ import {RackService} from '../Racks/rack.service';
     template: `
         <div *ngIf="showModal" class="addmodal"> 
             <div class="add-form">
-                Add new {{whatToAdd}} <input type="text" name="dname" [(ngModel)]="inputValue"><br>
+                {{whatAction}} {{whatToAdd}} <input type="text" name="dname" [(ngModel)]="inputValue"><br>
                 <div (click)="_newValue()" class="btn btn-primary">Submit</div>
                 <div (click)="_cancel()" class="btn btn-danger">Cancel</div>
             </div>
@@ -35,22 +35,29 @@ import {RackService} from '../Racks/rack.service';
         }
     `]
 })
-export class AddNewSiteModalComponent{
+export class AddNewFileFolderModalComponent{
     inputValue: string = '';
     showError = false;
     @Input() showModal: boolean;
+    @Input() whatAction: string;
     @Input() whatToAdd: string;
     @Output() newValue = new EventEmitter();
     private _newValue(){
         if(this.inputValue.length === 0){
             this.showError = true;
         } else {
-            this.newValue.emit({added: this.whatToAdd,inputValue: this.inputValue})
+            this.newValue.emit({
+                action: this.whatAction, 
+                changed: this.whatToAdd, 
+                inputValue: this.inputValue})
             this.inputValue = '';
         }
     }
     private _cancel(){
-        this.newValue.emit({added: this.whatToAdd, inputValue: 'cancel'})
+        this.newValue.emit({
+            action: this.whatToAdd, 
+            changed: this.whatToAdd, 
+            inputValue: 'cancel'})
         this.inputValue = '';
     }
 }

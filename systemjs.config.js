@@ -32,7 +32,7 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
 
       //public
-      'ng2-dnd': './node_modules/ng2-dnd',
+      'ng2-dnd': 'npm:ng2-dnd/bundles/index.umd.js',
       'ng2-popup': 'node_modules/ng2-popup/dist'
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -42,10 +42,10 @@
         defaultExtension: 'js',
       }, 
       'ng2-popup': { main: 'ng2-popup.umd.js', defaultExtension: 'js' },
-      'ng2-dnd':  {
-         main: 'index.js',  
-         defaultExtension: 'js' 
-        },
+      // 'ng2-dnd':  {
+      //    main: 'index.js',  
+      //    defaultExtension: 'js' 
+      //   },
       rxjs: {
         defaultExtension: 'js'
       }

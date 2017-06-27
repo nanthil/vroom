@@ -3,7 +3,7 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { AppComponent }  from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, FormBuilder, FormGroup} from '@angular/forms';
 
 //public
 import { DndModule } from 'ng2-dnd';
@@ -20,11 +20,20 @@ import {RackService} from './Racks/rack.service';
 import {SlotComponent} from './Racks/slot.component';
 
 import {ServerManagementComponent} from './ServerManagementPage/ServerManagementPage.component';
-import {AddNewSiteModalComponent} from './ServerManagementPage/addSiteModal.component';
-import {NavigationComponent} from './ServerManagementPage/navigation.component';
+import {AddNewFileFolderModalComponent} from './Shared/addnew.filefolder.component';
+import {MainNavigationComponent} from './Navigation/main.navigation.component';
 
-import {SiteNavigationComponent} from './Sites/siteNavigation.component';
-import {SiteComponent} from './Sites/site.component'
+import {FolderNavigationComponent} from './Navigation/folder.navigation.component';
+import {EnclaveViewComponent} from './Enclaves/enclave.view.component';
+
+//import {FileComponent} from './FileFolder/files.component';
+import {FolderComponent} from './FileFolder/folders.component';
+import {TagManagerComponent} from './Shared/tag.manager';
+import {TitleBarComponent} from './Shared/title.bar.component';
+import {CloseButtonComponent} from './Shared/close.button.component'
+import {ContextMenuComponent} from './Shared/contextMenu.component';
+import {DropDownComponent} from './Shared/dropDown.component';
+import {FileViewerComponent} from './Shared/fileViewer.component';
 
 
 @NgModule({
@@ -43,12 +52,19 @@ import {SiteComponent} from './Sites/site.component'
     RackComponent,
     RacksComponent,
     ServerManagementComponent,
-    NavigationComponent,
-    SiteNavigationComponent,
-    SiteComponent,
-    AddNewSiteModalComponent
+    MainNavigationComponent,
+    FolderNavigationComponent,
+    EnclaveViewComponent,
+    AddNewFileFolderModalComponent,
+    TagManagerComponent,
+    TitleBarComponent,
+    CloseButtonComponent,
+    FolderComponent,
+    ContextMenuComponent,
+    DropDownComponent,
+    FileViewerComponent
    ],
-   providers: [RackService, SiteComponent],
+   providers: [RackService, EnclaveViewComponent,FormBuilder],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
