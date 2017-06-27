@@ -12,6 +12,7 @@ import { EquipmentService } from './equipment.services';
                     [height]="e.height * 19.55"
                     [equipment]="e"
                     [isActive]="equipmentIsActive">
+                    [moveActiveEquipmentToNewSlot]="emptyObject"
                     </single-equipment>
                 </li>
             <ul>
@@ -21,8 +22,11 @@ import { EquipmentService } from './equipment.services';
         overflow:auto;
         list-style-type: none;
         display: list-item;
-        border: 3px solid #73AD21;
-        height: 400px; 
+        border-width: 10px;
+        border-style: ridge;
+        border-color: #344c5b;
+        background-color: #25272b;
+        height: 600px; 
     }`],
     providers: [EquipmentService]
 })
@@ -31,6 +35,7 @@ export class EquipmentsComponent{
     @Input() width: number;
     equipmentJson = new Array();
     equipmentIsActive = false;
+    emptyObject = {};
 
     constructor(private equipmentService: EquipmentService){
         this.generateDefaultEquipment();

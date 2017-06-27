@@ -3,7 +3,7 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { AppComponent }  from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, FormBuilder, FormGroup} from '@angular/forms';
 
 //public
 import { DndModule } from 'ng2-dnd';
@@ -32,6 +32,8 @@ import {TagManagerComponent} from './Shared/tag.manager';
 import {TitleBarComponent} from './Shared/title.bar.component';
 import {CloseButtonComponent} from './Shared/close.button.component'
 import {ContextMenuComponent} from './Shared/contextMenu.component';
+import {DropDownComponent} from './Shared/dropDown.component';
+import {FileViewerComponent} from './Shared/fileViewer.component';
 
 
 @NgModule({
@@ -58,9 +60,11 @@ import {ContextMenuComponent} from './Shared/contextMenu.component';
     TitleBarComponent,
     CloseButtonComponent,
     FolderComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    DropDownComponent,
+    FileViewerComponent
    ],
-   providers: [RackService, EnclaveViewComponent],
+   providers: [RackService, EnclaveViewComponent,FormBuilder],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

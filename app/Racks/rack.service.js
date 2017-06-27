@@ -5,36 +5,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+require("../NativeOperations/saveAndReadProjects");
 // Import RxJs required methods
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
-//TODO:
-//data format
-//[0] project
-// -> folders
-//      -> folders
-//      -> files
-//          -> enclaves
-//              -> equipment
-//                  -> config
-//[1]active files
-//TODO: for active files
-//when a file or folder is renamed,
-//figure out the path to the file
-//look to see if that is in the active files
-//rename that file or folder
 var RackService = (function () {
-    function RackService() {
+    function RackService(zone) {
         this.testNewData = [];
-        this.thereIsADatacenter = false;
-        this.currentSite = {
-            site: -1,
-            building: -1,
-            datacenter: -1
-        };
-        this.rackList = [];
+        this.rackList = {};
         this.browsers = [
             {
                 installed: false,
@@ -52,7 +35,23 @@ var RackService = (function () {
                 img: './app/EquipmentComponents/img/ie-active.png'
             }
         ];
+        this.emptySlot = {
+            'config': {},
+            'e': {
+                'name': 'Empty',
+                'imgUrl': '',
+                'height': 1
+            },
+            'w': 190
+        };
+        this.getFiles(zone);
     }
+    RackService.prototype.getFiles = function (z) {
+        var _this = this;
+        getAllFilesFromPath().done(function (d) {
+            z.run(function () { return _this.files = d; });
+        });
+    };
     //add file to the correct directory
     RackService.prototype.findFile = function (name, directory, action, oldFileName) {
         var localname = name;
@@ -123,14 +122,38 @@ var RackService = (function () {
     RackService.prototype.addFileToDirectory = function (directory, name) {
         directory.files.push(name);
     };
-    RackService.prototype.addFolderToDirectory = function (directory, name) {
+    RackService.prototype.addFolderToDirectory = function (directory, name, projectFolder) {
         directory.folders.push({
+            project: projectFolder ? true : false,
             name: name,
             showContents: false,
             files: [],
             folders: [],
             tags: []
         });
+    };
+    RackService.prototype.renameFileInRackList = function (oldDirectoryName, newDirectoryName, folder) {
+        if (folder === undefined) {
+            this.rackList[newDirectoryName] = this.clone(this.rackList[oldDirectoryName]);
+            if (this.shitToDeleteBecauseReasons === undefined)
+                this.shitToDeleteBecauseReasons = [oldDirectoryName];
+            else
+                this.shitToDeleteBecauseReasons.push(oldDirectoryName);
+        }
+        else {
+            //TODO actually create the new item in the racklist, and then set up for deletion the old folders etc
+            console.log('fix me mother fuker');
+        }
+    };
+    RackService.prototype.clone = function (obj) {
+        if (null == obj || "object" != typeof obj)
+            return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr))
+                copy[attr] = obj[attr];
+        }
+        return copy;
     };
     RackService.prototype.renameFile = function (directory, name, oldFileName) {
         directory.files = directory.files.map(function (x) { return x = x === oldFileName ? name : x; });
@@ -172,9 +195,9 @@ var RackService = (function () {
         return this.rackList[directory];
     };
     RackService.prototype.updateBrowsers = function (result) {
-        this.browsers = [];
         for (var i = 0; i < result.length; i++) {
             if (result[i].toLowerCase().includes('firefox')) {
+                this.browsers = this.browsers.filter(function (a) { return a.name !== 'Firefox'; });
                 this.browsers.push({
                     installed: true,
                     name: 'Firefox',
@@ -182,6 +205,7 @@ var RackService = (function () {
                 });
             }
             else if (result[i].toLowerCase().includes('chrome')) {
+                this.browsers = this.browsers.filter(function (a) { return a.name !== 'Chrome'; });
                 this.browsers.push({
                     installed: true,
                     name: 'Chrome',
@@ -189,6 +213,7 @@ var RackService = (function () {
                 });
             }
             else if (result[i].toLowerCase().includes('iexplore')) {
+                this.browsers = this.browsers.filter(function (a) { return a.name !== 'IE'; });
                 this.browsers.push({
                     installed: true,
                     name: 'IE',
@@ -196,29 +221,19 @@ var RackService = (function () {
                 });
             }
         }
-        console.log(this.browsers);
     };
     RackService.prototype.generateEmptyRack = function (directory) {
-        console.log(directory);
         var slotArray = [];
         var rackSize = 42;
         var rackWidth = 190;
         var shouldHideSlot = false;
-        var emptySlot = {
-            'e': {
-                'name': 'Empty',
-                'imgUrl': '',
-                'height': 1
-            },
-            'w': 190
-        };
         var rackCount = 1;
         for (var i = 0; i < rackSize; i++) {
             slotArray.push({
                 'equipmentActive': false,
                 'slotid': i,
                 'shouldHideSlot': shouldHideSlot,
-                'object': emptySlot,
+                'object': this.emptySlot,
             });
         }
         if (this.rackList[directory] === undefined) {
@@ -226,6 +241,23 @@ var RackService = (function () {
         }
         var rackID = 'rack-' + this.rackList[directory].length;
         this.rackList[directory].push({ id: rackID, slots: slotArray });
+    };
+    RackService.prototype.deleteSlot = function (directory, newRackId, oldRackId, newSlotId, oldSlotId, e) {
+        if (this.checkSlotsForValid(directory, newRackId, newSlotId, e.height)) {
+            this.rackList[directory][oldRackId.toString().split('-')[1]].slots[oldSlotId].equipmentActive = false;
+            this.rackList[directory][oldRackId.toString().split('-')[1]].slots[oldSlotId].object = this.emptySlot;
+            var slotsToUnconsume = e.height;
+            while (slotsToUnconsume > 0) {
+                this.rackList[directory][oldRackId.toString().split('-')[1]].slots[oldSlotId + slotsToUnconsume].shouldHideSlot = false;
+                slotsToUnconsume--;
+            }
+        }
+    };
+    RackService.prototype.updateEquipmentConfigInRack = function (directory, rackId, slotId, config) {
+        //this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId].equipmentActive = activeStatus;
+        console.log(this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId]);
+        console.log(slotId);
+        this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId].object.config = config;
     };
     RackService.prototype.updateRack = function (directory, rackId, slotId, newSlotValue, activeStatus) {
         var success = false;
@@ -241,7 +273,8 @@ var RackService = (function () {
             this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId].equipmentActive = activeStatus;
             this.rackList[directory][rackId.toString().split('-')[1]].slots[slotId].object = {
                 e: newSlotValue.e,
-                w: newSlotValue.w
+                w: newSlotValue.w,
+                id: newSlotValue.id
             };
             this.consumeSlots(directory, rackId, slotId, newSlotValue.e.height);
         }
@@ -252,7 +285,8 @@ var RackService = (function () {
         numberOfSlotsToConsume = numberOfSlotsToConsume - 1;
         while (numberOfSlotsToConsume > 0) {
             //check to see if slot is occupied and active already
-            if (this.rackList[directory][rackId.toString().split('-')[1]].slots[indexToConsume].equipmentActive) {
+            if (this.rackList[directory][rackId.toString().split('-')[1]].slots[indexToConsume].equipmentActive ||
+                this.rackList[directory][rackId.toString().split('-')[1]].slots[indexToConsume].shouldHideSlot) {
                 //if so, don't add, slot is occupied and configured
                 return false;
             }
@@ -271,13 +305,44 @@ var RackService = (function () {
             numberOfSlotsToConsume--;
         }
     };
-    RackService.prototype.getSavedRack = function (args) {
-        return new Array;
+    RackService.prototype.resetStateForNewProject = function () {
+        this.rackList = {};
+        this.testNewData = [];
+        this.projectName = undefined;
+    };
+    RackService.prototype.nameProject = function (name) {
+        this.projectName = name;
+    };
+    RackService.prototype.save = function () {
+        var _this = this;
+        var saveState = {};
+        saveState['data'] = {};
+        saveState['data']['files'] = this.testNewData;
+        saveState['data']['racks'] = this.clone(this.rackList);
+        console.log(this.rackList, '[save state]:', saveState);
+        saveProject(this.projectName, JSON.stringify(saveState));
+        if (this.shitToDeleteBecauseReasons !== undefined) {
+            this.shitToDeleteBecauseReasons.map(function (x) { delete _this.rackList[x]; });
+            this.shitToDeleteBecauseReasons = [];
+        }
+        ;
+    };
+    RackService.prototype.open = function (name, z) {
+        var _this = this;
+        readProject(name).done(function (d) {
+            console.log(d);
+            z.run(function () {
+                _this.projectName = name.replace('.txt', '');
+                _this.rackList = d.data.racks;
+                _this.testNewData = d.data.files;
+            });
+        });
     };
     return RackService;
 }());
 RackService = __decorate([
-    core_1.Injectable()
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [core_1.NgZone])
 ], RackService);
 exports.RackService = RackService;
 //# sourceMappingURL=rack.service.js.map

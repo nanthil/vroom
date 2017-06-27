@@ -15,17 +15,14 @@
     <script src="./app/NativeOperations/PuttyInstaller.js"></script>
     <script src="systemjs.config.js"></script>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="node_modules/ng2-dnd/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script>
-      window.addEventListener('click', e => {
-        console.log(e);
-      }, true);
+      //all node require needs to be on window for access at all times in the application
       var os = require('os');
       var registry = require('winreg');
       var $ = require('jquery');
-      var puttyPath = '';
+      var fs = require('fs');
+      window.uuidV4 = require('uuid/v4');
     </script>
 
     <script src="app/NativeOperations/detectBrowsers.js"></script>

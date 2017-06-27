@@ -18,11 +18,18 @@ var RackComponent = (function () {
         this.rackWidth = 190;
         this.rackName = "rack";
     }
+    RackComponent.prototype.recieveNewConfig = function (e) {
+        this.rackService.updateEquipmentConfigInRack(this.directory, this.rackId, e.slotid, e.e);
+    };
     RackComponent.prototype.callUpdateService = function (e) {
-        var success = this.rackService.updateRack(this.directory, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
-        if (!success) {
-            //error
-            console.log('Failed to add new component to the rack. Please try again.');
+        if (e.delete)
+            this.rackService.deleteSlot(this.directory, this.rackId, e.eventObject.dragData.relocateInRack.oldRackId, e.id, e.eventObject.dragData.relocateInRack.oldSlot, e.eventObject.dragData.e);
+        else {
+            var success = this.rackService.updateRack(this.directory, this.rackId, e.id, e.eventObject.dragData, e.activeStatus);
+            if (!success) {
+                //error
+                console.log('Failed to add new component to the rack. Please try again.');
+            }
         }
     };
     return RackComponent;
@@ -42,7 +49,7 @@ __decorate([
 RackComponent = __decorate([
     core_1.Component({
         selector: 'single-rack',
-        template: "\n      <div class=\"rack\">\n         <div *ngFor=\"let s of slots\">\n          <slot *ngIf=\"!s.shouldHideSlot\"\n            [isNav]=\"false\"\n            [equipmentObject]=s.object\n            [slotid]=s.slotid\n            [height]=\"s.object.e.height * 19.55\"\n            [equipmentActive]=s.equipmentActive\n            (updateRack)=\"callUpdateService($event)\"\n          ></slot>\n        </div>\n      </div>",
+        template: "\n      <div class=\"rack\">\n         <div *ngFor=\"let s of slots\">\n          <slot *ngIf=\"!s.shouldHideSlot\"\n            [rackId]=\"rackId\"\n            [isNav]=\"false\"\n            [equipmentObject]=s.object\n            [slotid]=s.slotid\n            [height]=\"s.object.e.height * 19.55\"\n            [equipmentActive]=s.equipmentActive\n            (updateRack)=\"callUpdateService($event)\"\n            (newConfig)=\"recieveNewConfig($event)\"\n          ></slot>\n        </div>\n      </div>",
         styles: [
             "\n        .rack {\n          padding-top:28.5px;\n          height: 875px;\n          width: 266px;\n          background-image: url(\"./app/Racks/img/42uRack.png\"); \n        }\n     "
         ]

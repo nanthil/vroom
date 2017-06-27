@@ -21,6 +21,7 @@ function detectBrowsers(){
             console.log('ERROR: '+err);
         }
         else {
+            console.log(items);
             foundBrowsers = items;
             deferred.resolve(foundBrowsers);
         }

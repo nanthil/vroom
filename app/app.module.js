@@ -34,6 +34,8 @@ var tag_manager_1 = require("./Shared/tag.manager");
 var title_bar_component_1 = require("./Shared/title.bar.component");
 var close_button_component_1 = require("./Shared/close.button.component");
 var contextMenu_component_1 = require("./Shared/contextMenu.component");
+var dropDown_component_1 = require("./Shared/dropDown.component");
+var fileViewer_component_1 = require("./Shared/fileViewer.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -65,9 +67,11 @@ AppModule = __decorate([
             title_bar_component_1.TitleBarComponent,
             close_button_component_1.CloseButtonComponent,
             folders_component_1.FolderComponent,
-            contextMenu_component_1.ContextMenuComponent
+            contextMenu_component_1.ContextMenuComponent,
+            dropDown_component_1.DropDownComponent,
+            fileViewer_component_1.FileViewerComponent
         ],
-        providers: [rack_service_1.RackService, enclave_view_component_1.EnclaveViewComponent],
+        providers: [rack_service_1.RackService, enclave_view_component_1.EnclaveViewComponent, forms_1.FormBuilder],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

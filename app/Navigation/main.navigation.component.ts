@@ -3,7 +3,9 @@ import {Component, Output, EventEmitter} from '@angular/core';
     selector: 'navigation',
     template: `
         <div class="nav-bar">
-            <site-nav (setView)=changeView($event)></site-nav>
+            <site-nav 
+                (setView)=changeView($event)
+                (rename)=renameActiveViews($event)></site-nav>
             <all-equipment [isNav]="true" [width]="rackWidth"></all-equipment>
         </div>
     `,
@@ -20,13 +22,17 @@ import {Component, Output, EventEmitter} from '@angular/core';
             right:0;
             height: 100vh;
             width: 400px;
-            background-color: blue;
+            background-color: #25272b;
         }
     `]
 })
 export class MainNavigationComponent{
     rackWidth = 40;
     something: any;
+    @Output() rename = new EventEmitter();
+    renameActiveViews(e:any){
+        this.rename.next(e);
+    }
     @Output() setView = new EventEmitter();
     changeView(e:any){
         this.setView.next(e);

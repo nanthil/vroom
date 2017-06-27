@@ -14,8 +14,15 @@ var ContextMenuComponent = (function () {
     function ContextMenuComponent() {
         this.options = [];
         //TODO on selecting an option, output that option
-        //@Output() selected: any;
+        this.selected = new core_1.EventEmitter();
     }
+    ContextMenuComponent.prototype.returnSelected = function (e) {
+        console.log(e);
+        this.selected.next(e);
+    };
+    ContextMenuComponent.prototype.onOutsideClick = function (e) {
+        this.returnSelected('cancel');
+    };
     return ContextMenuComponent;
 }());
 __decorate([
@@ -34,10 +41,17 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", Object)
 ], ContextMenuComponent.prototype, "y", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], ContextMenuComponent.prototype, "selected", void 0);
 ContextMenuComponent = __decorate([
     core_1.Component({
+        host: {
+            '(document:click)': 'onOutsideClick($event)'
+        },
         selector: 'context-menu',
-        template: "\n        <div class=\"main-context-area\" \n            [style.top.px]=\"y -50\"\n            [style.left.px]=\"x\">\n            <div *ngIf=\"showContextMenu\" class=\"context\">\n                <div class=\"list-of-options\" *ngFor=\"let o of options\">\n                    {{o}}\n                </div>\n            </div>\n        </div>\n    ",
+        template: "\n        <div class=\"main-context-area\" \n            [style.top.px]=\"y -50\"\n            [style.left.px]=\"x\">\n            <div *ngIf=\"showContextMenu\" class=\"context\">\n                <div class=\"list-of-options\" *ngFor=\"let o of options\">\n                    <span (click)=\"returnSelected(o)\">{{o}}</span>\n                </div>\n            </div>\n        </div>\n    ",
         styles: ["\n    \n      .context {\n          color: blue;\n      }\n      .main-context-area {\n          position: fixed;\n          z-index: 3;\n      }\n      .list-of-options {\n          background: green;\n      }\n    "]
     })
 ], ContextMenuComponent);

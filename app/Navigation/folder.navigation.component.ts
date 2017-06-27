@@ -13,15 +13,16 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
         ></add-new>
         <div class="folder-nav">
             <h4 class="nav-title"><p class="side-by-side">Project Explorer</p>
-                <p class="side-by-side"><a href="#" data-tooltip="Add new site.">
+                <!--<p class="side-by-side"><a href="#" data-tooltip="Add new site.">
                     <span (click)="addNew('folder')"
                     class="glyphicon glyphicon-folder-open"></span></a>
-                </p>
+                </p>-->
                 
             </h4>
             <div class="fix-overflow" *ngFor="let folder of rackService.testNewData; let i = index">
                 <div class="accordion-list">
                     <folder 
+                        (rename)=renameActiveView($event)
                         (setView)=changeView($event)
                         [indent]=0 
                         [content]=folder 
@@ -39,7 +40,11 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
         }
         .folder-nav{
             overflow:auto;
-            height: 600px;
+            height: 500px;
+            border-width: 10px;
+            border-style: ridge;
+            border-color: #344c5b;
+            background-color: #25272b;
         }
         .site-nav-div{
             position: fixed;
@@ -68,7 +73,7 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
             
         }
         .accordion-list {
-            
+            background-color: #ddd;
         }
         .building {
             margin-left:10px;
@@ -137,13 +142,16 @@ import {EnclaveViewComponent} from '../Enclaves/enclave.view.component'
     ]
 })
 export class FolderNavigationComponent{
-    directory = 'home';
+    directory: string;
     showModal = false;
     typeToAdd = '';
     aciton = 'Add New'
     argsToAdd: any[] = [];
     constructor(private rackService: RackService, private enclaveViewComponent: EnclaveViewComponent){}
-
+    @Output() rename = new EventEmitter();
+    renameActiveView(e:any){
+        this.rename.next(e);
+    }
     //TODO: MOVE THIS TO A service
     //CURRENTLY ANGULAR2 DOESN'T EXPLICITLY SUPPORT THIS BEHAVIOR
     //THIS IS A HACK TO RECEIVE RECURSIVE EVENTS HANDLED IN SERVERMANAGEMENTPAGE

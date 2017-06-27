@@ -17,7 +17,7 @@ import {RackService} from '../Racks/rack.service';
              (newValue)="pushNewItemToService($event)"
         ></add-new>
   <div [style.margin-left.px]="indent">
-    <div class="accordion-list"  (contextmenu)="contextMenu($event, 'folder')">
+    <div class="accordion-list"  (contextmenu)="contextMenu($event, 'folder', content.name)">
       <div class="side-by-side">{{content.name}}</div>
       <div *ngIf="!content.showContents" class="side-by-side file-buttons">
           
@@ -62,7 +62,12 @@ import {RackService} from '../Racks/rack.service';
             </div>
       
         <div *ngFor="let folder of content.folders"> 
-          <folder (setView)=changeView($event) [currentDirectory]="currentDirectory + '/' + folder.name" [content]=folder [indent]="indent + 10"></folder>
+          <folder 
+            (setView)=changeView($event) 
+            (rename)=changeNameOfAnActiveTab($event)
+            [currentDirectory]="currentDirectory + '/' + folder.name" 
+            [content]=folder 
+            [indent]="indent + 10"></folder>
         </div>
     </div>
   </div>
@@ -169,20 +174,32 @@ export class FolderComponent{
   contextMenuX = 0;
   contextMenuY = 0;
 
+  
+    //as folders is a recursive Component
+    //these events handles recursively for each level "this" folder is nested inside of
+    //that being the case, the value we're interested is the first event pushed to b
+    //the unpacking of this recursive object is handled in serverManagementPage
+  @Output() rename = new EventEmitter();
+  changeNameOfAnActiveTab(e:any, newName: any){
+    this.rename.next({a: this.currentDirectory, b: e, c: newName});
+  }
+
   //Sets the current enclave view model
   //This event bubbles to the serverManagementPage
   @Output() setView = new EventEmitter();
   changeView(e:any){
-    //as folders is a recursive Component
-    //the event handles recursively for each level "this" folder is nested inside of
-    //that being the case, the value we're interested is the first event pushed to b
-    //the unpacking of this recursive object is handled in serverManagementPage
     this.setView.next({a: this.currentDirectory, b: e});
   }
 
   contextMenu(e:any, type:string, file:any){
-      console.log(e.screenX, e.screenY);
-      //todo use content to know how to rename with the rackService
+      //handling renaming
+      //this.handleContextMenu()
+      //opens the "add new" modal to accept user input strings
+      //this.pushNewItemToService()
+      //asks if the user is renaming or doing something else while passing in the rename or add functionality
+      //further renaming happens in the ServerManagementPage
+      //the event is published recursively through "folder navigation componant" and the "main navigation component"
+      this.whatToAdd = type;
       this.contextMenuOptions = type==='file' ? ['delete', 'rename'] : ['add file', 'add folder', 'delete', 'rename'];
       this.showContextMenu = true;
       this.contextMenuX = e.screenX;
@@ -190,6 +207,7 @@ export class FolderComponent{
       this.oldFileNameForRenameFile = file;
   }
   pushNewItemToService(e:any){
+    //implement delete
     if(e.inputValue !== 'cancel'){
         if(e.action === 'Rename'){
             this.isFileOrFolder(e,
@@ -206,22 +224,30 @@ export class FolderComponent{
   isFileOrFolder(e:any, actionFile:any, actionFolder:any){
       
       if(e.changed === 'file'){
+            //this recursively publishes an event to the main navigation in order to extract the full path to this event
+            //then it renames the racklist directory and the active tabs directories
+            this.changeNameOfAnActiveTab(this.oldFileNameForRenameFile, e.inputValue);
             this.rackService.findFile(e.inputValue, this.currentDirectory, actionFile, this.oldFileNameForRenameFile);
         } else {
+            
+            this.changeNameOfAnActiveTab('rename folder', e.inputValue);
             this.rackService.findFolder(e.inputValue, this.currentDirectory, actionFolder);
         }
   }
 
   handleContextMenu(e:any){
-      if(e ==='add file'){
-          this.addNew('file', 'Add new');
-      } else if(e === 'add folder'){
-          this.addNew('folder', 'Add new');
-      } else if(e === 'remove'){
-          
-      } else if(e === 'rename'){
-          this.addNew(this.whatToAdd, 'Rename');
+      if(e !== 'cancel'){
+        if(e ==='add file'){
+            this.addNew('file', 'Add new');
+        } else if(e === 'add folder'){
+            this.addNew('folder', 'Add new');
+        } else if(e === 'remove'){
+            
+        } else if(e === 'rename'){
+            this.addNew(this.whatToAdd, 'Rename');
+        }
       }
+      
       this.showContextMenu = false;
   }
   //this does not add, it simply activates the add modal found in shared components

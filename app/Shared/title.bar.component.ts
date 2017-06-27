@@ -1,5 +1,5 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-
+import {Component, Input, Output, EventEmitter,NgZone} from '@angular/core';
+import {RackService} from '../Racks/rack.service'
 @Component({
     selector: 'title-bar',
     template: `
@@ -31,5 +31,7 @@ export class TitleBarComponent{
     closeWindow(e:any){
         this.close.next(e);
     }
+    constructor(private rackService:RackService, private zone: NgZone){}
+    
 
 }

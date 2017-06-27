@@ -16,6 +16,7 @@ var EquipmentsComponent = (function () {
         this.equipmentService = equipmentService;
         this.equipmentJson = new Array();
         this.equipmentIsActive = false;
+        this.emptyObject = {};
         this.generateDefaultEquipment();
     }
     EquipmentsComponent.prototype.generateDefaultEquipment = function () {
@@ -44,8 +45,8 @@ __decorate([
 EquipmentsComponent = __decorate([
     core_1.Component({
         selector: 'all-equipment',
-        template: "\n            <ul class=\"equipment-list\">\n                <li *ngFor=\"let e of equipmentJson\" >\n                    <single-equipment \n                    [isNav]=\"isNav\"\n                    [width]=\"width\" \n                    [height]=\"e.height * 19.55\"\n                    [equipment]=\"e\"\n                    [isActive]=\"equipmentIsActive\">\n                    </single-equipment>\n                </li>\n            <ul>\n    ",
-        styles: ["\n    .equipment-list{\n        overflow:auto;\n        list-style-type: none;\n        display: list-item;\n        border: 3px solid #73AD21;\n        height: 400px; \n    }"],
+        template: "\n            <ul class=\"equipment-list\">\n                <li *ngFor=\"let e of equipmentJson\" >\n                    <single-equipment \n                    [isNav]=\"isNav\"\n                    [width]=\"width\" \n                    [height]=\"e.height * 19.55\"\n                    [equipment]=\"e\"\n                    [isActive]=\"equipmentIsActive\">\n                    [moveActiveEquipmentToNewSlot]=\"emptyObject\"\n                    </single-equipment>\n                </li>\n            <ul>\n    ",
+        styles: ["\n    .equipment-list{\n        overflow:auto;\n        list-style-type: none;\n        display: list-item;\n        border-width: 10px;\n        border-style: ridge;\n        border-color: #344c5b;\n        background-color: #25272b;\n        height: 600px; \n    }"],
         providers: [equipment_services_1.EquipmentService]
     }),
     __metadata("design:paramtypes", [equipment_services_1.EquipmentService])

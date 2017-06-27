@@ -10,8 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var rack_service_1 = require("../Racks/rack.service");
 var TitleBarComponent = (function () {
-    function TitleBarComponent() {
+    function TitleBarComponent(rackService, zone) {
+        this.rackService = rackService;
+        this.zone = zone;
         this.close = new core_1.EventEmitter();
     }
     TitleBarComponent.prototype.ngOnInit = function () {
@@ -35,7 +38,8 @@ TitleBarComponent = __decorate([
         selector: 'title-bar',
         template: "\n        <div class=\"title-bar\">{{name}}\n        <close (close)=\"closeWindow(e)\"></close></div>\n    ",
         styles: ["\n        .close-button {\n            float:right;\n            background: #cc5588;\n        }\n        .close-button:hover{\n            color: #cc5588;\n            background: none;\n        }\n        .title-bar{\n            background: #333333;\n            color:white;\n            margin:0;\n        }\n    "]
-    })
+    }),
+    __metadata("design:paramtypes", [rack_service_1.RackService, core_1.NgZone])
 ], TitleBarComponent);
 exports.TitleBarComponent = TitleBarComponent;
 //# sourceMappingURL=title.bar.component.js.map
